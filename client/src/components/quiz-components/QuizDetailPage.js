@@ -1,30 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-function  QuizDetailPage(props)  {
+import React, {useEffect, useState, useContext} from 'react';
+import { AppContext } from '../AppContext';
 
-  const [selectedTopics, setSelectedTopics] = useState();
+function QuizDetailPage(props)  {
 
-  // stand-in code until context/router is set up vvv
-  const [quizData, setQuizData] = useState([]);
-  useEffect(() => {
-    const getQuizData = async () => {
-      const res = await axios.get("quiz/")
-        .catch(err => console.log(err))
-      if (res !== undefined) {
-        const data = await res.data;
-        const [quizOfInterest] = data.filter(quiz => quiz._id === props.selectedQuiz);
-        setQuizData(quizOfInterest);
-        setSelectedTopics(quizOfInterest.topics.map(topic => ({[topic.topicName] :  true})))
-      }
-    }
-    getQuizData();
-  }, [])
-  // stand-in code until context/router is set up ^^^
+  const {quizData} = useContext(AppContext)
   
-  const {quizName, subject, topics} = quizData;
+  const {quizName, subject} = quizData;
+  
+  const [initTopicSelection] = quizData
+    .filter(quiz => quiz._id === props.selectedQuiz)
+    .map(quiz => {
+      return quiz.topics.map(topic => ({[topic.topicName] : true}));
+    })
+    
+  const [selectedTopics, setSelectedTopics] = useState(initTopicSelection);
   
   const toggleCheckbox = (e) => {
-    const {name, checked} = e.target;
+    const {name} = e.target;
     setSelectedTopics(
       selectedTopics.map(topic => {
         const [topicName] = Object.keys(topic);
@@ -64,21 +56,21 @@ function  QuizDetailPage(props)  {
       <form className='quizConfig' onSubmit={startQuiz}>
         <p>Select the topics you would like to be included in the quiz:</p>
         {
-          selectedTopics && selectedTopics.map(topic => {
-          const [name] = Object.keys(topic);
-          const [value] = Object.values(topic);
-          return (
-                  <div className="quizConfigCheckBoxRow">
-                    <input 
-                      type="checkbox"
-                      onChange={toggleCheckbox}
-                      name={name}
-                      checked={value}
-                    />
-                    <label htmlFor={name}>{name}</label>
-                  </div>
-                )
-            })
+          selectedTopics.map((topic, index) => {
+            const [name] = Object.keys(topic);
+            const [value] = Object.values(topic);
+            return (
+                    <div key={index} className="quizConfigCheckBoxRow">
+                      <input 
+                        type="checkbox"
+                        onChange={toggleCheckbox}
+                        name={name}
+                        checked={value}
+                      />
+                      <label htmlFor={name}>{name}</label>
+                    </div>
+                  )
+          })
         }
         <div className='quizConfigButtonContainer'>
           <button onClick={() => props.handleBack()}>Back</button>

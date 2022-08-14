@@ -1,7 +1,6 @@
 export default function QuizCard(props) {
   const handleClick = props.handleClick;
-  const {_id, quizName, subject, topics} = props.cardDetails;
-  const topicsText = topics.map(topic => topic.topicName).join(", ");
+  const {_id, quizName, subject, topicsText} = props.cardDetails;
 
   return (
     <div className="quizCard" id={_id} onClick={handleClick}>
