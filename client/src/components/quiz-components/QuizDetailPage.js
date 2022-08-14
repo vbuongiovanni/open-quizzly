@@ -1,14 +1,21 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { AppContext } from '../AppContext';
+import axios from "axios";
 
-function QuizDetailPage(props)  {
+export default props => {
 
-  const {quizData} = useContext(AppContext)
+  const {userName, password} = props.credentials;
+  const {quizData} = useContext(AppContext);
+  const navigate = useNavigate();
+  // get selected quizId from react-router's: url:
+  const {quizId} = useParams();
   
-  const {quizName, subject} = quizData;
+  const filteredData = quizData.filter(quiz => quiz._id === quizId)
+  const {quizName, subject} = filteredData[0];
   
-  const [initTopicSelection] = quizData
-    .filter(quiz => quiz._id === props.selectedQuiz)
+  const [initTopicSelection] = filteredData
     .map(quiz => {
       return quiz.topics.map(topic => ({[topic.topicName] : true}));
     })
@@ -33,7 +40,9 @@ function QuizDetailPage(props)  {
   const startQuiz = (e) => {
     e.preventDefault();
     const quizConfiguration = {
-      quizId : props.selectedQuiz,
+      userName, 
+      password,
+      quizId : quizId,
       includedTopics : selectedTopics
                         .filter(topic => {
                           const [value] = Object.values(topic);
@@ -44,40 +53,49 @@ function QuizDetailPage(props)  {
                           return name;
                         })
     }
-    console.log(quizConfiguration)
+    
+    axios.post("/quiz/" + quizConfiguration.quizId, quizConfiguration)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
+  }
+
+  const handleBack = () => {
+    navigate("/menu/")
   }
   
   return(
-    <div className='quizDetail'>
-      <div className='quizDetailTitle'>
-        <h2>{quizName}</h2>
-        <h4>Subject: {subject}</h4>
-      </div>
-      <form className='quizConfig' onSubmit={startQuiz}>
-        <p>Select the topics you would like to be included in the quiz:</p>
-        {
-          selectedTopics.map((topic, index) => {
-            const [name] = Object.keys(topic);
-            const [value] = Object.values(topic);
-            return (
-                    <div key={index} className="quizConfigCheckBoxRow">
-                      <input 
-                        type="checkbox"
-                        onChange={toggleCheckbox}
-                        name={name}
-                        checked={value}
-                      />
-                      <label htmlFor={name}>{name}</label>
-                    </div>
-                  )
-          })
-        }
-        <div className='quizConfigButtonContainer'>
-          <button onClick={() => props.handleBack()}>Back</button>
-          <button>Start quiz</button>
+    <>
+      {}
+      <div className='quizDetail'>
+        <div className='quizDetailTitle'>
+          <h2>{quizName}</h2>
+          <h4>Subject: {subject}</h4>
         </div>
-      </form>
-    </div>
+        <form className='quizConfig' onSubmit={startQuiz}>
+          <p>Select the topics you would like to be included in the quiz:</p>
+          {
+            selectedTopics.map((topic, index) => {
+              const [name] = Object.keys(topic);
+              const [value] = Object.values(topic);
+              return (
+                      <div key={index} className="quizConfigCheckBoxRow">
+                        <input 
+                          type="checkbox"
+                          onChange={toggleCheckbox}
+                          name={name}
+                          checked={value}
+                        />
+                        <label htmlFor={name}>{name}</label>
+                      </div>
+                    )
+            })
+          }
+          <div className='quizConfigButtonContainer'>
+            <button onClick={handleBack}>Back</button>
+            <button>Start quiz</button>
+          </div>
+        </form>
+      </div>
+    </>
   )
 }
-export default QuizDetailPage

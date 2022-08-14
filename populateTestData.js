@@ -10,7 +10,7 @@ const populateUser = async (userName, password) => {
 }
 
 const populateQuiz = async (quizName) => {
-    const res = await axios.post("http://localhost:9000/quiz/newQuiz/" + quizName);
+    const res = await axios.post("http://localhost:9000/quiz/mockQuiz/" + quizName);
     console.log(`${res.data.quizName} added to db`);
 }
 
@@ -90,9 +90,34 @@ const populateQuizResult = async (userName) => {
 // populate 5 quizs:
     populateQuiz("A Sample Quiz");
     populateQuiz("Another Sample Quiz");
-    populateQuiz("A third Sample Quiz");
-    populateQuiz("A fourth Sample Quiz");
-    populateQuiz("Yet, another Sample Quiz");
 
 // run recursive functions to load user tables/result arrays
     loadUserCollection(0);
+
+const reactDesignPatternsQuiz = require("./quiz-content/Design Patterns in React.json")
+const html5Quiz = require("./quiz-content/HTML5.json")
+
+const unpackQuizData = quizData => {
+
+    const {quizName, quizSubject} = quizData;
+    let topics = Object.values(quizData.topics);
+    topics = topics.map(topic => ({...topic, questions : Object.values(topic.questions)}))
+
+    // topics.map(topic => topic.questions.map(question => console.log(question)))
+
+    const quizDetails = {
+        quizName : quizName,
+        subject : quizSubject,
+        topics : topics
+    }
+
+    return (quizDetails);
+}
+
+axios.post("http://localhost:9000/quiz/add/" + reactDesignPatternsQuiz.quizName, unpackQuizData(reactDesignPatternsQuiz))
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))
+
+axios.post("http://localhost:9000/quiz/add/" + html5Quiz.quizName, unpackQuizData(html5Quiz))
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err))

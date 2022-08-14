@@ -1,30 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import Navbar from './components/Navbar';
-import MainMenu from './components/MainMenu';
-import { AppContextProvider } from './components/AppContext';
-import './styles.css';
-
-import QuizDetailPage from './components/quiz-components/QuizDetailPage';
+import React, {useEffect, useState} from "react";
+import LoginPage from "./components/LoginPage"
+import Navbar from "./components/Navbar";
+import MainMenu from "./components/MainMenu";
+import {Route, Routes} from "react-router-dom";
+import "./styles.css";
+import QuizDetailPage from "./components/quiz-components/QuizDetailPage";
 
 function App() {
 
-  const [selectedQuiz, setPage] = useState();
-
-    // returns html ID of card, which is the corresponding '_id' of the quiz.
-    const handleClick = (e) => {
-      setPage(e.target.id)
-    }
-    const handleBack = (e) => {
-      setPage(undefined) 
-    }
+  const [credentials, setCredentials] = useState(undefined);  
 
   return (
-    <AppContextProvider>
-      <main className="App">
-        <Navbar />
-        {!selectedQuiz ? <MainMenu handleClick={handleClick}/> : <QuizDetailPage  handleBack={handleBack} selectedQuiz={selectedQuiz}/>}
-      </main>
-    </AppContextProvider>
+    <>
+      <Routes>
+        <Route
+            path="/"
+            element={<LoginPage setCredentials={setCredentials} credentials={credentials}/>}
+        />
+        <Route
+            path="/menu/"
+            element={<MainMenu credentials={credentials}/>}
+        />
+        <Route
+            path="/quiz/:quizId"
+            element={<QuizDetailPage credentials={credentials}/>}
+        />
+      </Routes>
+    </>
   );
 }
 
