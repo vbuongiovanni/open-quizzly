@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Navbar from './components/Navbar';
 import MainMenu from './components/MainMenu';
-import './App.css';
+import { AppContextProvider } from './components/AppContext';
+import './styles.css';
 
 import QuizDetailPage from './components/quiz-components/QuizDetailPage';
 
@@ -18,10 +19,12 @@ function App() {
     }
 
   return (
-    <div className="App">
-      <Navbar />
-      {!selectedQuiz ? <MainMenu handleClick={handleClick}/> : <QuizDetailPage  handleBack={handleBack} selectedQuiz={selectedQuiz}/>}
-    </div>
+    <AppContextProvider>
+      <main className="App">
+        <Navbar />
+        {!selectedQuiz ? <MainMenu handleClick={handleClick}/> : <QuizDetailPage  handleBack={handleBack} selectedQuiz={selectedQuiz}/>}
+      </main>
+    </AppContextProvider>
   );
 }
 

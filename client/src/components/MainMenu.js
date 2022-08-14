@@ -1,23 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import axios from "axios";
 import QuizCard from "./QuizCard";
+import {AppContext} from "./AppContext";
+import App from '../App';
 
-function  MainMenu(props)  {
 
-  const [quizData, setQuizData] = useState([]);
+function MainMenu(props)  {
+
   const userName = "John Smith";
-
-  useEffect(() => {
-    const getQuizData = async () => {
-      const res = await axios.get("quiz/")
-        .catch(err => console.log(err))
-      if (res !== undefined) {
-        const data = await res.data;
-        setQuizData(data);
-      }
-    }
-    getQuizData();
-  }, [])
+  const contextValue = useContext(AppContext);
+  const {quizLibrary} = contextValue;
 
   return(
     <main>
@@ -25,10 +17,10 @@ function  MainMenu(props)  {
         <h2>Welcome, {userName}!</h2>
       </div>
       <div className="quizCardDisplay">
-          {quizData.map(quizDetails => <QuizCard 
-                                          key={quizDetails._id}
+          {quizLibrary.map(quiz => <QuizCard 
+                                          key={quiz._id}
                                           handleClick={props.handleClick}
-                                          cardDetails={quizDetails}/>
+                                          cardDetails={quiz}/>
                                       )}
       </div>
     </main>
