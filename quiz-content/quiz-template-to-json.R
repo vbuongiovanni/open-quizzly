@@ -2,7 +2,7 @@ library(tidyverse)
 library(openxlsx)
 library(rjson)
 
-setwd("/Users/vbuongiovanni/Documents/VSchool/quizzly/quiz-content/")
+setwd("/Users/vbuongiovanni/Documents/VSchool/open-quizzly/quiz-content/")
 
 sheet_names <- getSheetNames("quiz-template.xlsx")
 
