@@ -1,18 +1,16 @@
 import React, {useContext} from 'react';
 import QuizCard from "./QuizCard";
-import {useNavigate} from 'react-router-dom';
 import {AppContext} from "./AppContext";
+import {UserContext} from "./UserContext";
 
-function MainMenu(props)  {
+export default () => {
 
-  const navigate = useNavigate();
-  const {userName} = props.credentials;
-  const contextValue = useContext(AppContext);
-  const {quizLibrary} = contextValue;
+  // load and deconstruct context:
+  const userContext = useContext(UserContext);
+  const {userName} = userContext.credentials;
 
-  const handleClick = (e) => {
-    navigate("/quiz/" + e.target.id)
-  }
+  const appContext = useContext(AppContext);
+  const {quizLibrary} = appContext;
 
   return(
     <>
@@ -23,7 +21,6 @@ function MainMenu(props)  {
         <div className="quizCardDisplay">
             {quizLibrary.map(quiz => <QuizCard 
                                             key={quiz._id}
-                                            handleClick={handleClick}
                                             cardDetails={quiz}/>
                                         )}
         </div>
@@ -31,5 +28,3 @@ function MainMenu(props)  {
     </>
   )
 }
-
-export default MainMenu

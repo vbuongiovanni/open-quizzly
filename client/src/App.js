@@ -1,29 +1,32 @@
 import React, {useEffect, useState} from "react";
-import LoginPage from "./components/LoginPage"
+import LoginPage from "./components/LoginPage";
 import Navbar from "./components/Navbar";
 import MainMenu from "./components/MainMenu";
 import {Route, Routes} from "react-router-dom";
 import "./styles.css";
 import QuizDetailPage from "./components/quiz-components/QuizDetailPage";
+import Quiz from "./components/quiz-components/Quiz";
 
 function App() {
-
-  const [credentials, setCredentials] = useState(undefined);  
 
   return (
     <>
       <Routes>
         <Route
             path="/"
-            element={<LoginPage setCredentials={setCredentials} credentials={credentials}/>}
+            element={<LoginPage/>}
         />
         <Route
             path="/menu/"
-            element={<MainMenu credentials={credentials}/>}
+            element={<MainMenu/>}
         />
         <Route
             path="/quiz/:quizId"
-            element={<QuizDetailPage credentials={credentials}/>}
+            element={<QuizDetailPage/>}
+        />
+        <Route
+            path="/quiz/active/:quizId"
+            element={<Quiz/>}
         />
       </Routes>
     </>

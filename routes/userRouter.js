@@ -38,24 +38,28 @@ userRouter.post("/", (req, res, next) => {
 })
 
 // Submit answer
-userRouter.post("/:userName", (req, res, next) => {
-    const {userName} = req.params
-    const newAnswer = req.body
+userRouter.post("/:userId", (req, res, next) => {
+    const {userId} = req.params
+    const {userName, password, newAnswer} = req.body
+    
     // get user with their existing responses:
     userModel.findOne(
-        {userName : userName},
+        {_id : userId},
         (err, returnedUser) => {
             if (err) {
                 res.status(500);
                 return next(err);
             }
             const {password, results} = returnedUser;
+            console.log(req.body)
+            console.log(results)
+
             userModel.findOneAndUpdate(
                 {userName : userName},
                 {
                     userName,
                     password,
-                    results : [...results, newAnswer]
+                    results : [...results, req.body]
                 },
                 {new : true},
                 (err, returnedUser) => {

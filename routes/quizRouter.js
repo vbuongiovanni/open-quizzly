@@ -13,9 +13,25 @@ quizRoute.get("/", (req, res, next) => {
     })
 })
 
+// get single quiz 
+quizRoute.get("/:quizId", (req, res, next) => {
+    const {quizId} = req.params;
+    console.log(req.params)
+    quizModel.findOne({_id : quizId}, (err, quiz) => {
+        if (err) {
+            res.status(500);
+            return next(err);
+        }
+        const {quizName, subject, topics} = quiz;
+        const topicSelections = topics
+          .map(topic => ({[topic.topicName] : true}))
+        res.send({quizName, subject, topicSelections});
+    })
+})
+
 // given a :quizId and request body, endpoint responds w/ filtered and randomized quiz
 // filters by topic
-quizRoute.post("/:quizId", (req, res, next) => {   
+quizRoute.post("/generate/:quizId", (req, res, next) => {   
 
     const quizConfiguration = req.body;
     const {quizId} = req.params;
@@ -42,26 +58,40 @@ quizRoute.post("/:quizId", (req, res, next) => {
                                 .filter(topic => desiredTopics
                                                 .includes(topic.topicName)
                                         );
-        filteredQuiz = shuffleArray(filteredQuiz);
-        const shuffledQuestions = filteredQuiz.map(topic => {
+        const topics = filteredQuiz.map(topic => {
             const questions = topic.questions.map(question => {
-                const {correctAnswer, incorrectAnswers} = question;
-                let answers = [...incorrectAnswers, correctAnswer]
-                return ({answers : shuffleArray(answers), correctAnswer})
+                const {correctAnswer, incorrectAnswers, questionText} = question;
+                let answers = [...incorrectAnswers, correctAnswer];
+                answers = shuffleArray(answers);
+                return ({questionText, answers, correctAnswer : answers.indexOf(correctAnswer)});
             })
-            return ({...topic, questions})
+            return ({...topic, questions});
         })
-        res.send(shuffledQuestions);
+
+        // aggregate all questionItems, consisting of topicName, question, and question text
+        // array, then shuffle array.
+        let shuffledQuestions = []
+        topics.map(topic => {
+            topic.questions.map(question => {
+                const questionItem = {topicName : topic.topicName, question}
+                shuffledQuestions.push(questionItem)
+            })
+        })
+        shuffledQuestions = shuffleArray(shuffledQuestions)
+
+        res.send({
+            quizName : responseQuiz.quizName,
+            subject : responseQuiz.subject,
+            shuffledQuestions
+        });
     })
 })
 
 // endpoint to add real quiz to local MongoDB
 quizRoute.post("/add/:newQuizName", (req, res, next) => {
-
     const quizDetails = req.body;
     const {newQuizName} = req.params;
     const newQuiz = new quizModel(quizDetails)
-        
     newQuiz.save((err, savedQuiz) => {
         if (err) {
             res.status(500);
