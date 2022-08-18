@@ -8,7 +8,7 @@ export const AppContextProvider = (props) => {
   // set state to store quizData
   const [quizData, setQuizData] = useState([]);
   const [quizLibrary, setQuizLibrary] = useState([]);
-
+  
   // use effect to get quiz detail
   useEffect(() => {
     const getQuizData = async () => {

@@ -1,27 +1,32 @@
-import React, {useState, useContext} from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { AppContext } from '../AppContext';
+import React, {useState, useContext, useEffect} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
+import QuizHeader from './quiz-subcomponents/QuizHeader';
+import {QuizContext} from "../QuizContext";
+import {AppContext} from "../AppContext";
 
 export default props => {
 
-  const {userName, password} = props.credentials;
-  const {quizData} = useContext(AppContext);
-  const navigate = useNavigate();
-  // get selected quizId from react-router's: url:
   const {quizId} = useParams();
-  
-  const filteredData = quizData.filter(quiz => quiz._id === quizId)
-  const {quizName, subject} = filteredData[0];
-  
-  const [initTopicSelection] = filteredData
-    .map(quiz => {
-      return quiz.topics.map(topic => ({[topic.topicName] : true}));
-    })
-    
-  const [selectedTopics, setSelectedTopics] = useState(initTopicSelection);
-  
+  const {quizData} = useContext(AppContext);
+  const {setActiveQuiz} = useContext(QuizContext);
+
+  // init navigate object
+  const navigate = useNavigate();
+
+  // init local state of QuizDetailPage
+  const [quizDetails, setQuizDetails] = useState();
+  const [selectedTopics, setSelectedTopics] = useState([]);
+
+  useEffect(() => {
+    axios.get("/quiz/" + quizId)
+      .then(res => {
+        setQuizDetails(res.data)
+        setSelectedTopics(res.data.topicSelections)
+      })
+      .catch(err => console.log(err))
+  }, [])
+
   const toggleCheckbox = (e) => {
     const {name} = e.target;
     setSelectedTopics(
@@ -40,9 +45,7 @@ export default props => {
   const startQuiz = (e) => {
     e.preventDefault();
     const quizConfiguration = {
-      userName, 
-      password,
-      quizId : quizId,
+      selectedQuizId : quizId,
       includedTopics : selectedTopics
                         .filter(topic => {
                           const [value] = Object.values(topic);
@@ -54,9 +57,14 @@ export default props => {
                         })
     }
     
-    axios.post("/quiz/" + quizConfiguration.quizId, quizConfiguration)
-      .then(res => console.log(res.data))
+    axios.post("/quiz/generate/" + quizConfiguration.selectedQuizId, quizConfiguration)
+      .then(res => {
+        console.log(res.data)
+        setActiveQuiz(res.data)
+      })
       .catch(err => console.log(err))
+
+    navigate(`/quiz/active/${quizId}`)
   }
 
   const handleBack = () => {
@@ -65,11 +73,11 @@ export default props => {
   
   return(
     <>
-      {}
+      {(quizDetails !== undefined && selectedTopics !== undefined) && 
       <div className='quizDetail'>
-        <div className='quizDetailTitle'>
-          <h2>{quizName}</h2>
-          <h4>Subject: {subject}</h4>
+        <QuizHeader quizName={quizDetails.quizName} subject={quizDetails.subject}/>
+        <div className='quizDetailResultsBtnContainer'>
+          <button>See Previous Results</button>
         </div>
         <form className='quizConfig' onSubmit={startQuiz}>
           <p>Select the topics you would like to be included in the quiz:</p>
@@ -96,6 +104,7 @@ export default props => {
           </div>
         </form>
       </div>
+      }
     </>
   )
 }
