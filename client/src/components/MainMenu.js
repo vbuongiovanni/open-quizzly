@@ -6,11 +6,13 @@ import {UserContext} from "./UserContext";
 export default () => {
 
   // load and deconstruct context:
-  const userContext = useContext(UserContext);
-  const {userName} = userContext.credentials;
+  const {credentials} = useContext(UserContext);
+  const {userName} = credentials;
 
   const appContext = useContext(AppContext);
   const {quizLibrary} = appContext;
+
+  console.log(credentials.results);
 
   return(
     <>

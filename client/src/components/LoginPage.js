@@ -1,53 +1,29 @@
 import {useState, useContext} from "react";
 import {useNavigate} from "react-router-dom";
 import { UserContext } from "./UserContext";
+import LoginForm from "./login-components/LoginForm";
+import UserCreateForm from "./login-components/UserCreateForm";
 import axios from "axios";
 
 export default (props) => {
-  const navigate = useNavigate();
-  const [loginInputs, setLoginInputs] = useState({
-    userName : "",
-    password : ""
-  });
-  const {setCredentials} = useContext(UserContext);
+  const [accCreation, setAccCreation] = useState(false)
+  const [loginMessage, setLoginMessage] = useState("")
 
-  // handler for form submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios.post("/user", loginInputs)
-      .then(res => {
-        if (res.data !== undefined) {
-          setCredentials({...res.data});
-          navigate("/menu/")
-        }
-      })
-      .catch(err => console.log(err))
-  };
-  
-  // handler func for inputs
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setLoginInputs(prevInputs => ({...prevInputs, [name] : value}))
-  };
-  
+  // handler to toggle Acc. Creation
+  const toggleAccCreation = () => {
+    setAccCreation(prevValue => !prevValue)
+    console.log(accCreation)
+    // this negates form submittion:
+    return false;
+  }
+  console.log(loginMessage)
   return(    
     <div>
       <div className="loginFormDiv">
-        <form className="loginForm" onSubmit={handleSubmit}>
-          
-          <label htmlFor="userName">Username</label>
-          <input 
-            type="text"
-            name="userName"
-            onChange={handleChange}
-          />
-          <label htmlFor="password">Password</label>
-          <input type="text"
-            name="password"
-            onChange={handleChange}
-          />
-          <button className="loginButton">Login</button>
-        </form>
+        {!accCreation ? 
+          <LoginForm toggleAccCreation={toggleAccCreation}/> : 
+          <UserCreateForm toggleAccCreation={toggleAccCreation} setLoginMessage={setLoginMessage}/>}
+        <h1 className="loginMessage">{loginMessage}</h1>  
       </div>
     </div>
   );
