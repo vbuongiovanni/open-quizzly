@@ -31,7 +31,7 @@ export default () => {
       answers : answeredQuestion.question.answers,
       topicName : answeredQuestion.topicName,
       questionText : answeredQuestion.question.questionText, 
-      userAnswer : answerInput,
+      userAnswer : new Number(answerInput),
       correctAnswer : answeredQuestion.question.correctAnswer
     }
     const requestBody = {

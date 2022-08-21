@@ -24,8 +24,7 @@ const app = express();
 
 // setup error handler - relay error message to client via object
     app.use((err, req, res, next) => {
-        console.log(err);
-        res.send({ErrMsg : err.message});
+        return res.send({errMsg : err.message});
     })
 
 // start server

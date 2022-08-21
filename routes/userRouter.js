@@ -12,14 +12,9 @@ userRouter.post("/", (req, res, next) => {
         }
         // If user doesn't exist, add them
         if (users.length === 0) {
-            const newUser = new userModel({
-                userName,
-                password,
-                results : []
-            })
-            newUser.save((err, savedUser) => {
-                res.send(savedUser);
-            })
+            res.status(401);
+            const err = new Error("User not found or credentials don't match. Please try again or create a new account.");
+            return next(err);
         // otherwise, check password:
         } else {
             const [user] = users;
@@ -28,14 +23,44 @@ userRouter.post("/", (req, res, next) => {
                 res.send(user);
             } else {
                 // throw error with descriptive message if credentials dont match
-                const invalidLogin = new Error();
-                invalidLogin.message = "User credentials didn't match";
-                res.status(500);
-                return next(invalidLogin);
+                res.status(401);
+                const err = new Error("User not found or credentials don't match. Please try again or create a new account.");
+                return next(err);
             }
         }
     })
 })
+
+// new user
+userRouter.post("/new", (req, res, next) => {    
+    const {userName, password, confirmPassword} = req.body;
+    if (password !== confirmPassword) {
+        res.status(500);
+        const err = new Error("Entered password does not match confirmation.");
+        return next(err);
+    }
+    userModel.find({userName : userName}, (err, users) => {
+        if (err) {
+            res.status(500);
+            const err = new Error("Provided password doesn't match confirmation");
+            return next(err);
+        } else if (users.length > 0) {
+            res.status(500);
+            const err = new Error("Username already exists.");
+            return next(err);
+        } else {
+            const newUser = new userModel({
+                userName,
+                password,
+                results : []
+            })
+            newUser.save((err, savedUser) => {
+                res.send("User profile successfully created!");
+            })
+        }
+    })
+})
+
 
 // Submit answer
 userRouter.post("/:userId", (req, res, next) => {
@@ -59,7 +84,7 @@ userRouter.post("/:userId", (req, res, next) => {
                 {
                     userName,
                     password,
-                    results : [...results, req.body]
+                    results : [...results, req.body.newAnswer]
                 },
                 {new : true},
                 (err, returnedUser) => {
