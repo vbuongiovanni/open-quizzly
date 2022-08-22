@@ -12,12 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
+    "datalib": "^1.9.3",
     "express": "^4.18.1",
     "mongoose": "^6.5.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "react-confirm-box": "^1.2.0"
   },
-  "nodemonConfig" : {
-    "ignore" : [
+  "nodemonConfig": {
+    "ignore": [
       "./client/*"
     ]
   }

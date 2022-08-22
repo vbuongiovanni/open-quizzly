@@ -16,7 +16,6 @@ quizRoute.get("/", (req, res, next) => {
 // get single quiz 
 quizRoute.get("/:quizId", (req, res, next) => {
     const {quizId} = req.params;
-    console.log(req.params)
     quizModel.findOne({_id : quizId}, (err, quiz) => {
         if (err) {
             res.status(500);
@@ -79,9 +78,18 @@ quizRoute.post("/generate/:quizId", (req, res, next) => {
         })
         shuffledQuestions = shuffleArray(shuffledQuestions)
 
+        let sessionId = new Date();
+        let randomNumber = Math.ceil(Math.random() * 1000000000);
+        // build session ID (YEAR_MONTH_DATE_HOUR_MINUTE_SECOND_randomID)
+        sessionId = `${sessionId.getFullYear()}_${sessionId.getMonth()+1}_` + 
+                    `${sessionId.getDate()}_${sessionId.getHours()}_` + 
+                    `${sessionId.getMinutes()}_${sessionId.getSeconds()}_` + 
+                    `${randomNumber}`
+
         res.send({
             quizName : responseQuiz.quizName,
             subject : responseQuiz.subject,
+            sessionId ,
             shuffledQuestions
         });
     })

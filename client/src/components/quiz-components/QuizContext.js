@@ -1,5 +1,4 @@
-import {createContext, useState, useEffect, useContext} from "react";
-import {AppContext} from "./AppContext";
+import {createContext, useState} from "react";
 import { useNavigate } from "react-router-dom";
 export const QuizContext = createContext();
 
