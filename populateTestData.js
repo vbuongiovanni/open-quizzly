@@ -5,19 +5,14 @@ const reactDesignPatternsQuiz = require("./quiz-content/Design Patterns in React
 const html5Quiz = require("./quiz-content/HTML5.json")
 
 const unpackQuizData = quizData => {
-
     const {quizName, quizSubject} = quizData;
     let topics = Object.values(quizData.topics);
     topics = topics.map(topic => ({...topic, questions : Object.values(topic.questions)}))
-
-    // topics.map(topic => topic.questions.map(question => console.log(question)))
-
     const quizDetails = {
         quizName : quizName,
         subject : quizSubject,
         topics : topics
     }
-
     return (quizDetails);
 }
 
@@ -53,6 +48,14 @@ const populateQuizResult = async (userName, password) => {
     let answers = [];
     res.data.map(quiz => {
         const {quizName, _id, subject} = quiz;
+        let sessionId = new Date();
+        let randomNumber = Math.ceil(Math.random() * 1000000000);
+        // build session ID (YEAR_MONTH_DATE_HOUR_MINUTE_SECOND_randomID)
+        const psudeoSessionId = `${sessionId.getFullYear()}_${sessionId.getMonth()+1}_` + 
+                                `${sessionId.getDate()}_${sessionId.getHours()}_` + 
+                                `${sessionId.getMinutes()}_${sessionId.getSeconds()}_` + 
+                                `${randomNumber}`
+
         quiz.topics.map(topic => {
             const {topicName} = topic;
             topic.questions.map((question, index) => {
@@ -71,11 +74,11 @@ const populateQuizResult = async (userName, password) => {
                     return (array);
                 }
                 allAnswers = shuffleArray(allAnswers)
-                
                 const body = {
                     quizId : _id, 
                     answers : allAnswers,
                     topicName,
+                    sessionId : psudeoSessionId,
                     userAnswer : allAnswers.indexOf(userAnswer), 
                     questionText, 
                     correctAnswer : allAnswers.indexOf(correctAnswer), 

@@ -2,13 +2,17 @@ import React, {useState, useContext, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import QuizHeader from './quiz-subcomponents/QuizHeader';
-import {QuizContext} from "../QuizContext";
+import TopicResultsSummary from './quiz-subcomponents/TopicResultsSummary';
+import {QuizContext} from "./QuizContext";
+import {UserContext} from "../UserContext";
 import {AppContext} from "../AppContext";
 
 export default props => {
 
   const {quizId} = useParams();
   const {quizData} = useContext(AppContext);
+  const {credentials} = useContext(UserContext);
+  
   const {setActiveQuiz} = useContext(QuizContext);
 
   // init navigate object
@@ -16,16 +20,30 @@ export default props => {
 
   // init local state of QuizDetailPage
   const [quizDetails, setQuizDetails] = useState();
+  const [prevResultsView, setPrevResultsView] = useState(false);
   const [selectedTopics, setSelectedTopics] = useState([]);
+  const [histPerformance, setHistPerformance] = useState([]);
 
   useEffect(() => {
+    // get quiz details:
     axios.get("/quiz/" + quizId)
       .then(res => {
         setQuizDetails(res.data)
         setSelectedTopics(res.data.topicSelections)
       })
       .catch(err => console.log(err))
+    // get historical performance of quiz:
+    axios.get(`/user/history/${credentials._id}?quizId=${quizId}`)
+      .then(res => {
+        console.log(res.data)
+        setHistPerformance(res.data)
+      })
+      .catch(err => console.log(err))
   }, [])
+
+  const togglePrevResults = () => {
+    setPrevResultsView(prevValue => !prevValue);
+  }
 
   const toggleCheckbox = (e) => {
     const {name} = e.target;
@@ -59,7 +77,6 @@ export default props => {
     
     axios.post("/quiz/generate/" + quizConfiguration.selectedQuizId, quizConfiguration)
       .then(res => {
-        console.log(res.data)
         setActiveQuiz(res.data)
       })
       .catch(err => console.log(err))
@@ -76,8 +93,9 @@ export default props => {
       {(quizDetails !== undefined && selectedTopics !== undefined) && 
       <div className='quizDetail'>
         <QuizHeader quizName={quizDetails.quizName} subject={quizDetails.subject}/>
+        <TopicResultsSummary histPerformance={histPerformance}/>
         <div className='quizDetailResultsBtnContainer'>
-          <button>See Previous Results</button>
+          <button>See Detail Previous Results</button>
         </div>
         <form className='quizConfig' onSubmit={startQuiz}>
           <p>Select the topics you would like to be included in the quiz:</p>
