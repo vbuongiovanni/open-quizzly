@@ -13,15 +13,14 @@ export default () => {
     // this prevents form submission:
     return false;
   }
-  return(    
-    <div>
-      <img src={require("../resources/quizzly-bear.png")}/>
-      <div className="loginFormDiv">
-        {!accCreation ? 
-          <LoginForm toggleAccCreation={toggleAccCreation}/> : 
-          <UserCreateForm toggleAccCreation={toggleAccCreation} setLoginMessage={setLoginMessage}/>}
-        <h1 className="loginMessage">{loginMessage}</h1>  
-      </div>
+  return(
+    <div className="loginMain">
+      <h1>Welcome to Quizzly!</h1>
+      <img className="bearLogoMain" src={require("../resources/quizzly-bear.png")}/>
+      {!accCreation ? 
+        <LoginForm toggleAccCreation={toggleAccCreation}/> : 
+        <UserCreateForm toggleAccCreation={toggleAccCreation} setLoginMessage={setLoginMessage}/>}
+      <h1 className="loginMessage">{loginMessage}</h1>  
     </div>
   );
 }

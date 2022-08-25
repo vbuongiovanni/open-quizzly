@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
+import Header from "../Header";
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 import TopicResultsSummary from './quiz-subcomponents/TopicResultsSummary';
 import {QuizContext} from "./QuizContext";
@@ -12,7 +13,6 @@ export default props => {
   const {quizId} = useParams();
   const {quizData} = useContext(AppContext);
   const {credentials} = useContext(UserContext);
-  
   const {setActiveQuiz} = useContext(QuizContext);
 
   // init navigate object
@@ -59,7 +59,6 @@ export default props => {
       })
     )
   }
-
   const startQuiz = (e) => {
     e.preventDefault();
     const quizConfiguration = {
@@ -74,13 +73,11 @@ export default props => {
                           return name;
                         })
     }
-    
     axios.post("/quiz/generate/" + quizConfiguration.selectedQuizId, quizConfiguration)
       .then(res => {
         setActiveQuiz(res.data)
       })
       .catch(err => console.log(err))
-
     navigate(`/quiz/active/${quizId}`)
   }
 
@@ -89,40 +86,48 @@ export default props => {
   }
   
   return(
-    <>
-      {(quizDetails !== undefined && selectedTopics !== undefined) && 
-      <div className='quizDetail'>
-        <QuizHeader quizName={quizDetails.quizName} subject={quizDetails.subject}/>
-        <TopicResultsSummary histPerformance={histPerformance}/>
-        <div className='quizDetailResultsBtnContainer'>
-          <button>See Detail Previous Results</button>
-        </div>
-        <form className='quizConfig' onSubmit={startQuiz}>
-          <p>Select the topics you would like to be included in the quiz:</p>
-          {
-            selectedTopics.map((topic, index) => {
-              const [name] = Object.keys(topic);
-              const [value] = Object.values(topic);
-              return (
-                      <div key={index} className="quizConfigCheckBoxRow">
-                        <input 
-                          type="checkbox"
-                          onChange={toggleCheckbox}
-                          name={name}
-                          checked={value}
-                        />
-                        <label htmlFor={name}>{name}</label>
-                      </div>
-                    )
-            })
+    <main>
+      <Header negateMetrics={true}/>
+      <div> {/*
+        Don't delete this div - 
+        it is required in order to ensure quizContainer fits screen properly 
+      */}
+        <div className="quizContainer">
+          {(quizDetails !== undefined && selectedTopics !== undefined) && 
+            <div className='quizDetail'>
+              <QuizHeader quizName={quizDetails.quizName} subject={quizDetails.subject}/>
+              <TopicResultsSummary histPerformance={histPerformance}/>
+              <div className='quizDetailResultsBtnContainer'>
+                <button>See Detail Previous Results</button>
+              </div>
+              <form className='quizConfig' onSubmit={startQuiz}>
+                <p>Select the topics you would like to be included in the quiz:</p>
+                {
+                  selectedTopics.map((topic, index) => {
+                    const [name] = Object.keys(topic);
+                    const [value] = Object.values(topic);
+                    return (
+                            <div key={index} className="quizConfigCheckBoxRow">
+                              <input 
+                                type="checkbox"
+                                onChange={toggleCheckbox}
+                                name={name}
+                                checked={value}
+                              />
+                              <label htmlFor={name}>{name}</label>
+                            </div>
+                          )
+                  })
+                }
+                <div className='quizConfigButtonContainer'>
+                  <button onClick={handleBack}>Back</button>
+                  <button>Start quiz</button>
+                </div>
+              </form>
+            </div>
           }
-          <div className='quizConfigButtonContainer'>
-            <button onClick={handleBack}>Back</button>
-            <button>Start quiz</button>
-          </div>
-        </form>
+        </div>
       </div>
-      }
-    </>
+    </main>
   )
 }

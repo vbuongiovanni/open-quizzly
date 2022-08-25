@@ -2,8 +2,8 @@ export default (props) => {
 
   return (
     <div className='quizDetailTitle'>
-          <h2>{props.quizName}</h2>
-          <h4>Subject: {props.subject}</h4>
+      <p className="quizHeaderMain">{props.quizName}</p>
+      <p className="quizSubHeader">Subject: {props.subject}</p>
     </div>
   );
 }
