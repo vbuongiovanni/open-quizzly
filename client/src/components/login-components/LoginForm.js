@@ -55,28 +55,39 @@ export default (props) => {
   };
   
   return(    
-    <form className="loginForm" onSubmit={handleSubmit}>
-      <label htmlFor="userName">Username</label>
-      <input 
-        type="text"
-        name="userName"
-        maxLength="15"
-        minLength="2"
-        pattern="[a-z0-9A-Z!]{1,}"
-        required
-        onChange={handleChange}
-      />
-      <label htmlFor="password">Password</label>
-      <input type="text"
-        name="password"
-        maxLength="20"
-        minLength="5"
-        required
-        onChange={handleChange}
-      />
-      <p className="loginMessage">{loginMessage}</p>
-      <button className="loginButton">Login</button>
-      <input type="button" className="loginButton" onClick={toggleAccCreation} value="Create New Login"/>
-    </form>
+    <>
+      <form className="loginForm" onSubmit={handleSubmit}>
+        <h3 className="loginHeader">Hello again!</h3>
+        <input 
+          className="textInput"
+          type="text"
+          name="userName"
+          placeholder="Username"
+          maxLength="15"
+          minLength="2"
+          pattern="[a-z0-9A-Z!]{1,}"
+          required
+          onChange={handleChange}
+          />
+        {/* <label htmlFor="password">Password</label> */}
+        <input 
+          className="textInput"
+          type="text"
+          name="password"
+          placeholder="Password"
+          maxLength="20"
+          minLength="5"
+          required
+          onChange={handleChange}
+          />
+        <div className="buttonContainer">
+          <button className="loginButton">Login</button>
+          <button className="toggleAccCreateButton" onClick={toggleAccCreation}>Create New Login</button>
+        </div>
+        <div className="loginMsgContainer">
+          <p className="userMessage">{loginMessage}</p>
+        </div>
+      </form>
+    </>
   );
 }

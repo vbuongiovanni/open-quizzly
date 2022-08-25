@@ -54,37 +54,47 @@ export default (props) => {
     }
   };
   
-  return(    
-    <form className="loginForm" onSubmit={handleSubmit}>
-      <label htmlFor="userName">New User Name</label>
-      <input 
-        type="text"
-        name="userName"
-        maxLength="15"
-        minLength="2"
-        pattern="[a-z0-9A-Z!]{1,}"
-        required
-        onChange={handleChange}
-      />
-      <label htmlFor="password">Password</label>
-      <input type="text"
-        name="password"
-        maxLength="20"
-        minLength="5"
-        required
-        onChange={handleChange}
-      />
-      <label htmlFor="password">Confirm Password</label>
-      <input type="text"
-        name="confirmPassword"
-        maxLength="20"
-        minLength="5"
-        required
-        onChange={handleChange}
-      />
-      <p className="loginCreateMessage">{loginCreateMessage}</p>
-      <button className="loginButton">Create New Account</button>
-      <input type="button" className="loginButton" onClick={toggleAccCreation} value="Cancel"/>
-    </form>
+  return(
+    <>
+      <form className="loginForm" onSubmit={handleSubmit}>
+        <h3 className="loginHeader">Let's get you set up with an account...</h3>
+        <input 
+          type="text"
+          placeholder="New User Name"
+          className="textInput"
+          name="userName"
+          maxLength="15"
+          minLength="2"
+          pattern="[a-z0-9A-Z!]{1,}"
+          required
+          onChange={handleChange}
+        />
+        <input type="text"
+          name="password"
+          placeholder="Password"
+          className="textInput"
+          maxLength="20"
+          minLength="5"
+          required
+          onChange={handleChange}
+        />
+        <input type="text"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          className="textInput"
+          maxLength="20"
+          minLength="5"
+          required
+          onChange={handleChange}
+        />
+        <div className="buttonContainer">
+          <button className="loginButton">Create New Account</button>
+          <button className="toggleAccCreateButton" onClick={toggleAccCreation}>Cancel</button>
+        </div>
+        <div className="loginMsgContainer">
+          <p className="userMessage">{loginCreateMessage}</p>
+        </div>
+      </form>
+    </>
   );
 }

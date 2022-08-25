@@ -3,6 +3,7 @@ import axios from "axios";
 import {confirm} from "react-confirm-box";
 import {QuizContext} from "./QuizContext";
 import {UserContext} from "../UserContext";
+import Header from "../Header";
 import { useNavigate, useParams } from 'react-router-dom';
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 
@@ -54,14 +55,14 @@ export default () => {
       }
     }
   }
-
+  
   // functions to 1) handle the click of sub-button on form and 
   // 2) uses a confirmation box to dictate whether or not to exit
   const confirmExit = async () => {
     const options = {
       labels: {
         confirmable: "Yes, get me out of this thing",
-        cancellable: "Nevermind, I have a few questions in me"
+        cancellable: "No, I have a few more questions in me"
       }
     }
     const userRes = await confirm("Are you sure you want to exit the quiz?", options);
@@ -81,18 +82,23 @@ export default () => {
     const {questionText, answers} = activeQuiz.shuffledQuestions[questionNumber].question;
     return (
       <div>
-        <p>{questionText}</p>
+        <p className="questionText">{questionText}</p>
         {answers.map((answer, index) => {
           return (
-            <div key={index}>
-              <input 
-                type="radio"
-                value={index}
-                checked={answerInput == index}
-                name={"answerSelection"}
-                onChange={handleAnswerSelect}
-              />
-              <span>{answer}</span>
+            <div className="questionContainer" key={index}>
+              <div className="questionInputContainer">
+                <input 
+                  className="radioInput"
+                  type="radio"
+                  value={index}
+                  checked={answerInput == index}
+                  name={"answerSelection"}
+                  onChange={handleAnswerSelect}
+                />
+              </div>
+              <div className="questionTextContainer">
+                <p className="answerText">{answer}</p>
+              </div>
             </div>
           )
         })}
@@ -101,20 +107,31 @@ export default () => {
   }
 
   return(
-    <>
-      {activeQuiz && 
-        <div className="quizDetail">
-          <QuizHeader quizName={activeQuiz.quizName} subject={activeQuiz.subject} />
-          <div>
-            <form onSubmit={submitAnswer}>
-              {displayQuestion(questionIndex)}
-              <button>Next Question</button>
-              <button onClick={exitHandler}>Exit Quiz</button>  
-            </form>
-            <p>{messageText}</p>
-          </div>
+    <main>
+      <Header negateMetrics={true}/>
+      <div> {/*
+        Don't delete this div - 
+        it is required in order to ensure quizContainer fits screen properly 
+      */}
+        <div className="quizContainer">
+          {activeQuiz && 
+            <div className="quizDetail">
+              <QuizHeader quizName={activeQuiz.quizName} subject={activeQuiz.subject} />
+                <form className="quizForm" onSubmit={submitAnswer}>
+                  {displayQuestion(questionIndex)}
+                  <div className="quizConfigButtonContainer">
+                    <button className="quizNavButton" onClick={exitHandler}>Exit Quiz</button>  
+                    <button className="quizNavButton">
+                      {questionIndex === (activeQuiz.shuffledQuestions.length - 1) ? "Finish" : 
+                        "Next Question"}
+                    </button>
+                  </div>
+                </form>
+                <p className="userMessage quizMessage">{messageText}</p>
+            </div>
+          }
         </div>
-      }
-    </>
+      </div>
+    </main>
   )
 }

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {AppContext} from "./AppContext";
 import {UserContext} from "./UserContext";
-import Navbar from "./Navbar"
+import Header from "./Header"
 import QuizCard from "./quiz-components/QuizCard";
 
 export default () => {
@@ -14,16 +14,14 @@ export default () => {
   const {quizLibrary} = appContext;
 
   return(
-    <>
-      <Navbar globalStats={globalStats}/>
-      <main>
-        <div  className="quizDataDisplay">
-          <h2>Welcome, {userName}!</h2>
+    <main>
+      <Header globalStats={globalStats} negateMetrics={false}/>
+        <div  className="welcomeTextContainer">
+          <h1>Welcome, {userName}!</h1>
         </div>
         <div className="quizCardDisplay">
             {quizLibrary.map(quiz => <QuizCard key={quiz._id} cardDetails={quiz}/>)}
         </div>
-      </main>
-    </>
+    </main>
   )
 }
