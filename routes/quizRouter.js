@@ -81,7 +81,7 @@ quizRoute.post("/generate/:quizId", (req, res, next) => {
         let sessionId = new Date();
         let randomNumber = Math.ceil(Math.random() * 1000000000);
         // build session ID (YEAR_MONTH_DATE_HOUR_MINUTE_SECOND_randomID)
-        sessionId = `${sessionId.getFullYear()}_${sessionId.getMonth()+1}_` + 
+        sessionId = `${sessionId.getFullYear()}_${sessionId.getMonth()}_` + 
                     `${sessionId.getDate()}_${sessionId.getHours()}_` + 
                     `${sessionId.getMinutes()}_${sessionId.getSeconds()}_` + 
                     `${randomNumber}`

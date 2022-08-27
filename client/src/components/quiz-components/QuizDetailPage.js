@@ -2,6 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import Header from "../Header";
+import QuizResults from './QuizResults';
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 import TopicResultsSummary from './quiz-subcomponents/TopicResultsSummary';
 import {QuizContext} from "./QuizContext";
@@ -35,7 +36,6 @@ export default props => {
     // get historical performance of quiz:
     axios.get(`/user/history/${credentials._id}?quizId=${quizId}`)
       .then(res => {
-        console.log(res.data)
         setHistPerformance(res.data)
       })
       .catch(err => console.log(err))
@@ -96,34 +96,42 @@ export default props => {
           {(quizDetails !== undefined && selectedTopics !== undefined) && 
             <div className='quizDetail'>
               <QuizHeader quizName={quizDetails.quizName} subject={quizDetails.subject}/>
-              <TopicResultsSummary histPerformance={histPerformance}/>
-              <div className='quizDetailResultsBtnContainer'>
-                <button>See Detail Previous Results</button>
-              </div>
-              <form className='quizConfig' onSubmit={startQuiz}>
-                <p>Select the topics you would like to be included in the quiz:</p>
-                {
-                  selectedTopics.map((topic, index) => {
-                    const [name] = Object.keys(topic);
-                    const [value] = Object.values(topic);
-                    return (
-                            <div key={index} className="quizConfigCheckBoxRow">
-                              <input 
-                                type="checkbox"
-                                onChange={toggleCheckbox}
-                                name={name}
-                                checked={value}
-                              />
-                              <label htmlFor={name}>{name}</label>
-                            </div>
-                          )
-                  })
-                }
-                <div className='quizConfigButtonContainer'>
-                  <button onClick={handleBack}>Back</button>
-                  <button>Start quiz</button>
-                </div>
-              </form>
+              {!prevResultsView ?
+                  <>
+                    <TopicResultsSummary histPerformance={histPerformance}/>
+                    <div className='quizDetailResultsBtnContainer'>
+                      <button onClick={togglePrevResults}>See Detail Previous Results</button>
+                    </div>
+                    <form className='quizConfig' onSubmit={startQuiz}>
+                      <p>Select the topics you would like to be included in the quiz:</p>
+                      {
+                        selectedTopics.map((topic, index) => {
+                          const [name] = Object.keys(topic);
+                          const [value] = Object.values(topic);
+                          return (
+                                  <div key={index} className="quizConfigCheckBoxRow">
+                                    <input 
+                                      type="checkbox"
+                                      onChange={toggleCheckbox}
+                                      name={name}
+                                      checked={value}
+                                    />
+                                    <label htmlFor={name}>{name}</label>
+                                  </div>
+                                )
+                        })
+                      }
+                      <div className='quizConfigButtonContainer'>
+                        <button onClick={handleBack}>Back</button>
+                        <button>Start quiz</button>
+                      </div>
+                    </form>
+                  </>
+                : 
+                  <>
+                    <QuizResults credentials={credentials} togglePrevResults={togglePrevResults}/>
+                  </>
+              }
             </div>
           }
         </div>

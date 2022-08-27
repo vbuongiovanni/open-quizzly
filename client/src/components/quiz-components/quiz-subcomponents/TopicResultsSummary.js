@@ -1,10 +1,6 @@
 export default (props) => {
   const {histPerformance} = props;
   
-  console.log("topicResults")
-  console.log(histPerformance)
-  //
-
   const rankTopics = (histPerformance) => {
     return histPerformance.sort((a, b) => a.percentCorrect < b.percentCorrect ? 1 : -1)
           .map((element, index) => {

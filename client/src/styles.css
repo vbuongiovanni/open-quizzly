@@ -224,7 +224,7 @@ main {
   justify-content: center;
 }
   .quizDetail {
-    background-color: var(--quiz-background-color);
+    background-color: var(--sub-background-color);
     display:  flex;
     flex-direction: column;
     justify-content: center;
@@ -338,6 +338,89 @@ main {
           width: 200px;
           height: 40px;
         }
+/* QuizResults */
+.quizResultsContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+  .historicalQuizMenu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .historicalQuizCardContainer {
+      min-width: 600px;
+      margin: 20px 0px 20px 0px;
+      overflow: auto;
+      max-height: 60vh;
+      border: 1px var(--border-color) solid;
+  }
+      .historicalQuizCard {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--quiz-background-color);
+        border-bottom: 1px var(--border-color) dashed;
+        transition: background-color .5s;
+        width: 100%;
+
+        padding: 10px 5px;
+      }
+      .historicalQuizCard:hover {
+        background-color: var(--header-color-1);
+      }
+        .historicalQuizCard__text {
+          font-size: 17px;
+        }
+        .historicalQuizCard__pair {
+          text-align: justify;
+        }
+          .historicalQuizCard__label {
+            font-weight: 800;
+          }
+          .emphasizedText {
+            font-style: italic;
+          }
+  .historicalQuiz {
+    overflow: auto;
+    max-height: 60vh;
+  }
+  .historicalQuestionContainer{
+    display: flex;
+    flex-direction: column;
+    
+  }
+    .historicalQuestionTextContainer {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0px 25px;
+    }
+      .historicalQuestionText {
+        font-size: 20px;
+        text-align: justify;
+      }
+      .historicalAnswerText {
+        font-size: 18px;
+      }
+      .correctAnswer {
+        font-weight: 700;
+        text-decoration: underline;
+      }
+      .incorrectAnswer {
+        color: darkgray;
+      }
+      .iconPlaceholder, .quizIcon {
+        width: 25px;
+        height: 25px;
+        min-width: 25px;
+        margin-right: 10px;
+        display: inline-block;
+      }
+      .historicalAnswer {
+        display: flex;
+        align-items: center;
+      }
 
 /* confirm box */
   .confirm-box__content {
