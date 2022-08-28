@@ -4,7 +4,8 @@ import axios from "axios";
 
 import Header from "../Header";
 import QuizHeader from './quiz-subcomponents/QuizHeader';
-import TopicResultsSummary from './quiz-subcomponents/TopicResultsSummary';
+
+import QuizConfigurationForm from './quiz-subcomponents/QuizConfigurationForm';
 import HistoricalResults from './HistoricalResults';
 
 import {QuizContext} from "./QuizContext";
@@ -39,7 +40,7 @@ const QuizDetailPage = () => {
         setHistPerformance(res.data)
       })
       .catch(err => console.log(err))
-  }, [])
+  }, [credentials._id, quizId])
 
   const togglePrevResults = () => {
     setPrevResultsView(prevValue => !prevValue);
@@ -84,6 +85,13 @@ const QuizDetailPage = () => {
   const handleBack = () => {
     navigate("/menu/")
   }
+
+  const quizConfigHandlers = {
+    handleBack,
+    startQuiz,
+    toggleCheckbox,
+    togglePrevResults
+  }
   
   return(
     <main>
@@ -94,38 +102,9 @@ const QuizDetailPage = () => {
             <div className='quizDetail'>
               <QuizHeader quizName={quizDetails.quizName} subject={quizDetails.subject}/>
               {!prevResultsView ?
-                  <>
-                    <TopicResultsSummary histPerformance={histPerformance}/>
-                    <div className='quizDetailResultsBtnContainer'>
-                      <button onClick={togglePrevResults}>See historical Results</button>
-                    </div>
-                    <form className='quizConfig' onSubmit={startQuiz}>
-                      <p>Select the topics you would like to be included in the quiz:</p>
-                      {
-                        selectedTopics.map((topic, index) => {
-                          const [name] = Object.keys(topic);
-                          const [value] = Object.values(topic);
-                          return (
-                                  <div key={index} className="quizConfigCheckBoxRow">
-                                    <input 
-                                      type="checkbox"
-                                      onChange={toggleCheckbox}
-                                      name={name}
-                                      checked={value}
-                                    />
-                                    <label htmlFor={name}>{name}</label>
-                                  </div>
-                                )
-                        })
-                      }
-                      <div className='quizConfigButtonContainer'>
-                        <button onClick={handleBack}>Back</button>
-                        <button>Start Quiz</button>
-                      </div>
-                    </form>
-                  </>
+                <QuizConfigurationForm histPerformance={histPerformance} selectedTopics={selectedTopics} quizConfigHandlers={quizConfigHandlers}/>
                 : 
-                <HistoricalResults credentials={credentials} togglePrevResults={togglePrevResults}/>
+                <HistoricalResults credentials={credentials} quizId={quizId} togglePrevResults={togglePrevResults}/>
               }
             </div>
           }

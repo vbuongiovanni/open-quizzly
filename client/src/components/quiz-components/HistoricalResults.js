@@ -3,10 +3,11 @@ import HistoricalQuizList from "./quiz-subcomponents/HistoricalQuizList";
 import HistoricalQuizDetail from "./quiz-subcomponents/HistoricalQuizDetail";
 
 const HistoricalResults = props => {
+  const {quizId} = props
   const {results} = props.credentials;
   const togglePrevResults = props.togglePrevResults;
   
-  const sessionSet = new Set(results.map(session => session.sessionId))
+  const sessionSet = new Set(results.filter(result => result.quizId === quizId).map(session => session.sessionId))
   let quizGrouping = [];
 
   const [selectedSessionId, setSessionId] = useState(null)
