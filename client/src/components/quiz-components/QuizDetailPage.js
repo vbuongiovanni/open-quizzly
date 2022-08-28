@@ -1,18 +1,18 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
+
 import Header from "../Header";
-import QuizResults from './QuizResults';
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 import TopicResultsSummary from './quiz-subcomponents/TopicResultsSummary';
+import HistoricalResults from './HistoricalResults';
+
 import {QuizContext} from "./QuizContext";
 import {UserContext} from "../UserContext";
-import {AppContext} from "../AppContext";
 
-export default props => {
+const QuizDetailPage = () => {
 
   const {quizId} = useParams();
-  const {quizData} = useContext(AppContext);
   const {credentials} = useContext(UserContext);
   const {setActiveQuiz} = useContext(QuizContext);
 
@@ -88,10 +88,7 @@ export default props => {
   return(
     <main>
       <Header negateMetrics={true}/>
-      <div> {/*
-        Don't delete this div - 
-        it is required in order to ensure quizContainer fits screen properly 
-      */}
+      <div> {/* Don't delete - required in order to ensure quizContainer fits screen properly */}
         <div className="quizContainer">
           {(quizDetails !== undefined && selectedTopics !== undefined) && 
             <div className='quizDetail'>
@@ -100,7 +97,7 @@ export default props => {
                   <>
                     <TopicResultsSummary histPerformance={histPerformance}/>
                     <div className='quizDetailResultsBtnContainer'>
-                      <button onClick={togglePrevResults}>See Detail Previous Results</button>
+                      <button onClick={togglePrevResults}>See historical Results</button>
                     </div>
                     <form className='quizConfig' onSubmit={startQuiz}>
                       <p>Select the topics you would like to be included in the quiz:</p>
@@ -123,14 +120,12 @@ export default props => {
                       }
                       <div className='quizConfigButtonContainer'>
                         <button onClick={handleBack}>Back</button>
-                        <button>Start quiz</button>
+                        <button>Start Quiz</button>
                       </div>
                     </form>
                   </>
                 : 
-                  <>
-                    <QuizResults credentials={credentials} togglePrevResults={togglePrevResults}/>
-                  </>
+                <HistoricalResults credentials={credentials} togglePrevResults={togglePrevResults}/>
               }
             </div>
           }
@@ -139,3 +134,4 @@ export default props => {
     </main>
   )
 }
+export default QuizDetailPage;

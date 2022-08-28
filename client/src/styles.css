@@ -22,7 +22,11 @@
   --gradient-mid-1-color: #2B7A78;
   --gradient-mid-2-color: #163832;
   --gradient-bottom-color: #051f20;
-  --gradient-background-color: linear-gradient(var(--gradient-top-color), var(--gradient-mid-1-color), var(--gradient-mid-2-color), var(--gradient-bottom-color)); 
+  --gradient-background-color: linear-gradient(
+          var(--gradient-top-color),
+          var(--gradient-mid-1-color),
+          var(--gradient-mid-2-color),
+          var(--gradient-bottom-color)); 
 }
 
 /* Global Styling */
@@ -33,6 +37,7 @@
 }
 #root, body, html {
   height: 100%;
+  overflow-y: hidden;
 }
 h1 {
   font-size : 50px;
@@ -339,89 +344,80 @@ main {
           height: 40px;
         }
 /* QuizResults */
-.quizResultsContainer {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-}
-  .historicalQuizMenu {
+  .histQuizContainer {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100%;
   }
-  .historicalQuizCardContainer {
+    .histQuiz {
       min-width: 600px;
+      max-height: 60vh;
       margin: 20px 0px 20px 0px;
       overflow: auto;
-      max-height: 60vh;
       border: 1px var(--border-color) solid;
-  }
-      .historicalQuizCard {
+    }
+    /* HistoricalQuizList */
+      .histQuizListItem {
         display: flex;
         flex-direction: column;
         background-color: var(--quiz-background-color);
         border-bottom: 1px var(--border-color) dashed;
         transition: background-color .5s;
         width: 100%;
-
         padding: 10px 5px;
       }
-      .historicalQuizCard:hover {
+      .histQuizListItem:hover {
         background-color: var(--header-color-1);
       }
-        .historicalQuizCard__text {
-          font-size: 17px;
-        }
-        .historicalQuizCard__pair {
+          .histQuizListItem__text {
+            font-size: 17px;
+          }
+          .histQuizListItem__pair {
+            text-align: justify;
+          }
+            .histQuizListItem__label {
+              font-weight: 800;
+            }
+            .emphasizedText {
+              font-style: italic;
+            }
+    /* HistoricalQuizDetail */
+      .histQuestionContainer{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+      }
+      .histQuestionTextContainer {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0px 25px;
+      }
+        .histQuestionText {
+          font-size: 20px;
           text-align: justify;
         }
-          .historicalQuizCard__label {
-            font-weight: 800;
-          }
-          .emphasizedText {
-            font-style: italic;
-          }
-  .historicalQuiz {
-    overflow: auto;
-    max-height: 60vh;
-  }
-  .historicalQuestionContainer{
-    display: flex;
-    flex-direction: column;
-    
-  }
-    .historicalQuestionTextContainer {
-      display: flex;
-      flex-direction: column;
-      margin: 10px 0px 25px;
-    }
-      .historicalQuestionText {
-        font-size: 20px;
-        text-align: justify;
-      }
-      .historicalAnswerText {
-        font-size: 18px;
-      }
-      .correctAnswer {
-        font-weight: 700;
-        text-decoration: underline;
-      }
-      .incorrectAnswer {
-        color: darkgray;
-      }
-      .iconPlaceholder, .quizIcon {
-        width: 25px;
-        height: 25px;
-        min-width: 25px;
-        margin-right: 10px;
-        display: inline-block;
-      }
-      .historicalAnswer {
-        display: flex;
-        align-items: center;
-      }
-
+        .iconPlaceholder, .quizIcon {
+          width: 25px;
+          height: 25px;
+          min-width: 25px;
+          margin-right: 10px;
+          display: inline-block;
+        }
+        .correctAnswer {
+          font-weight: 700;
+          text-decoration: underline;
+        }
+        .incorrectAnswer {
+          color: darkgray;
+        }
+        .histAnswer {
+          display: flex;
+          align-items: center;
+        }
+        .histAnswerText {
+          font-size: 18px;
+        }
 /* confirm box */
   .confirm-box__content {
     position:absolute;
