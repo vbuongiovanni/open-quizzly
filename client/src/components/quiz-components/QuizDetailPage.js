@@ -1,17 +1,19 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
+
 import Header from "../Header";
 import QuizHeader from './quiz-subcomponents/QuizHeader';
-import TopicResultsSummary from './quiz-subcomponents/TopicResultsSummary';
+
+import QuizConfigurationForm from './quiz-subcomponents/QuizConfigurationForm';
+import HistoricalResults from './HistoricalResults';
+
 import {QuizContext} from "./QuizContext";
 import {UserContext} from "../UserContext";
-import {AppContext} from "../AppContext";
 
-export default props => {
+const QuizDetailPage = () => {
 
   const {quizId} = useParams();
-  const {quizData} = useContext(AppContext);
   const {credentials} = useContext(UserContext);
   const {setActiveQuiz} = useContext(QuizContext);
 
@@ -35,11 +37,10 @@ export default props => {
     // get historical performance of quiz:
     axios.get(`/user/history/${credentials._id}?quizId=${quizId}`)
       .then(res => {
-        console.log(res.data)
         setHistPerformance(res.data)
       })
       .catch(err => console.log(err))
-  }, [])
+  }, [credentials._id, quizId])
 
   const togglePrevResults = () => {
     setPrevResultsView(prevValue => !prevValue);
@@ -84,46 +85,27 @@ export default props => {
   const handleBack = () => {
     navigate("/menu/")
   }
+
+  const quizConfigHandlers = {
+    handleBack,
+    startQuiz,
+    toggleCheckbox,
+    togglePrevResults
+  }
   
   return(
     <main>
       <Header negateMetrics={true}/>
-      <div> {/*
-        Don't delete this div - 
-        it is required in order to ensure quizContainer fits screen properly 
-      */}
+      <div> {/* Don't delete - required in order to ensure quizContainer fits screen properly */}
         <div className="quizContainer">
           {(quizDetails !== undefined && selectedTopics !== undefined) && 
             <div className='quizDetail'>
               <QuizHeader quizName={quizDetails.quizName} subject={quizDetails.subject}/>
-              <TopicResultsSummary histPerformance={histPerformance}/>
-              <div className='quizDetailResultsBtnContainer'>
-                <button>See Detail Previous Results</button>
-              </div>
-              <form className='quizConfig' onSubmit={startQuiz}>
-                <p>Select the topics you would like to be included in the quiz:</p>
-                {
-                  selectedTopics.map((topic, index) => {
-                    const [name] = Object.keys(topic);
-                    const [value] = Object.values(topic);
-                    return (
-                            <div key={index} className="quizConfigCheckBoxRow">
-                              <input 
-                                type="checkbox"
-                                onChange={toggleCheckbox}
-                                name={name}
-                                checked={value}
-                              />
-                              <label htmlFor={name}>{name}</label>
-                            </div>
-                          )
-                  })
-                }
-                <div className='quizConfigButtonContainer'>
-                  <button onClick={handleBack}>Back</button>
-                  <button>Start quiz</button>
-                </div>
-              </form>
+              {!prevResultsView ?
+                <QuizConfigurationForm histPerformance={histPerformance} selectedTopics={selectedTopics} quizConfigHandlers={quizConfigHandlers}/>
+                : 
+                <HistoricalResults credentials={credentials} quizId={quizId} togglePrevResults={togglePrevResults}/>
+              }
             </div>
           }
         </div>
@@ -131,3 +113,4 @@ export default props => {
     </main>
   )
 }
+export default QuizDetailPage;
