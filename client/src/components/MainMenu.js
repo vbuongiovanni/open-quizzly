@@ -4,15 +4,14 @@ import {UserContext} from "./UserContext";
 import Header from "./Header"
 import QuizCard from "./quiz-components/QuizCard";
 
-export default () => {
+const MainMenu = () => {
 
   // load and deconstruct context:
   const {credentials} = useContext(UserContext);
+  const {quizLibrary} = useContext(AppContext);
+
   const {userName, summaryStats, globalStats} = credentials;
-
-  const appContext = useContext(AppContext);
-  const {quizLibrary} = appContext;
-
+  
   return(
     <main>
       <Header globalStats={globalStats} negateMetrics={false}/>
@@ -25,3 +24,4 @@ export default () => {
     </main>
   )
 }
+export default MainMenu;

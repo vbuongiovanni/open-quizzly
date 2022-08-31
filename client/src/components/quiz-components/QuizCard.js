@@ -1,13 +1,16 @@
-import {useContext} from "react";
-import {QuizContext} from './QuizContext';
+import { useNavigate } from "react-router-dom";
 import React from 'react';
 
 export default function QuizCard(props) {
   const {_id, quizName, subject, topicsText} = props.cardDetails;
   
-  // load and deconstruct context:
-  const quizContext = useContext(QuizContext);
-  const {handleQuizSelection} = quizContext;
+  // handle quiz selection:
+  // create navigate object:
+  const navigate = useNavigate();
+  
+  const handleQuizSelection = (e) => {
+    navigate(`/quiz/${e.target.id}`);
+  }
 
   return (
     <div className="quizCard" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>

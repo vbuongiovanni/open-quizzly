@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 
-export default (props) => {
+const LoginForm = (props) => {
   const {toggleAccCreation} = props
   const navigate = useNavigate();
   const [loginFormInputs, setLoginFormInputs] = useState({
@@ -20,7 +20,8 @@ export default (props) => {
       .then(res => {
         if (res.data !== undefined) {
           setCredentials({...res.data});
-          navigate("/menu/")
+          navigate("/menu/");
+          localStorage.setItem("credentials", JSON.stringify(res.data))
         }
       })
       .catch(err => setLoginMessage(err.response.data.errMsg))
@@ -41,7 +42,7 @@ export default (props) => {
         setLoginFormInputs(prevInputs => ({...prevInputs, [name] : value}))
       }
     } else {
-      const pattern = /(\w|\!|\@|\#|\?)/
+      const pattern = /(\w|!|@|#|\?)/
       const restrictedChars = value.split("").every(element => {
         return pattern.test(element);
       })
@@ -91,3 +92,4 @@ export default (props) => {
     </>
   );
 }
+export default LoginForm;
