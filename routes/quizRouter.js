@@ -123,7 +123,7 @@ quizRoute.post("/mockQuiz/:newQuizName", (req, res, next) => {
                     questions : [
                         {
                             questionText : "What is 2 + 2",
-                            correctAnswer : "2",
+                            correctAnswer : "4",
                             incorrectAnswers : ["5", "4", "22"]
                         },
                         {

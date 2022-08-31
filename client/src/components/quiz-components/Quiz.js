@@ -1,10 +1,10 @@
 import {useContext, useState} from "react";
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import {confirm} from "react-confirm-box";
 import {QuizContext} from "./QuizContext";
 import {UserContext} from "../UserContext";
 import Header from "../Header";
-import { useNavigate, useParams } from 'react-router-dom';
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 
 const Quiz = () => {
@@ -45,7 +45,10 @@ const Quiz = () => {
         password : credentials.password,
         newAnswer
       }
-      axios.post(`/user/${credentials._id}`, requestBody)
+      // find user and update:
+      axios.post(`/user/answer/${credentials._id}`, requestBody)
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err))
       // if user is on final question, navigate to main, otherwise iterate index val
       if (questionIndex + 1 === activeQuiz.shuffledQuestions.length) {
         navigate("/menu/");

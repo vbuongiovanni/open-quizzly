@@ -1,4 +1,4 @@
-export default (props) => {
+const QuizHeader = (props) => {
 
   return (
     <div className='quizDetailTitle'>
@@ -7,3 +7,4 @@ export default (props) => {
     </div>
   );
 }
+export default QuizHeader;
