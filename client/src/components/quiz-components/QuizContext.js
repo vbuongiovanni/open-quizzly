@@ -7,9 +7,7 @@ export const QuizContextProvider = (props) => {
   const [activeQuiz, setActiveQuiz] = useState();
 
   return (
-    <QuizContext.Provider
-      value={{setActiveQuiz, activeQuiz}}
-      >
+    <QuizContext.Provider value={{setActiveQuiz, activeQuiz}}>
       {props.children}
     </QuizContext.Provider>
   )

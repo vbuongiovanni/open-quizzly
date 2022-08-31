@@ -1,30 +1,25 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
-
 import Header from "../Header";
 import QuizHeader from './quiz-subcomponents/QuizHeader';
-
 import QuizConfigurationForm from './quiz-subcomponents/QuizConfigurationForm';
-import HistoricalResults from './HistoricalResults';
+import HistoricalResults from './quiz-subcomponents/HistoricalResults';
 
 import {QuizContext} from "./QuizContext";
-import {UserContext} from "../UserContext";
 
 const QuizDetailPage = () => {
 
   const {quizId} = useParams();
-  const {credentials} = useContext(UserContext);
   const {setActiveQuiz} = useContext(QuizContext);
 
   // init navigate object
   const navigate = useNavigate();
 
   // init local state of QuizDetailPage
-  const [quizDetails, setQuizDetails] = useState();
   const [prevResultsView, setPrevResultsView] = useState(false);
+  const [quizDetails, setQuizDetails] = useState();
   const [selectedTopics, setSelectedTopics] = useState([]);
-  const [histPerformance, setHistPerformance] = useState([]);
 
   useEffect(() => {
     // get quiz details:
@@ -34,18 +29,11 @@ const QuizDetailPage = () => {
         setSelectedTopics(res.data.topicSelections)
       })
       .catch(err => console.log(err))
-    // get historical performance of quiz:
-    axios.get(`/user/history/${credentials._id}?quizId=${quizId}`)
-      .then(res => {
-        setHistPerformance(res.data)
-      })
-      .catch(err => console.log(err))
-  }, [credentials._id, quizId])
+  }, [quizId])
 
   const togglePrevResults = () => {
     setPrevResultsView(prevValue => !prevValue);
   }
-
   const toggleCheckbox = (e) => {
     const {name} = e.target;
     setSelectedTopics(
@@ -81,11 +69,9 @@ const QuizDetailPage = () => {
       .catch(err => console.log(err))
     navigate(`/quiz/active/${quizId}`)
   }
-
   const handleBack = () => {
     navigate("/menu/")
   }
-
   const quizConfigHandlers = {
     handleBack,
     startQuiz,
@@ -102,9 +88,9 @@ const QuizDetailPage = () => {
             <div className='quizDetail'>
               <QuizHeader quizName={quizDetails.quizName} subject={quizDetails.subject}/>
               {!prevResultsView ?
-                <QuizConfigurationForm histPerformance={histPerformance} selectedTopics={selectedTopics} quizConfigHandlers={quizConfigHandlers}/>
+                <QuizConfigurationForm quizId={quizId} selectedTopics={selectedTopics} quizConfigHandlers={quizConfigHandlers}/>
                 : 
-                <HistoricalResults credentials={credentials} quizId={quizId} togglePrevResults={togglePrevResults}/>
+                <HistoricalResults quizId={quizId} togglePrevResults={togglePrevResults}/>
               }
             </div>
           }

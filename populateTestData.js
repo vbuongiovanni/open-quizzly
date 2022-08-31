@@ -143,8 +143,13 @@ const populateQuizResult = async (userName, password) => {
     
     populateQuiz("A Sample Quiz");
     populateQuiz("Another Sample Quiz");
+    populateQuiz("Simple Math test");
+    populateQuiz("Different simple math test");
+    populateQuiz("Math Test");
+    populateQuiz("Just a math test");
+    populateQuiz("Yet, another quiz");
+    populateQuiz("Math quiz");
+    populateQuiz("test quiz");
 
 // run recursive functions to load user tables/result arrays
     loadUserCollection(0);
-
-

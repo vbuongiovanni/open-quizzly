@@ -23,46 +23,10 @@ userRouter.post("/", (req, res, next) => {
       const [user] = users;
       // if passwords match, then return user details
       if (user.password === password){
-        // create array of results, by quiz & topic name
-        const quizSummary = user.results.map(result => ({
-          quizId : result.quizId,
-          topicName : result.topicName,
-          isCorrect : result.userAnswer === result.correctAnswer ? 1 : 0
-        }));
-        // aggregate results by quizz ID and topic name
-        const aggregated = dl
-          .groupby("quizId", "topicName")
-          .execute(quizSummary)
-
-        // create counters for global metrics
-        let globalTotal = 0;
-        let globalCorrectTotal = 0;
-        
-        // create summaryStats, showing the various statics of results
-        const summaryStats = aggregated.map(element => {
-          const totalCorrect = dl.sum(element.values.map(value => value.isCorrect)) + 0.00;
-          globalCorrectTotal = globalCorrectTotal + totalCorrect;
-          const totalAnswered = element.values.length + 0.00;
-          globalTotal = globalTotal + totalAnswered;
-          return {
-            quizId : element.quizId,
-            topicName : element.topicName,
-            totalAnswers : totalAnswered,
-            correctAnswers : totalCorrect, 
-            percentCorrect : Math.round((totalCorrect / totalAnswered) * 10000)/10000
-          }
-        });
-
         res.send({
           userName : user.userName, 
           password : user.password, 
-          results : user.results, 
-          _id : user._id,
-          summaryStats,
-          globalStats : {
-            globalTotal,
-            globalCorrectTotal
-          }
+          _id : user._id
         });
       } else {
         // otherwise, throw error
@@ -105,10 +69,9 @@ userRouter.post("/new", (req, res, next) => {
 })
 
 // submit answer
-userRouter.post("/:userId", (req, res, next) => {
+userRouter.post("/answer/:userId", (req, res, next) => {
   const {userId} = req.params
   const {userName, password, newAnswer} = req.body
-
   // get user with their existing responses:
   userModel.findOne(
     {_id : userId},
@@ -118,24 +81,98 @@ userRouter.post("/:userId", (req, res, next) => {
         return next(err);
       }
       const {password, results} = returnedUser;
-      userModel.findOneAndUpdate(
-        {userName : userName},
-        {
-        userName,
-        password,
-        results : [...results, req.body.newAnswer]
-        },
-        {new : true},
-        (err, returnedUser) => {
-          if (err) {
-            res.status(500);
-            return next(err);
+      if (password === req.body.password) {
+        userModel.findOneAndUpdate(
+          {userName : userName},
+          {
+          userName,
+          password,
+          results : [...results, req.body.newAnswer]
+          },
+          {new : true},
+          (err, returnedUser) => {
+            if (err) {
+              res.status(500);
+              return next(err);
+            }
+            res.send("Answer Saved")
           }
-          res.send("Answer Saved")
-        }
-      )
+        )
+      } else {
+        res.status(500);
+        const err = new Error("User authentication error.");
+        return next(err);
+      }
     }
   )
+})
+
+// existing user login
+userRouter.post("/:userId", (req, res, next) => {  
+  const {userName, password} = req.body;
+
+  userModel.find({userName : userName}, (err, users) => {
+    if (err) {
+      res.status(500);
+      return next(err);
+    }
+
+    // If user doesn't exist, throw error:
+    if (users.length === 0) {
+      res.status(401);
+      const err = new Error("User not found or credentials don't match. Please try again or create a new account.");
+      return next(err);
+    // otherwise, check password:
+    } else {
+      const [user] = users;
+      // if passwords match, then return user details
+      if (user.password === password){
+        // create array of results, by quiz & topic name
+        const quizSummary = user.results.map(result => ({
+          quizId : result.quizId,
+          topicName : result.topicName,
+          isCorrect : result.userAnswer === result.correctAnswer ? 1 : 0
+        }));
+        // aggregate results by quizz ID and topic name
+        const aggregated = dl
+          .groupby("quizId", "topicName")
+          .execute(quizSummary)
+
+        // create counters for global metrics
+        let globalTotal = 0;
+        let globalCorrectTotal = 0;
+        
+        // create summaryStats, showing the various statics of results
+        const summaryStats = aggregated.map(element => {
+          const totalCorrect = dl.sum(element.values.map(value => value.isCorrect)) + 0.00;
+          globalCorrectTotal = globalCorrectTotal + totalCorrect;
+          const totalAnswered = element.values.length + 0.00;
+          globalTotal = globalTotal + totalAnswered;
+          return {
+            quizId : element.quizId,
+            topicName : element.topicName,
+            totalAnswers : totalAnswered,
+            correctAnswers : totalCorrect, 
+            percentCorrect : Math.round((totalCorrect / totalAnswered) * 10000)/10000
+          }
+        });
+
+        res.send({
+          results : user.results, 
+          summaryStats,
+          globalStats : {
+            globalTotal,
+            globalCorrectTotal
+          }
+        });
+      } else {
+        // otherwise, throw error
+        res.status(401);
+        const err = new Error("User not found or credentials don't match. Please try again or create a new account.");
+        return next(err);
+      }
+    }
+  })
 })
 
 // get historical details results
@@ -175,4 +212,5 @@ userRouter.get("/history/:userId", (req, res, next) => {
     res.send(historicalStats);
   })
 })
+
 module.exports = userRouter;

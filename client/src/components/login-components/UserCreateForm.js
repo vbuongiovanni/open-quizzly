@@ -1,7 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 
-export default (props) => {
+const UserCreateForm = props => {
   const {toggleAccCreation, setLoginMessage} = props
   const [loginInputs, setLoginInputs] = useState({
     userName : "",
@@ -16,7 +16,6 @@ export default (props) => {
     axios.post("/user/new", loginInputs)
       .then(res => {
         if (res.data !== undefined) {
-          console.log(res.data);
           setLoginMessage(res.data);
           toggleAccCreation();
         } else {
@@ -41,7 +40,7 @@ export default (props) => {
         setLoginInputs(prevInputs => ({...prevInputs, [name] : value}))
       }
     } else {
-      const pattern = /(\w|\!|\@|\#|\?)/
+      const pattern = /(\w|!|@|#|\?)/
       const restrictedChars = value.split("").every(element => {
         return pattern.test(element);
       })
@@ -98,3 +97,4 @@ export default (props) => {
     </>
   );
 }
+export default UserCreateForm;

@@ -1,10 +1,28 @@
-import { useState } from "react";
-import HistoricalQuizList from "./quiz-subcomponents/HistoricalQuizList";
-import HistoricalQuizDetail from "./quiz-subcomponents/HistoricalQuizDetail";
+import { useState, useContext, useEffect} from "react";
+import {UserContext} from "../../UserContext";
+import axios from "axios";
+import HistoricalQuizList from "./HistoricalQuizList";
+import HistoricalQuizDetail from "./HistoricalQuizDetail";
 
 const HistoricalResults = props => {
   const {quizId} = props
-  const {results} = props.credentials;
+
+  const {credentials} = useContext(UserContext);
+  const {userName, password, userId} = credentials;
+
+  const [results, setResults] = useState([])
+
+  // fetch and set state of 'results' from backend.
+  useEffect(() => {
+    const requestBody = {
+      userName : userName,
+      password : password,
+    }
+    axios.post("/user/" + userId, requestBody)
+      .then(res => setResults(res.data.results))
+      .catch(err => console.log(err))
+  }, [])
+
   const togglePrevResults = props.togglePrevResults;
   
   const sessionSet = new Set(results.filter(result => result.quizId === quizId).map(session => session.sessionId))

@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from "react";
-import LoginPage from "./components/LoginPage";
+import React from "react";
+import Login from "./components/login-components/Login";
 import MainMenu from "./components/MainMenu";
 import {Route, Routes} from "react-router-dom";
 import "./styles.css";
 import QuizDetailPage from "./components/quiz-components/QuizDetailPage";
 import Quiz from "./components/quiz-components/Quiz";
 
-function App() {
+const App = () => {
 
   return (
     <>
       <Routes>
         <Route
             path="/"
-            element={<LoginPage/>}
+            element={<Login/>}
         />
         <Route
             path="/menu/"
