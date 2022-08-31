@@ -7,7 +7,7 @@ import Header from "../Header";
 import { useNavigate, useParams } from 'react-router-dom';
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 
-export default () => {
+const Quiz = () => {
 
   const {activeQuiz} = useContext(QuizContext);
   const {credentials} = useContext(UserContext);
@@ -37,7 +37,7 @@ export default () => {
         answers : answeredQuestion.question.answers,
         topicName : answeredQuestion.topicName,
         questionText : answeredQuestion.question.questionText, 
-        userAnswer : new Number(answerInput),
+        userAnswer : Number(answerInput),
         correctAnswer : answeredQuestion.question.correctAnswer
       }
       const requestBody = {
@@ -91,7 +91,7 @@ export default () => {
                   className="radioInput"
                   type="radio"
                   value={index}
-                  checked={answerInput == index}
+                  checked={answerInput === index}
                   name={"answerSelection"}
                   onChange={handleAnswerSelect}
                 />
@@ -135,3 +135,4 @@ export default () => {
     </main>
   )
 }
+export default Quiz;

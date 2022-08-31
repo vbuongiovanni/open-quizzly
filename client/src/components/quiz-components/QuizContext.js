@@ -1,5 +1,4 @@
 import {createContext, useState} from "react";
-import { useNavigate } from "react-router-dom";
 export const QuizContext = createContext();
 
 export const QuizContextProvider = (props) => {
@@ -7,17 +6,9 @@ export const QuizContextProvider = (props) => {
   // create state for active quiz data
   const [activeQuiz, setActiveQuiz] = useState();
 
-  // create navigate object:
-  const navigate = useNavigate();
-  
-  // handle quiz selection:
-  const handleQuizSelection = (e) => {
-    navigate(`/quiz/${e.target.id}`);
-  }
-
   return (
     <QuizContext.Provider
-      value={{handleQuizSelection, setActiveQuiz, activeQuiz}}
+      value={{setActiveQuiz, activeQuiz}}
       >
       {props.children}
     </QuizContext.Provider>

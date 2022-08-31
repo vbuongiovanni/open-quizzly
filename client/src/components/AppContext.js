@@ -6,13 +6,12 @@ export const AppContext = createContext();
 export const AppContextProvider = (props) => {
   
   // set state to store quizData
-  const [quizData, setQuizData] = useState([]);
-  const [quizLibrary, setQuizLibrary] = useState([]);
-  
-  // use effect to get quiz detail
-  useEffect(() => {
+    const [quizData, setQuizData] = useState([]);
+    const [quizLibrary, setQuizLibrary] = useState([]);
+ 
+  // async function to retrieve quiz data and set state:
     const getQuizData = async () => {
-      const res = await axios.get("quiz/")
+      const res = await axios.get("/quiz/")
         .catch(err => console.log(err))
       if (res !== undefined) {
         const data = await res.data;
@@ -28,12 +27,15 @@ export const AppContextProvider = (props) => {
         );
       }
     }
-    getQuizData();
-  }, [])
+
+  // use effect to get quiz detail
+    useEffect(() => {
+      getQuizData();
+    }, [])
 
   return (
     <AppContext.Provider
-      value={{quizData, quizLibrary}}
+      value={{quizData, quizLibrary, getQuizData}}
       >
       {props.children}
     </AppContext.Provider>
