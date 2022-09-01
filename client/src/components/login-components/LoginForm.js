@@ -82,8 +82,8 @@ const LoginForm = (props) => {
           onChange={handleChange}
           />
         <div className="buttonContainer">
-          <button className="loginButton">Login</button>
-          <button className="toggleAccCreateButton" onClick={toggleAccCreation}>Create New Login</button>
+          <button className="loginButton colorBtn">Login</button>
+          <button className="toggleAccCreateButton colorBtn" onClick={toggleAccCreation}>Create New Login</button>
         </div>
         <div className="loginMsgContainer">
           <p className="userMessage">{loginMessage}</p>

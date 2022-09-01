@@ -9,7 +9,9 @@ const HistoricalQuizDetail = props => {
           return <HistoricalQuizQuestion key={index} question={question} questionNumber={index+1}/>
         })}
       </div>
-      <button onClick={handleExitQuizReview}>Exit Quiz Review</button>
+      <div className='btnContainer btnContainerSingle'>
+        <button className="togglePrevBtn colorBtn" onClick={handleExitQuizReview}>Exit Quiz Review</button>
+      </div>
     </>
   )
 }

@@ -124,7 +124,7 @@ quizRoute.post("/mockQuiz/:newQuizName", (req, res, next) => {
                         {
                             questionText : "What is 2 + 2",
                             correctAnswer : "4",
-                            incorrectAnswers : ["5", "4", "22"]
+                            incorrectAnswers : ["5", "8", "22"]
                         },
                         {
                             questionText : "What is 4 + 4",

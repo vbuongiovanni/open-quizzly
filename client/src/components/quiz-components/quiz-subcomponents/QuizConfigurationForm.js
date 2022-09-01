@@ -25,7 +25,7 @@ const QuizConfigurationForm = props => {
     <>
       <TopicResultsSummary histPerformance={histPerformance}/>
       <div className='quizDetailResultsBtnContainer'>
-        <button onClick={togglePrevResults}>See historical Results</button>
+        <button className="togglePrevBtn colorBtn" onClick={togglePrevResults}>See historical Results</button>
       </div>
       <form className='quizConfig' onSubmit={startQuiz}>
         <p>Select the topics you would like to be included in the quiz:</p>
@@ -46,9 +46,9 @@ const QuizConfigurationForm = props => {
                   )
           })
         }
-        <div className='quizConfigButtonContainer'>
-          <button onClick={handleBack}>Back</button>
-          <button>Start Quiz</button>
+        <div className='btnContainer btnContainerDual'>
+          <button className="colorBtn" onClick={handleBack}>Back</button>
+          <button className="colorBtn" >Start Quiz</button>
         </div>
       </form>
     </>

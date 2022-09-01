@@ -87,8 +87,8 @@ const UserCreateForm = props => {
           onChange={handleChange}
         />
         <div className="buttonContainer">
-          <button className="loginButton">Create New Account</button>
-          <button className="toggleAccCreateButton" onClick={toggleAccCreation}>Cancel</button>
+          <button className="loginButton colorBtn">Create New Account</button>
+          <button className="toggleAccCreateButton colorBtn" onClick={toggleAccCreation}>Cancel</button>
         </div>
         <div className="loginMsgContainer">
           <p className="userMessage">{loginCreateMessage}</p>
