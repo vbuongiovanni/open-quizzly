@@ -37,7 +37,7 @@ const Quiz = () => {
         answers : answeredQuestion.question.answers,
         topicName : answeredQuestion.topicName,
         questionText : answeredQuestion.question.questionText, 
-        userAnswer : Number(answerInput),
+        userAnswer : parseInt(answerInput),
         correctAnswer : answeredQuestion.question.correctAnswer
       }
       const requestBody = {
@@ -45,7 +45,7 @@ const Quiz = () => {
         password : credentials.password,
         newAnswer
       }
-      // find user and update:
+      // find user and post answer:
       axios.post(`/user/answer/${credentials._id}`, requestBody)
         .then(res => console.log(res.data))
         .catch(err => console.log(err))
@@ -94,7 +94,7 @@ const Quiz = () => {
                   className="radioInput"
                   type="radio"
                   value={index}
-                  checked={answerInput === index}
+                  checked={parseInt(answerInput) == index}
                   name={"answerSelection"}
                   onChange={handleAnswerSelect}
                 />
@@ -122,15 +122,15 @@ const Quiz = () => {
               <QuizHeader quizName={activeQuiz.quizName} subject={activeQuiz.subject} />
                 <form className="quizForm" onSubmit={submitAnswer}>
                   {displayQuestion(questionIndex)}
-                  <div className="quizConfigButtonContainer">
-                    <button className="quizNavButton" onClick={exitHandler}>Exit Quiz</button>  
-                    <button className="quizNavButton">
+                  <div className="btnContainer btnContainerDual">
+                    <button className="quizNavButton colorBtn" onClick={exitHandler}>Exit Quiz</button>  
+                    <button className="quizNavButton colorBtn">
                       {questionIndex === (activeQuiz.shuffledQuestions.length - 1) ? "Finish" : 
                         "Next Question"}
                     </button>
                   </div>
+                  <p className="userMessage">{messageText}</p>
                 </form>
-                <p className="userMessage quizMessage">{messageText}</p>
             </div>
           }
         </div>

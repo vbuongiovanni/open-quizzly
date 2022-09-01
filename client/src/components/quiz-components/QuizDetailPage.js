@@ -20,6 +20,7 @@ const QuizDetailPage = () => {
   const [prevResultsView, setPrevResultsView] = useState(false);
   const [quizDetails, setQuizDetails] = useState();
   const [selectedTopics, setSelectedTopics] = useState([]);
+  const [messageText, setMessageText] = useState("");
 
   useEffect(() => {
     // get quiz details:
@@ -50,25 +51,32 @@ const QuizDetailPage = () => {
   }
   const startQuiz = (e) => {
     e.preventDefault();
-    const quizConfiguration = {
-      selectedQuizId : quizId,
-      includedTopics : selectedTopics
-                        .filter(topic => {
-                          const [value] = Object.values(topic);
-                          return value;
-                        })
-                        .map(topic => {
-                          const [name] = Object.keys(topic);
-                          return name;
-                        })
+    // check to see if there is at least 1 input selected:
+    const isValid = selectedTopics.map(inputValue => Object.values(inputValue)[0] === true).includes(true);
+    if (isValid) {
+      const quizConfiguration = {
+        selectedQuizId : quizId,
+        includedTopics : selectedTopics
+                          .filter(topic => {
+                            const [value] = Object.values(topic);
+                            return value;
+                          })
+                          .map(topic => {
+                            const [name] = Object.keys(topic);
+                            return name;
+                          })
+      }
+      axios.post("/quiz/generate/" + quizConfiguration.selectedQuizId, quizConfiguration)
+        .then(res => {
+          setActiveQuiz(res.data)
+        })
+        .catch(err => console.log(err))
+      navigate(`/quiz/active/${quizId}`)
+    } else {
+      setMessageText("Please select at least one topic.")
     }
-    axios.post("/quiz/generate/" + quizConfiguration.selectedQuizId, quizConfiguration)
-      .then(res => {
-        setActiveQuiz(res.data)
-      })
-      .catch(err => console.log(err))
-    navigate(`/quiz/active/${quizId}`)
   }
+
   const handleBack = () => {
     navigate("/menu/")
   }
@@ -92,6 +100,7 @@ const QuizDetailPage = () => {
                 : 
                 <HistoricalResults quizId={quizId} togglePrevResults={togglePrevResults}/>
               }
+            <p className="userMessage">{messageText}</p>
             </div>
           }
         </div>

@@ -28,7 +28,9 @@ const HistoricalQuizList = props => {
           )
         })}
       </div>
-      <button onClick={togglePrevResults}>Back to Topic Selection</button>
+      <div className='btnContainer btnContainerSingle'>
+        <button className="togglePrevBtn colorBtn" onClick={togglePrevResults}>Back to Topic Selection</button>
+      </div>
     </>
   )
 }
