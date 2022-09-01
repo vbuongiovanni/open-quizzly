@@ -3,6 +3,7 @@ import {AppContext} from "./AppContext";
 import {UserContext} from "./UserContext";
 import axios from "axios";
 import Header from "./Header"
+import NavBar from './NavBar';
 import QuizCard from "./quiz-components/QuizCard";
 
 const MainMenu = () => {
@@ -33,6 +34,7 @@ const MainMenu = () => {
   return(
     <main>
       <Header globalStats={globalStats} negateMetrics={false}/>
+      <NavBar />
       <div  className="welcomeTextContainer">
         <h1>Welcome, {userName}!</h1>
       </div>
