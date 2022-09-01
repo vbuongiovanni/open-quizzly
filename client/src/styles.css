@@ -191,14 +191,20 @@ header {
     font-size: 14px;
     letter-spacing: .5px;
     }
-  .loginMsgContainer{
+  .loginMsgContainer {
     height: 50px;
     max-width: 350px;
+  }
+  .loginMsgContainer > p {
+    font-size: 20px;
   }
     .userMessage {
       font-style: italic;
       text-align: center;
-      font-size: 20px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      font-size: 25px;
+      min-height: 25px;
       color: var(--err-msg-color);
     }
 
@@ -373,10 +379,6 @@ main {
         justify-content: flex-start;
         margin-left: 20px;
         color : var(--general-text-color)
-      }
-      .quizMessage {
-        margin-top: 15px;
-        font-size: 25px;
       }
       .quizNavButton {
         width: 200px;

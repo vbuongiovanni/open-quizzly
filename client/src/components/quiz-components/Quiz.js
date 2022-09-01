@@ -129,8 +129,8 @@ const Quiz = () => {
                         "Next Question"}
                     </button>
                   </div>
+                  <p className="userMessage">{messageText}</p>
                 </form>
-                <p className="userMessage quizMessage">{messageText}</p>
             </div>
           }
         </div>
