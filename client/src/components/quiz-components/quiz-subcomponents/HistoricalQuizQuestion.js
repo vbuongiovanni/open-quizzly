@@ -4,7 +4,7 @@ const HistoricalQuizQuestion = props => {
   const icon = (question.correctAnswer === question.userAnswer) ? 
                 <img 
                   className="quizIcon"
-                  alt={"Green checkmark indicating correct answer"}
+                  alt={"Green check mark indicating correct answer"}
                   src={require("./quiz-resources/icon-correct.png")}
                 />
                 : 
@@ -15,15 +15,15 @@ const HistoricalQuizQuestion = props => {
                 />;
   return (
     <>
-      <div className="histQuestionContainer">
-        <p className="histQuestionText">{`${questionNumber}. `}{question.questionText}</p>
-        <div className="histQuestionTextContainer">
+      <div className="inactiveQuestionContainer">
+        <p className="inactiveQuestionText">{`${questionNumber}. `}{question.questionText}</p>
+        <div>
           {question.answers.map((answer, index) => {
             const correctClassName = question.correctAnswer === index ? "correctAnswer" : "incorrectAnswer";
-            return <div className={`answerText histAnswer ${correctClassName}`}>
+            return <div className={`answerText inactiveAnswer ${correctClassName}`}>
                     {question.userAnswer === index ? icon : <div className="iconPlaceholder"></div>}
                     <input type="radio" className={`quizIcon ${correctClassName}`} checked={question.userAnswer===index} disabled={true}/>
-                    {<span className="histAnswerText">{answer}</span>}
+                    {<span className="inactiveAnswerText">{answer}</span>}
                   </div>
           })}
         </div>

@@ -17,6 +17,9 @@
   --emphasis-text-color: #4fd6cf;
   --general-text-color: #17252A;
   --err-msg-color: rgb(244, 6, 6);
+
+  --warning-btn-color: rgb(184, 18, 18);
+  --warning-btn-border: rgb(131, 18, 18);
   
   --gradient-top-color: #3AAFA9;
   --gradient-mid-1-color: #2B7A78;
@@ -32,6 +35,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 #root, body, html {
   height: 100%;
@@ -86,6 +90,7 @@ h3 {
 }
 .btnContainerSingle {
   justify-content: space-evenly;
+  width: 100%;
 }
 
 .colorBtn {
@@ -105,6 +110,16 @@ h3 {
   border: 1px var(--button-color);
 }
 
+.btnCaution {
+  color : var(--header-color-1);
+  background-color: var(--warning-btn-color);
+  border: 1px var(--warning-btn-border);
+  transition: background-color .2s;
+}
+.btnCaution:hover {
+  background-color: var(--warning-btn-border);
+  border: 1px var(--warning-btn-color);
+}
 
 
 
@@ -413,6 +428,107 @@ main {
         width: 200px;
         height: 40px;
       }
+
+/*-- Quiz Creator Form ---*/
+.quizCreatorForm {
+  background-color: var(--sub-background-color);
+  display:  flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 30px;
+  margin: 20px;
+  padding: 20px;
+  min-width: 350px;
+  width: 100%;
+  max-width: 80%;
+  border-radius: 25px;
+  overflow: auto;
+  height: fit-content;
+  max-height: 700px;
+  
+}
+  .creatorInput {
+    margin: 0px 10px 0px 10px;
+  }
+  .creatorBtn {
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  .creatorBtnMain {
+    font-size: 22px;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+  }
+  .creatorTitle {
+    align-items: center;
+  }
+  .creatorQuizName {
+    width: 70%;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .creatorQuizSubject {
+    width: 60%;
+    font-size: 27px;
+    text-align: center;
+  }
+  .topicCreatorContainerSpacer {
+    width: 100%;
+  }
+  .topicCreatorContainer {
+    width: 95%;
+    padding-left: 2%;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px dashed var(--border-color);
+  }
+  .topicCreatorContainer:last-child {
+    border-bottom: 0px;
+  }
+
+
+    .topicNameText, .topicNameText > * {
+      font-size: 23px;
+      display: flex;
+    }
+    .inactiveQuestionText > * {
+      font-size: 20px;
+    }
+    .questionCreatorContainer {
+      padding-left: 2%;
+    }
+      .answerCreatorContainer {
+        padding-left: 35px;
+        display: flex;
+        flex-direction: column;
+      }
+        .answerCreatorGuideText {
+          font-size: 18px;
+        }
+        .quizCreatorAnswerCorr, .quizCreatorAnswerIncorr {
+          font-size: 18px;
+          margin-left: 15px;
+        }
+        .noBorder {
+          border: 0px;
+        }
+      .questionCreator {
+        border-bottom: 1px dashed var(--border-color);
+        margin-bottom: 15px;
+      }
+      .questionCreator:last-child {
+        border-bottom: 0px;
+      }
+      .quizCreatorFormMessage {
+        font-size: 18px;
+      }
+
+
+
+
 /* QuizResults */
   .togglePrevBtn {
     min-height: 30px;
@@ -425,7 +541,7 @@ main {
     width: 100%;
     height: 100%;
   }
-    .histQuiz {
+    .inactiveQuiz {
       min-width: 300px;
       max-height: 60vh;
       margin: 20px 0px 20px 0px;
@@ -461,19 +577,21 @@ main {
               font-style: italic;
             }
     /* HistoricalQuizDetail */
-      .histQuestionContainer{
+      .inactiveQuestionContainer{
         display: flex;
         flex-direction: column;
         padding: 10px;
       }
-      .histQuestionTextContainer {
+      .inactiveQuestionTextContainer {
         display: flex;
         flex-direction: column;
         margin: 10px 0px 25px;
       }
-        .histQuestionText {
+        .inactiveQuestionText {
+          display: flex;
           font-size: 20px;
           text-align: justify;
+          margin-bottom: 15px;
         }
         .iconPlaceholder, .quizIcon {
           width: 25px;
@@ -489,11 +607,11 @@ main {
         .incorrectAnswer {
           color: darkgray;
         }
-        .histAnswer {
+        .inactiveAnswer {
           display: flex;
           align-items: center;
         }
-        .histAnswerText {
+        .inactiveAnswerText {
           font-size: 18px;
         }
 /* confirm box */

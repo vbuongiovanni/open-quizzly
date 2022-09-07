@@ -16,11 +16,11 @@ const unpackQuizData = quizData => {
     return (quizDetails);
 }
 
-axios.post("http://localhost:9000/quiz/add/" + reactDesignPatternsQuiz.quizName, unpackQuizData(reactDesignPatternsQuiz))
+axios.post("http://localhost:9000/quiz/add/", unpackQuizData(reactDesignPatternsQuiz))
     .then(res => res.data)
     .catch(err => console.log(err))
 
-axios.post("http://localhost:9000/quiz/add/" + html5Quiz.quizName, unpackQuizData(html5Quiz))
+axios.post("http://localhost:9000/quiz/add/", unpackQuizData(html5Quiz))
     .then(res => res.data)
     .catch(err => console.log(err))
 
