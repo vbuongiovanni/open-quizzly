@@ -449,7 +449,7 @@ main {
   
 }
   .creatorInput {
-    margin: 0px 10px 0px 10px;
+    margin: 0px 10px 5px 10px;
   }
   .creatorBtn {
     font-size: 18px;
@@ -488,8 +488,6 @@ main {
   .topicCreatorContainer:last-child {
     border-bottom: 0px;
   }
-
-
     .topicNameText, .topicNameText > * {
       font-size: 23px;
       display: flex;
@@ -524,6 +522,13 @@ main {
       }
       .quizCreatorFormMessage {
         font-size: 18px;
+      }
+      .questionDeleteContainer{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding: 5px 3% 3% 3%;
       }
 
 

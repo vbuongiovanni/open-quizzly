@@ -101,7 +101,7 @@ const populateQuizResult = async (userName, password) => {
     const sendPutRequest = (userId, answers, iteration) => {
         if (iteration < answers.length) {
             setTimeout(() => {
-                axios.post("http://localhost:9000/user/" + userId, {...body, newAnswer : answers[iteration]})
+                axios.post("http://localhost:9000/user/answer/" + userId, {...body, newAnswer : answers[iteration]})
                 iteration++;
                 sendPutRequest(userId, answers, iteration);
                 }, 500);
