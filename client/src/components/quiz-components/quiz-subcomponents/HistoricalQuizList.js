@@ -4,7 +4,7 @@ const HistoricalQuizList = props => {
   return (
     <>
     
-      <div className="histQuiz">
+      <div className="inactiveQuiz">
         {quizGrouping.map(quiz => {
           const [dayName, monthName] = quiz.dateTime.toString().split(" ");
           const prettyDate = `${dayName} ${monthName} ${quiz.dateTime.getDate()}, ${quiz.dateTime.getFullYear()}`
