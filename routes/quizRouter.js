@@ -100,7 +100,7 @@ quizRoute.post("/add", (req, res, next) => {
       res.status(500);
       return next(errMsg);
     } else {
-      const CleanedTopics = topics.map(topic => {
+      const cleanedTopics = topics.map(topic => {
         const {topicName, topicNumber} = topic
         const questions = topic.questions.map(question => {
         const {questionText, correctAnswer, incorrectAnswer1, incorrectAnswer2, incorrectAnswer3} = question;
@@ -108,7 +108,8 @@ quizRoute.post("/add", (req, res, next) => {
         })        
         return {topicName, topicNumber, questions}
       })
-      const quizDetails = {quizName : quizName, subject, CleanedTopics}
+      const quizDetails = {quizName : quizName, subject, topics : cleanedTopics}
+      console.log(quizDetails)
       const newQuiz = new quizModel(quizDetails)
       newQuiz.save((err, savedQuiz) => {
         if (err) {
@@ -159,6 +160,7 @@ quizRoute.post("/mockQuiz/:newQuizName", (req, res, next) => {
     ],
     },
     ]}
+    console.log(quizDetails)
     const newQuiz = new quizModel(quizDetails)
     newQuiz.save((err, savedQuiz) => {
       if (err) {

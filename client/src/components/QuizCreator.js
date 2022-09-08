@@ -1,12 +1,16 @@
 import {useState} from "react";
+import { useNavigate } from "react-router-dom"
+import axios from "axios";
 import Header from "./Header";
 import NavBar from './NavBar';
 import QuizTopicInput from "./quiz-creator-components/QuizTopicInput";
 import {confirm} from "react-confirm-box";
-import axios from "axios";
 
 const QuizCreator = () => {
-
+  
+  // initialize navigate object
+  const navigate = useNavigate();
+  
   // initialize question and topic objects
     const initQuestion = {
       questionText : "",
@@ -26,7 +30,7 @@ const QuizCreator = () => {
     // initialize state
       const [quizDetails, setQuizDetails] = useState({quizName : "", subject : ""});
       const [topics, setTopics] = useState([{...initTopic}]);
-      const [messageText, setMessageText] = useState("")
+      const [messageText, setMessageText] = useState("");
 
   // handle quiz detail inputs
     const handleQuizDetailChange = e => {
@@ -34,9 +38,7 @@ const QuizCreator = () => {
       setQuizDetails(prevDetails => ({...prevDetails, [name] : value}));
     } 
 
-  // 
-  // functions to 1) handle the click of sub-button on form and 
-  // 2) uses a confirmation box to dictate whether or not to exit
+  // function to handle confirmation of deletion
   const confirmExit = async (userQuestion, confirmText, cancelText, deleteHander, event) => {
     const options = {
       labels: {
@@ -135,7 +137,6 @@ const QuizCreator = () => {
       setTopics(prevTopics => {
         const modTopic = prevTopics.find(topic => topic.topicNumber === Number(topicId));
         const modQuestion = {...modTopic.questions.find(question => question.questionNumber === Number(questionId)), [name] : value}
-        console.log(modQuestion)
 
         return [
           ...prevTopics.filter(topic => topic.topicNumber !== Number(topicId)),
@@ -149,12 +150,29 @@ const QuizCreator = () => {
       e.preventDefault();
       const {quizName, subject} = quizDetails;
       const requestBody = {quizName, subject, topics : topics};
-
       axios.post(`/quiz/add`, requestBody)
-          .then(res => console.log(res.data))
-          .catch(err => setMessageText(err.response.data.errMsg))
-    
+          .then(res => {
+            console.log(res)
+            navigate("/menu/")
+          })
+          .catch(err => {
+            setMessageText(err.response.data.errMsg)
+            setInterval(() => {
+              setMessageText("")
+            }, 10000)
+          })
     }
+
+  // 
+
+  const handleUserMessage = (e) => {
+    setMessageText("You can't have more than 5 topics.")
+    setInterval(() => {
+      setMessageText("")
+    }, 5000)
+  }
+
+  const deactivateTopicCreation = topics.length >= 5
 
   return (
     <main>
@@ -168,11 +186,14 @@ const QuizCreator = () => {
           </div>
           <div className="topicCreatorContainerSpacer">
           {
-            topics.map((topic, index) => <QuizTopicInput key={index} topicData={topic} createNewTopic={createNewTopic} handleDeleteTopic={handleDeleteTopic} handleTopicChange={handleTopicChange} handleQuestionChange={handleQuestionChange} handleDeleteQuestion={handleDeleteQuestion} handleNewQuestion={handleNewQuestion}/>)
+            topics.map((topic, index) => <QuizTopicInput key={index} numTopics={topics.length} topicData={topic} createNewTopic={createNewTopic} handleDeleteTopic={handleDeleteTopic} handleTopicChange={handleTopicChange} handleQuestionChange={handleQuestionChange} handleDeleteQuestion={handleDeleteQuestion} handleNewQuestion={handleNewQuestion}/>)
           }
           </div>
           <div className="btnContainer btnContainerSingle">
-            <input type="button" className="creatorBtn creatorBtnMain colorBtn" onClick={createNewTopic} value="Add another topic"/>
+            {!deactivateTopicCreation ? 
+              <input type="button" className="creatorBtn creatorBtnMain colorBtn" onClick={createNewTopic} value="Add another topic"/> :
+              <input type="button" className="creatorBtn creatorBtnMain btnCautionDeactivated" onClick={handleUserMessage} value="Add another topic"/>
+            }
             <button className="creatorBtn creatorBtnMain colorBtn">Create Quiz</button>
           </div>
           <p className="userMessage quizCreatorFormMessage">{messageText}</p>

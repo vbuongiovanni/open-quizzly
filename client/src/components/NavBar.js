@@ -3,9 +3,10 @@ const NavBar = () => {
 
   const navigate = useNavigate();
 
-  // NOTE TO FUTURE SELF - I AM GOING TO USE THIS W/ CSS TO SHOW WHICH DIVBUTTON IS CURRENTLY SELECTED.
+  // used to conditionally style buttons in navbar.
   const currentLocation = useLocation().pathname
 
+  // handler functions
   const handleNavHome  = () => {
     navigate("/menu/");
   }
@@ -21,18 +22,18 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="NavBar">
-      <div className="NavBarBtn" onClick={handleNavHome}>
-        <span className="NavBarBtnText">Take Me Home</span>
+    <nav className="navBar">
+      <div className={`navBarBtn ${currentLocation === "/menu/" && "activeBtn"}`} onClick={handleNavHome}>
+        <span className="navBarBtnText">Take Me Home</span>
       </div>
-      <div className="NavBarBtn" onClick={handleNavToCreator}>
-        <span className="NavBarBtnText">Create New Quiz</span>
+      <div className={`navBarBtn ${currentLocation === "/quiz/creator" &&  "activeBtn"}`} onClick={handleNavToCreator}>
+        <span className="navBarBtnText">Create New Quiz</span>
       </div>
-      <div className="NavBarBtn" onClick={handleNavToUserStats}>
-        <span className="NavBarBtnText">My Global Stats</span>
+      <div className={`navBarBtn ${currentLocation === "/user/stats" && "activeBtn"}`} onClick={handleNavToUserStats}>
+        <span className="navBarBtnText">My Global Stats</span>
       </div>
-      <div className="NavBarBtn" onClick={handleSignOut}>
-        <span className="NavBarBtnText">Sign Out</span>
+      <div className={`navBarBtn ${currentLocation === "/" &&  "activeBtn"}`} onClick={handleSignOut}>
+        <span className="navBarBtnText">Sign Out</span>
       </div>
     </nav>
   )

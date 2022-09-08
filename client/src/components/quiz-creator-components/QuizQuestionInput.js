@@ -1,3 +1,4 @@
+import {useState} from "react";
 const QuizQuestionInput = (props) => {
   
   const {
@@ -6,8 +7,18 @@ const QuizQuestionInput = (props) => {
     questionNumber,
   } = props.questionData;
 
-  const {topicNumber, handleDeleteQuestion, handleQuestionChange} = props;
+  const {topicNumber, handleDeleteQuestion, handleQuestionChange, numQuestions} = props;
 
+  const [messageText, setMessageText] = useState("");
+  // handler to post message if deactivated button is pressed
+  const handleUserMessage = (e) => {
+    setMessageText("Each topic must have at least 1 question.")
+    setInterval(() => {
+      setMessageText("")
+    }, 5000)
+  }
+
+  const isDeleteDeactivated = numQuestions <= 1
   
   return (
     <div className="inactiveQuestionContainer questionCreator">
@@ -23,10 +34,13 @@ const QuizQuestionInput = (props) => {
         <textarea id={`${topicNumber}-${questionNumber}`} className="quizCreatorAnswerIncorr creatorInput" placeholder={"8"} name="incorrectAnswer2" value={incorrectAnswer2} onChange={handleQuestionChange} required></textarea>
         <textarea id={`${topicNumber}-${questionNumber}`} className="quizCreatorAnswerIncorr creatorInput" placeholder={"Not entirely sure..."} name="incorrectAnswer3" value={incorrectAnswer3} onChange={handleQuestionChange} required></textarea>
       </div>
-
       <div className="questionDeleteContainer">
-        <input type="button" className="creatorBtn btnCaution" id={`${topicNumber}-${questionNumber}`} onClick={handleDeleteQuestion} value={`Delete Question ${questionNumber}`}/>
+        {!isDeleteDeactivated ? 
+          <input type="button" className="creatorBtn btnCaution" id={`${topicNumber}-${questionNumber}`} onClick={handleDeleteQuestion} value={`Delete Question ${questionNumber}`}/> :
+          <input type="button" className="creatorBtn btnCautionDeactivated" id={`${topicNumber}-${questionNumber}`} onClick={handleUserMessage} value={`Delete Question ${questionNumber}`}/>
+        }
       </div>
+      <p className="userMessage quizCreatorFormMessage">{messageText}</p>
     </div>
   )
 }

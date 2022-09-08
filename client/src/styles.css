@@ -20,6 +20,9 @@
 
   --warning-btn-color: rgb(184, 18, 18);
   --warning-btn-border: rgb(131, 18, 18);
+  --warning-deactive-btn-text: rgb(58, 58, 58);
+  --warning-deactive-btn-color: rgb(196, 196, 196);
+  --warning-deactive-btn-border: rgb(131, 131, 131);
   
   --gradient-top-color: #3AAFA9;
   --gradient-mid-1-color: #2B7A78;
@@ -121,6 +124,12 @@ h3 {
   border: 1px var(--warning-btn-color);
 }
 
+.btnCautionDeactivated {
+  color : var(--warning-deactive-btn-text);
+  background-color: var(--warning-deactive-btn-color);
+  border: 1px var(--warning-deactive-btn-border);
+}
+
 
 
 /* Header bar */
@@ -156,28 +165,38 @@ header {
     color: var(--header-color-1);
   }
 /* NavBar */
-.NavBar {
+.navBar {
   display: flex;
   justify-content: space-around;
   background-color: var(--main-background-color);
   height: 5%;
 }
-  .NavBarBtn {
+  .navBarBtn {
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
     width: 200px;
-    border-radius: 10px;
-    color : var(--header-color-1 );
+    border-radius: 5px 5px 0px 0px;
+    color : var(--header-color-2 );
+    background-color: var(--button-border-color);
+    border: 1px var(--button-color);
+  }
+  .navBarBtn:hover {
+    color : var(--header-color-1);
     background-color: var(--button-color);
     border: 1px var(--button-border-color);
   }
-  .NavBarBtn:hover {
-    cursor: pointer;
-    background-color: var(--button-border-color);
-    border: 1px var(--button-color);
+  .activeBtn {
+    color : var(--header-color-1);
+    background-color: var(--button-color);
+    border: 1px var(--button-border-color);
+  }
+  .activeBtn > * {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
   }
 
 
