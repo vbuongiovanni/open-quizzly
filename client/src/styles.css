@@ -200,7 +200,7 @@ header {
   }
 
 
-  /* Login page */
+/* Login page */
 .loginMain {
   display: flex;
   flex-direction: column;
@@ -353,9 +353,10 @@ main {
     margin: 20px;
     padding: 20px;
     min-width: 350px;
-    width: 100%;
     max-width: 80%;
     border-radius: 25px;
+    width: 100%;
+    text-align: center;
   }
   .quizDetailTitle {
     width: 100%;
@@ -377,10 +378,6 @@ main {
       font-size: 25px;
       margin-bottom: 20px;
       height: 100px;
-    }
-    .quizDetail {
-      width: 100%;
-      text-align: center;
     }
       .questionContainer {
         display: flex;
@@ -648,4 +645,82 @@ main {
   .confirm-box__content > span {
     text-align: center;
     font-size: 25px;
+  }
+/* UserStats */
+  .userStatsContainer {
+    display: flex;
+    justify-content: center;
+    height: 80%;
+  }
+  .userStatsContent {
+    background-color: var(--sub-background-color);
+    display:  flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    margin: 20px;
+    padding: 20px;
+    width: 100%;
+    min-width: 350px;
+    max-width: 80%;
+    border-radius: 25px;
+    text-align: center;
+  }
+  .userStatsPane {
+    width: 90%;
+    height: 90%;
+    max-height: 525px;
+    border: 1px solid var(--border-color);
+    overflow-y: scroll;
+  }
+    .userStatsResultsCard {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 0px 10px 10px;
+    }
+      .userStatsResultsCardTitle {
+        font-size: 30px;
+        font-weight: 600;
+      }
+      .userStatsResultsCardStats {
+        display: flex;
+        align-items: center;
+        margin-left: 5%;
+        width: 90%;
+        border-bottom: 1px dashed var(--border-color);
+        padding-bottom: 10px;
+      }
+        .userStatsResultsCardRatio {
+          font-size: 24px;
+        }
+        .userStatsResultsCardSep {
+          margin: 0px 10px;
+        }
+        .userStatsResultsCardPct {
+          font-size: 24px;
+          font-style: italic;
+        }
+  /* UserStatsTabset */
+  .tabsetContainer { 
+    display: flex;
+    width: 90%;
+  }
+  .tabsetBtn {
+    padding: .5% 1%;
+    border-radius: 10px 10px 0px 0px;
+    border: 1px solid var(--border-color);
+    border-bottom: 0;
+    cursor: pointer;
+    background-color: var(--header-color-2);
+    color: var(--button-border-color)
+  }
+  .tabsetBtn:hover, .activeTabsetBtn {
+    background-color: var(--header-color-1);
+    color: var(--banner-background-color);
+  }
+  .activeTabsetBtn {
+    position: relative;
+    top: 1px;
   }
