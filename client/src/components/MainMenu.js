@@ -24,7 +24,7 @@ const MainMenu = () => {
       userName : userName,
       password : password,
     }
-    axios.post("/user/" + userId, requestBody)
+    axios.post("/user/summary/" + userId, requestBody)
       .then(res => {
         setGlobalStats(res.data.globalStats)
         setSummaryStats(res.data.summaryStats)
