@@ -18,7 +18,7 @@ const HistoricalResults = props => {
       userName : userName,
       password : password,
     }
-    axios.post("/user/" + userId, requestBody)
+    axios.post("/user/summary/" + userId, requestBody)
       .then(res => setResults(res.data.results))
       .catch(err => console.log(err))
   }, [])

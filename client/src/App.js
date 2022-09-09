@@ -3,7 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import Login from "./components/login-components/Login";
 import MainMenu from "./components/MainMenu";
 import QuizCreator from "./components/QuizCreator";
-import UserStats from "./components/UserStats";
+import UserStats from "./components/user-statistics-components/UserStats";
 import QuizDetailPage from "./components/quiz-components/QuizDetailPage";
 import Quiz from "./components/quiz-components/Quiz";
 import "./styles.css";
