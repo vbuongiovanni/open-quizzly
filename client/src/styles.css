@@ -169,19 +169,21 @@ header {
   display: flex;
   justify-content: space-around;
   background-color: var(--main-background-color);
-  height: 5%;
+  border-top: 2px solid var(--button-color); /* this should be the same color as the active tab */
+  height: 7.5%;
 }
   .navBarBtn {
     cursor: pointer;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 10px;
+    align-items: flex-end;
+    padding-bottom: 10px;
     width: 200px;
-    border-radius: 5px 5px 0px 0px;
+    border-radius: 0px 0px 5px 5px ;
     color : var(--header-color-2 );
     background-color: var(--button-border-color);
     border: 1px var(--button-color);
+    margin-bottom: 10px;
   }
   .navBarBtn:hover {
     color : var(--header-color-1);
