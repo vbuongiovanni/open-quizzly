@@ -122,6 +122,11 @@ const Quiz = () => {
               <QuizHeader quizName={activeQuiz.quizName} subject={activeQuiz.subject} />
                 <form className="quizForm" onSubmit={submitAnswer}>
                   {displayQuestion(questionIndex)}
+                  <div className="quizFormProgressBarContainer">
+                    <div className="quizFormProgressBar">
+                      {activeQuiz.shuffledQuestions.map((question, index) => <div className={`quizFormProgressBarBlock ${questionIndex > index ? " activeBlock" : ""}`} key={index}></div>)}
+                    </div>
+                  </div>
                   <div className="btnContainer btnContainerDual">
                     <button className="quizNavButton colorBtn" onClick={exitHandler}>Exit Quiz</button>  
                     <button className="quizNavButton colorBtn">

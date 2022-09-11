@@ -444,6 +444,27 @@ main {
         width: 200px;
         height: 40px;
       }
+    .quizFormProgressBarContainer {
+      display: flex;
+      justify-content: center;
+    }
+    .quizFormProgressBar, .quizFormProgressBarBlock { 
+      min-height: 15px;
+      border-radius: 4px;
+    }
+      .quizFormProgressBar {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        border: 1px solid var(--border-color);
+      }
+        .quizFormProgressBarBlock {
+          width: 100%;
+          background-color: var(--header-color-2);
+        }
+        .activeBlock {
+          background-color: var(--emphasis-text-color);
+        }
 
 /*-- Quiz Creator Form ---*/
 .quizCreatorForm {
