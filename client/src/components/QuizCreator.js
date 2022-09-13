@@ -175,9 +175,10 @@ const QuizCreator = () => {
   const deactivateTopicCreation = topics.length >= 5
 
   return (
+    <>
+    <Header negateMetrics={true}/>
+    <NavBar />
     <main>
-      <Header negateMetrics={true}/>
-      <NavBar />
       <div className="quizContainer">
         <form onSubmit={submitNewQuiz} className="quizCreatorForm">
           <div className="quizDetailTitle creatorTitle">
@@ -191,15 +192,16 @@ const QuizCreator = () => {
           </div>
           <div className="btnContainer btnContainerSingle">
             {!deactivateTopicCreation ? 
-              <input type="button" className="creatorBtn creatorBtnMain colorBtn" onClick={createNewTopic} value="Add another topic"/> :
-              <input type="button" className="creatorBtn creatorBtnMain btnCautionDeactivated" onClick={handleUserMessage} value="Add another topic"/>
+              <input type="button" className="creatorBtnMain btn colorBtn" onClick={createNewTopic} value="Add another topic"/> :
+              <input type="button" className="creatorBtnMain btn deactivatedBtn" onClick={handleUserMessage} value="Add another topic"/>
             }
-            <button className="creatorBtn creatorBtnMain colorBtn">Create Quiz</button>
+            <button className="creatorBtnMain btn colorBtn">Create Quiz</button>
           </div>
-          <p className="userMessage quizCreatorFormMessage">{messageText}</p>
+          <p className="userMessage emphasizedText quizCreatorFormMessage">{messageText}</p>
         </form>
       </div>
     </main>
+    </>
   )
 }
 export default QuizCreator

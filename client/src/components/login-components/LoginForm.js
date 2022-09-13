@@ -81,9 +81,9 @@ const LoginForm = (props) => {
           required
           onChange={handleChange}
           />
-        <div className="buttonContainer">
-          <button className="loginButton colorBtn">Login</button>
-          <button className="toggleAccCreateButton colorBtn" onClick={toggleAccCreation}>Create New Login</button>
+        <div className="stackedBtnContainer">
+          <button className="btn colorBtn loginBtn">Login</button>
+          <button className="btn colorBtn loginBtn" onClick={toggleAccCreation}>Create New Login</button>
         </div>
         <div className="loginMsgContainer">
           <p className="userMessage">{loginMessage}</p>

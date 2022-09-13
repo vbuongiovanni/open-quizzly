@@ -44,7 +44,7 @@ const UserStatsPane = props => {
             <p className="userStatsResultsCardStats">
               <span className="userStatsResultsCardRatio">{result.ratioCorrect}</span> 
               <span className="userStatsResultsCardSep"> - </span> 
-              <span className="userStatsResultsCardPct">{`${(Math.round(result.pctCorrect*10000)/100)}%`}</span>
+              <span className="userStatsResultsCardPct emphasizedText">{`${(Math.round(result.pctCorrect*10000)/100)}%`}</span>
             </p>
           </div>
         )

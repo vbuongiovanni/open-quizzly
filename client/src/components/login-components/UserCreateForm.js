@@ -86,9 +86,9 @@ const UserCreateForm = props => {
           required
           onChange={handleChange}
         />
-        <div className="buttonContainer">
-          <button className="loginButton colorBtn">Create New Account</button>
-          <button className="toggleAccCreateButton colorBtn" onClick={toggleAccCreation}>Cancel</button>
+        <div className="stackedBtnContainer">
+          <button className="loginBtn btn colorBtn">Create New Account</button>
+          <button className="loginBtn btn colorBtn" onClick={toggleAccCreation}>Cancel</button>
         </div>
         <div className="loginMsgContainer">
           <p className="userMessage">{loginCreateMessage}</p>

@@ -33,16 +33,18 @@ const MainMenu = () => {
   }, [])
   
   return(
-    <main>
+    <>
       <Header globalStats={globalStats} negateMetrics={false}/>
       <NavBar />
-      <div  className="welcomeTextContainer">
-        <h1>Welcome, {userName}!</h1>
-      </div>
-      <div className="quizCardDisplay">
-          {quizLibrary.map(quiz => <QuizCard key={quiz._id} cardDetails={quiz}/>)}
-      </div>
-    </main>
+      <main>
+        <div  className="welcomeTextContainer">
+          <h1>Welcome, {userName}!</h1>
+        </div>
+        <div className="quizCardDisplay">
+            {quizLibrary.map(quiz => <QuizCard key={quiz._id} cardDetails={quiz}/>)}
+        </div>
+      </main>
+    </>
   )
 }
 export default MainMenu;

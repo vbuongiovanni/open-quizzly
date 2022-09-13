@@ -26,13 +26,13 @@ const QuizTopicInput = (props) => {
         {questions.map((question, index) => <QuizQuestionInput key={index} numQuestions={questions.length} topicNumber={topicNumber} questionData={question} handleDeleteQuestion={handleDeleteQuestion} handleQuestionChange={handleQuestionChange}/>)}
       </div>
       <div className="btnContainer btnContainerDual noBorder">
-        <input type="button" id={topicNumber} className="creatorBtn colorBtn" onClick={handleNewQuestion} value="Add another question"/>
+        <input type="button" id={topicNumber} className="creatorBtn btn colorBtn" onClick={handleNewQuestion} value="Add another question"/>
         {!isDeleteDeactivated ? 
-          <input type="button" id={topicNumber} onClick={handleDeleteTopic} className="creatorBtn btnCaution" value={`Delete Topic ${topicNumber}`}/> : 
-          <input type="button" id={topicNumber} onClick={handleUserMessage} className="creatorBtn btnCautionDeactivated" value={`Delete Topic ${topicNumber}`}/>
+          <input type="button" id={topicNumber} onClick={handleDeleteTopic} className="creatorBtn btn cautionBtn" value={`Delete Topic ${topicNumber}`}/> : 
+          <input type="button" id={topicNumber} onClick={handleUserMessage} className="creatorBtn btn deactivatedBtn" value={`Delete Topic ${topicNumber}`}/>
           }  
       </div>
-      <p className="userMessage quizCreatorFormMessage">{messageText}</p>
+      <p className="userMessage emphasizedText quizCreatorFormMessage">{messageText}</p>
     </div>
   )
 }
