@@ -20,7 +20,7 @@ const HistoricalQuizQuestion = props => {
         <div>
           {question.answers.map((answer, index) => {
             const correctClassName = question.correctAnswer === index ? "correctAnswer" : "incorrectAnswer";
-            return <div className={`answerText inactiveAnswer ${correctClassName}`}>
+            return <div key={index} className={`answerText inactiveAnswer ${correctClassName}`}>
                     {question.userAnswer === index ? icon : <div className="iconPlaceholder"></div>}
                     <input type="radio" className={`quizIcon ${correctClassName}`} checked={question.userAnswer===index} disabled={true}/>
                     {<span className="inactiveAnswerText">{answer}</span>}

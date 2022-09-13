@@ -94,7 +94,7 @@ const Quiz = () => {
                   className="radioInput"
                   type="radio"
                   value={index}
-                  checked={parseInt(answerInput) == index}
+                  checked={parseInt(answerInput) === index}
                   name={"answerSelection"}
                   onChange={handleAnswerSelect}
                 />

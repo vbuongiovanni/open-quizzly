@@ -15,9 +15,9 @@ const MainMenu = () => {
   const {userName, password, _id : userId} = credentials;
 
   const [globalStats, setGlobalStats] = useState({});
-  const [summaryStats, setSummaryStats] = useState({});
 
   // fetch and set state of stats from backend.
+ 
   useEffect(() => {
     getQuizData();
     const requestBody = {
@@ -27,10 +27,9 @@ const MainMenu = () => {
     axios.post("/user/summary/" + userId, requestBody)
       .then(res => {
         setGlobalStats(res.data.globalStats)
-        setSummaryStats(res.data.summaryStats)
       })
       .catch(err => console.log(err))
-  }, [])
+  }, [userName, password, userId, ])
   
   return(
     <>
@@ -40,8 +39,12 @@ const MainMenu = () => {
         <div  className="welcomeTextContainer">
           <h1>Welcome, {userName}!</h1>
         </div>
-        <div className="quizCardDisplay">
-            {quizLibrary.map(quiz => <QuizCard key={quiz._id} cardDetails={quiz}/>)}
+        <div className="quizCardDisplayContainer">
+          <div className="quizCardDisplaySpacer spacerTextContainer"><span className="spacerText">Select a quiz card to begin</span></div>
+          <div className="quizCardDisplay">
+              {quizLibrary.map(quiz => <QuizCard key={quiz._id} cardDetails={quiz}/>)}
+          </div>
+          <div className="quizCardDisplaySpacer"></div>
         </div>
       </main>
     </>

@@ -14,6 +14,7 @@ const UserStats = () => {
 
   // load and deconstruct context:
     const {credentials} = useContext(UserContext);
+    const {userName, password, _id} = credentials
 
   // create state to contain global statistics data
     const [globalStats, setGlobalStats] = useState({
@@ -28,15 +29,15 @@ const UserStats = () => {
   // wrap http request in useEffect - single render
     useEffect(() => {
       const requestBody = {
-        userName : credentials.userName,
-        password : credentials.password,
+        userName : userName,
+        password : password,
       }
-      axios.post("/user/global/" + credentials._id, requestBody)
+      axios.post("/user/global/" + _id, requestBody)
         .then(res => {
           setGlobalStats(res.data)
         })
         .catch(err => console.log(err))
-    }, [])
+    }, [userName, password, _id])
 
   // handle nav to main menu
     const navToMain = () => {

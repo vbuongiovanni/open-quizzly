@@ -3,7 +3,7 @@ const HistoricalQuizList = props => {
 
   return (
     <>
-    
+      <p className="spacerText">Select a historical quiz below see your feedback</p>
       <div className="inactiveQuiz">
         {quizGrouping.map(quiz => {
           const [dayName, monthName] = quiz.dateTime.toString().split(" ");

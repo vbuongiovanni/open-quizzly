@@ -18,7 +18,20 @@ export const AppContextProvider = (props) => {
         setQuizLibrary(
           data.map(quiz => {
             const {_id, quizName, subject, topics} = quiz;
-            const topicsText = topics.map(topic => topic.topicName).join(", ");
+            const topicsText = topics.map(topic => {
+              const {topicName} = topic;
+              let properTopicName = "";
+              for (let c in topicName) {
+
+                if (c === "0" || topicName[c - 1] === " ") {
+                  properTopicName = properTopicName += topicName[c].toUpperCase()
+                } else {
+                  properTopicName = properTopicName += topicName[c]
+                }
+              }
+              // const properTopicName = topicName[0] + topicName.slice(1)
+              return properTopicName;
+            }).join(", ");
             return {_id, quizName, subject, topics, topicsText};
           })
         );

@@ -21,7 +21,7 @@ const HistoricalResults = props => {
     axios.post("/user/summary/" + userId, requestBody)
       .then(res => setResults(res.data.results))
       .catch(err => console.log(err))
-  }, [])
+  }, [userName, userId, password])
 
   const togglePrevResults = props.togglePrevResults;
   
