@@ -6,6 +6,7 @@
   --cust-palette-0: #8D3FD0;
   --cust-palette-1: #0683D7;
     --cust-palette-1-darker: #0380d4;
+    --cust-palette-1-lighter: #0099ff;
   --cust-palette-2: #223CCF;
   --cust-palette-3: #161B7F;
   --base-color: #161f22;
@@ -30,14 +31,13 @@
   --login-form-color: var(--base-color-light);
   /* Nav Bar */
   --navbar-background-color: var(--base-contrast-color);
-  --nav-bar-top-border-color: var(--accent-color);
+  --nav-bar-top-border-color: var(--cust-palette-1-lighter);
   --nav-bar-tab-active-color: var(--base-color);
   --nav-bar-tab-inactive-color: var(--base-color);
   --nav-bar-tab-hover-text: var(--dark-contrast-text-emphasis);
   --nav-bar-tab-inactive-text: var(--dark-contrast-text-deemphasis);
   --nav-bar-tab-inactive-inshadow : outset 3px #2b3f45;
-  --nav-bar-tab-active-text: var(--accent-color);
-  --nav-bar-tab-active-border: 1px solid var(--accent-color);
+  --nav-bar-tab-active-text: var(--cust-palette-1-lighter);
   --nav-bar-tab-active-inshadow : inset 0 0 3px #3c565e;
   /* Header */
   --header-background-color: var(--base-contrast-color);
@@ -90,9 +90,8 @@
     ); 
 
   --gradient-background-color-main: linear-gradient(
-    var(--cust-palette-2),
-    var(--cust-palette-1-darker),
-    var(--cust-palette-2)
+    var(--gradient-top-color),
+    var(--gradient-bottom-color)
     ); 
 }
 
@@ -322,7 +321,6 @@ header {
     background-color: var(--nav-bar-tab-active-color);
     box-shadow: var(--nav-bar-tab-active-inshadow);
     border: 0;
-    border-top: var(--nav-bar-tab-active-border); 
   }
   .navBarTab:hover {
     color : var(--nav-bar-tab-hover-text);
@@ -400,10 +398,34 @@ main {
   height: 12%;
   max-height: 80px;
 }
-.quizCardDisplay  {
+.quizCardDisplayContainer {
   background-color: var(--quiz-card-color);
   max-height: 65%;
   min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px 50px;
+  border-radius: 10px;
+}
+.quizCardDisplaySpacer {
+  min-height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  .spacerTextContainer {
+    padding: 15px;
+  }
+  .spacerText {
+    color: var(--accent-color);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 20px;
+  }
+.quizCardDisplay  {
+  background-color: var(--quiz-card-color);
+  max-height: 90%;
+  width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
   display: grid;
@@ -411,7 +433,7 @@ main {
   justify-items: stretch;
   align-items: center;
   grid-template-columns: repeat(auto-fill, minmax(375px, 400px));
-  margin: 10px 50px;
+  /* margin: 10px 50px; */
   border-radius: 10px;
 }
   /*-- Quiz Card ---*/
@@ -485,6 +507,13 @@ main {
   .quizForm {
     width: 100%;
   }
+    .quizHeaderMain, .quizSubHeader {
+      font-weight: 600;
+    }
+    .quizSubHeader {
+      font-size: 22px;
+    }
+
     .questionText {
       font-weight: 600;
       font-size: 25px;

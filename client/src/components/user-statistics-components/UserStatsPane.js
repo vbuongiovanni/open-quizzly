@@ -27,6 +27,8 @@ const UserStatsPane = props => {
             pctCorrect : result.totalCorrect/result.totalAttempted
           }
           break;
+        default :
+          output = "";
       }
       return output;
     });

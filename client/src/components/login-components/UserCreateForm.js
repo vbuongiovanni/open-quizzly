@@ -68,7 +68,8 @@ const UserCreateForm = props => {
           required
           onChange={handleChange}
         />
-        <input type="text"
+        <input 
+          type="password"
           name="password"
           placeholder="Password"
           className="textInput"
@@ -77,7 +78,8 @@ const UserCreateForm = props => {
           required
           onChange={handleChange}
         />
-        <input type="text"
+        <input
+          type="password"
           name="confirmPassword"
           placeholder="Confirm Password"
           className="textInput"

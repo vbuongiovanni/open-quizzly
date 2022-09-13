@@ -92,7 +92,7 @@ const QuizCreator = () => {
   // handle addition of new question
     const handleNewQuestion = e => {
       // get id of topic to delete
-      const {id, name, value} = e.target
+      const {id} = e.target
       setTopics(prevTopics => {
         const modTopic = prevTopics.find(topic => topic.topicNumber === Number(id));
         const newQuestion = {...initQuestion, questionNumber : (modTopic.questions.length + 1)}
@@ -182,8 +182,8 @@ const QuizCreator = () => {
       <div className="quizContainer">
         <form onSubmit={submitNewQuiz} className="quizCreatorForm">
           <div className="quizDetailTitle creatorTitle">
-            <input type="text" className="creatorQuizName creatorInput" onChange={handleQuizDetailChange} placeholder="Quiz Name" name="quizName" value={quizDetails.quizName} required/>
-            <input type="text" className="creatorQuizSubject creatorInput" onChange={handleQuizDetailChange} placeholder="Subject" name="subject" value={quizDetails.subject} required/>
+            <input type="text" className="creatorQuizName creatorInput" onChange={handleQuizDetailChange} placeholder="Quiz Name" maxlength="22" name="quizName" value={quizDetails.quizName} required/>
+            <input type="text" className="creatorQuizSubject creatorInput" onChange={handleQuizDetailChange} placeholder="Subject" maxlength="22" name="subject" value={quizDetails.subject} required/>
           </div>
           <div className="topicCreatorContainerSpacer">
           {
@@ -192,8 +192,8 @@ const QuizCreator = () => {
           </div>
           <div className="btnContainer btnContainerSingle">
             {!deactivateTopicCreation ? 
-              <input type="button" className="creatorBtnMain btn colorBtn" onClick={createNewTopic} value="Add another topic"/> :
-              <input type="button" className="creatorBtnMain btn deactivatedBtn" onClick={handleUserMessage} value="Add another topic"/>
+              <input type="button" className="creatorBtnMain btn colorBtn" onClick={createNewTopic} value="Add New topic"/> :
+              <input type="button" className="creatorBtnMain btn deactivatedBtn" onClick={handleUserMessage} value="Add New topic"/>
             }
             <button className="creatorBtnMain btn colorBtn">Create Quiz</button>
           </div>

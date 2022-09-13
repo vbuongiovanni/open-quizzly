@@ -3,7 +3,7 @@ const Header = (props) => {
     <header>
       <div className="logoContainer">
         <img className="logoHeaderBear" src={require("../resources/quizzly-bear.png")} alt={"Presentational icon of a cartoon bear wearing a graduation cap"}/>
-        <h1 className="logoHeaderText">Quizzly.</h1>
+        <h1 className="logoHeaderText">Quizzly</h1>
       </div>
       {!props.negateMetrics && 
         <div className="headerMetrics">
