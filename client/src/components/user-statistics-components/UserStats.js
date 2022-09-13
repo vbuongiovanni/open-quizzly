@@ -53,19 +53,21 @@ const UserStats = () => {
   const tabsetProps = {tabSelection, changeTabset, selections}
 
   return (
-    <main>
+    <>
       <Header negateMetrics={true}/>
       <NavBar />
-      <div className="userStatsContainer">
-        <div className="userStatsContent">
-            <UserStatsTabset tabsetProps={tabsetProps}/>
-            <UserStatsPane globalStats={globalStats} tabSelection={tabSelection}/>
-          <div className="btnContainer btnContainerSingle">
-            <button className="colorBtn" onClick={navToMain}>Back</button>
+      <main>
+        <div className="userStatsContainer">
+          <div className="userStatsContent">
+              <UserStatsTabset tabsetProps={tabsetProps}/>
+              <UserStatsPane globalStats={globalStats} tabSelection={tabSelection}/>
+            <div className="btnContainer btnContainerSingle">
+              <button className="colorBtn userStatsBtn" onClick={navToMain}>Back</button>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
 export default UserStats

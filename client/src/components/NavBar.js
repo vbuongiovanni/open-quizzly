@@ -23,17 +23,17 @@ const NavBar = () => {
 
   return (
     <nav className="navBar">
-      <div className={`navBarBtn ${currentLocation === "/menu/" && "activeBtn"}`} onClick={handleNavHome}>
-        <span className="navBarBtnText">Take Me Home</span>
+      <div className={`navBarTab btn ${currentLocation === "/menu/" && "activeTab"}`} onClick={handleNavHome}>
+        <span className="navBarTabText">Take Me Home</span>
       </div>
-      <div className={`navBarBtn ${currentLocation === "/quiz/creator" &&  "activeBtn"}`} onClick={handleNavToCreator}>
-        <span className="navBarBtnText">Create New Quiz</span>
+      <div className={`navBarTab btn ${currentLocation === "/quiz/creator" &&  "activeTab"}`} onClick={handleNavToCreator}>
+        <span className="navBarTabText">Create New Quiz</span>
       </div>
-      <div className={`navBarBtn ${currentLocation === "/user/stats" && "activeBtn"}`} onClick={handleNavToUserStats}>
-        <span className="navBarBtnText">My Global Stats</span>
+      <div className={`navBarTab btn ${currentLocation === "/user/stats" && "activeTab"}`} onClick={handleNavToUserStats}>
+        <span className="navBarTabText">My Global Stats</span>
       </div>
-      <div className={`navBarBtn ${currentLocation === "/" &&  "activeBtn"}`} onClick={handleSignOut}>
-        <span className="navBarBtnText">Sign Out</span>
+      <div className={`navBarTab btn ${currentLocation === "/" &&  "activeTab"}`} onClick={handleSignOut}>
+        <span className="navBarTabText">Sign Out</span>
       </div>
     </nav>
   )

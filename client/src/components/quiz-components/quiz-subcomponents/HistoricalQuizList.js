@@ -9,7 +9,7 @@ const HistoricalQuizList = props => {
           const [dayName, monthName] = quiz.dateTime.toString().split(" ");
           const prettyDate = `${dayName} ${monthName} ${quiz.dateTime.getDate()}, ${quiz.dateTime.getFullYear()}`
           return (
-            <div key={quiz.sessionId} id={quiz.sessionId} onClick={handleQuizSelect} className="histQuizListItem">
+            <div key={quiz.sessionId} id={quiz.sessionId} onClick={handleQuizSelect} className="histQuizListItem btn">
               <p className="histQuizListItem__pair histQuizListItem__text">
                 <span className="histQuizListItem__label">Quiz Name: </span>
                 <span>{quiz.quizId}</span>
@@ -29,7 +29,7 @@ const HistoricalQuizList = props => {
         })}
       </div>
       <div className='btnContainer btnContainerSingle'>
-        <button className="togglePrevBtn colorBtn" onClick={togglePrevResults}>Back to Topic Selection</button>
+        <button className="quizConfigPrevViewBtn colorBtn" onClick={togglePrevResults}>Back to Topic Selection</button>
       </div>
     </>
   )

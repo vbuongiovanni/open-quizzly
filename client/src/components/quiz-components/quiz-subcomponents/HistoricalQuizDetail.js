@@ -10,7 +10,7 @@ const HistoricalQuizDetail = props => {
         })}
       </div>
       <div className='btnContainer btnContainerSingle'>
-        <button className="togglePrevBtn colorBtn" onClick={handleExitQuizReview}>Exit Quiz Review</button>
+        <button className="quizConfigPrevViewBtn colorBtn" onClick={handleExitQuizReview}>Exit Quiz Review</button>
       </div>
     </>
   )

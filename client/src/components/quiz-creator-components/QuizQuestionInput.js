@@ -36,11 +36,11 @@ const QuizQuestionInput = (props) => {
       </div>
       <div className="questionDeleteContainer">
         {!isDeleteDeactivated ? 
-          <input type="button" className="creatorBtn btnCaution" id={`${topicNumber}-${questionNumber}`} onClick={handleDeleteQuestion} value={`Delete Question ${questionNumber}`}/> :
-          <input type="button" className="creatorBtn btnCautionDeactivated" id={`${topicNumber}-${questionNumber}`} onClick={handleUserMessage} value={`Delete Question ${questionNumber}`}/>
+          <input type="button" className="creatorBtn btn cautionBtn colorBtn" id={`${topicNumber}-${questionNumber}`} onClick={handleDeleteQuestion} value={`Delete Question ${questionNumber}`}/> :
+          <input type="button" className="creatorBtn btn deactivatedBtn" id={`${topicNumber}-${questionNumber}`} onClick={handleUserMessage} value={`Delete Question ${questionNumber}`}/>
         }
       </div>
-      <p className="userMessage quizCreatorFormMessage">{messageText}</p>
+      <p className="userMessage emphasizedText quizCreatorFormMessage">{messageText}</p>
     </div>
   )
 }

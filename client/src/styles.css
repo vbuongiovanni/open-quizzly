@@ -1,51 +1,114 @@
-/* Global Variables */
+/* Global Variable Colors */
 :root {
-  --main-background-color: #17252A;
-  --sub-background-color: #FEFFFF;
-  --quiz-background-color: #DEF2F1;
-  --banner-background-color: #17252A;
-  --header-color-1: #FEFFFF;
-  --header-color-2: #DEF2F1;
-  --header-color-3: #3AAFA9;
-  --header-color-4: #2B7A78;
-  
-  --border-color: #2B7A78;
+  /* Original Color Declarations */
+  --accent-color: #ED3D63;
+  --accent-color-deemph: #ed3d6378;
+  --cust-palette-0: #8D3FD0;
+  --cust-palette-1: #0683D7;
+    --cust-palette-1-darker: #0380d4;
+  --cust-palette-2: #223CCF;
+  --cust-palette-3: #161B7F;
+  --base-color: #161f22;
+  --base-contrast-color: #29444b;
+  --base-color-light: #FEFFFF;
+  --base-color-light-contrast: #dee2f2;
 
-  --button-color: #3AAFA9;
-  --button-border-color: #257772;
-  
-  --emphasis-text-color: #4fd6cf;
+  /* General */
+  --header-color-1: var(--base-color-light);
+  --header-color-2: var(--base-color-light-contrast);
+  --header-color-3: var(--cust-palette-2);
+  --header-color-4: var(--cust-palette-3);
   --general-text-color: #17252A;
-  --err-msg-color: rgb(244, 6, 6);
-
-  --warning-btn-color: rgb(184, 18, 18);
-  --warning-btn-border: rgb(131, 18, 18);
-  --warning-deactive-btn-text: rgb(58, 58, 58);
-  --warning-deactive-btn-color: rgb(196, 196, 196);
-  --warning-deactive-btn-border: rgb(131, 131, 131);
+  --dark-contrast-text-emphasis: #fafaff;
+  --dark-contrast-text-deemphasis: #ceced5;
+  --light-contrast-text-emphasis: var(--cust-palette-3);
+  --light-contrast-text-deemphasis: #707085;
+  --err-msg-color: #bf0000;
+  --border-color: var(--cust-palette-1);
   
-  --gradient-top-color: #3AAFA9;
-  --gradient-mid-1-color: #2B7A78;
-  --gradient-bottom-color: #051f20;
-  --gradient-background-color: linear-gradient(
-          var(--gradient-top-color),
-          var(--gradient-mid-1-color),
-          var(--gradient-bottom-color)); 
+  /* Login Form */
+  --login-form-color: var(--base-color-light);
+  /* Nav Bar */
+  --navbar-background-color: var(--base-contrast-color);
+  --nav-bar-top-border-color: var(--accent-color);
+  --nav-bar-tab-active-color: var(--base-color);
+  --nav-bar-tab-inactive-color: var(--base-color);
+  --nav-bar-tab-hover-text: var(--dark-contrast-text-emphasis);
+  --nav-bar-tab-inactive-text: var(--dark-contrast-text-deemphasis);
+  --nav-bar-tab-inactive-inshadow : outset 3px #2b3f45;
+  --nav-bar-tab-active-text: var(--accent-color);
+  --nav-bar-tab-active-border: 1px solid var(--accent-color);
+  --nav-bar-tab-active-inshadow : inset 0 0 3px #3c565e;
+  /* Header */
+  --header-background-color: var(--base-contrast-color);
+  /* Quiz Card Display */
+  --quiz-card-color: var(--base-color-light);
+  --quiz-card-shadow-color: #c2c2c2;
+  /* User Stats */
+  --user-stats-content: var(--base-color-light);
+  /* Quiz Creator Form */
+  --quiz-creator-form-color: var(--base-color-light);
+  /* Quiz Detail */
+  --quiz-detail-color: var(--base-color-light);
+  --progress-bar-block-color: var(--accent-color);
+  --progress-bar-background-color: var(--base-color-light-contrast);
+  /* Hist Quiz List */
+  --hist-quiz-list-item: var(--base-color-light-contrast);
+  --hist-quiz-list-item-active: var(--base-color-light);
+  /* User stats tabset */
+  --user-stat-inactive-tabset-color: var(--base-color-light-contrast);
+  --user-stat-inactive-tabset-text: var(--light-contrast-text-deemphasis);
+  --user-stat-active-tabset-color: var(--base-color-light);
+  --user-stat-active-tabset-text: var(--header-color-4);
+  
+  /* Buttons */
+  --button-color: var(--cust-palette-3);
+  --button-text: var(--base-color-light);
+  --active-button-color: var(--cust-palette-1-darker);
+  --button-border-color: #257772;
+
+  /* Warning Buttons */
+  --warning-btn-color: var(--cust-palette-3);
+  --warning-btn-hover-color: var(--err-msg-color);
+
+  /* Deactivated btns */
+  --warning-deactive-btn-text: #3a3a3a;
+  --warning-deactive-btn-color: #c4c4c4;
+  --warning-deactive-btn-border: #838383;
+
+  /* scrollbar */
+  --scrollbar-track-color: var(--base-color-light-contrast);
+  --scrollbar-thumb-color: #17252A;
+
+  /* Backgrounds */
+  --gradient-top-color: var(--cust-palette-1);
+  --gradient-bottom-color: var(--base-color);
+
+  --gradient-background-color-login: linear-gradient(
+    var(--gradient-top-color),
+    var(--gradient-bottom-color)
+    ); 
+
+  --gradient-background-color-main: linear-gradient(
+    var(--cust-palette-2),
+    var(--cust-palette-1-darker),
+    var(--cust-palette-2)
+    ); 
 }
 
 /* Global Styling */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 #root, body, html {
   height: 100%;
   overflow-y: hidden;
 }
 h1 {
-  font-size : 50px;
+  font-size : 40px;
   color : var(--header-color-1);
   letter-spacing: 2px;
 }
@@ -54,7 +117,7 @@ h2 {
   letter-spacing: 1px;
 }
 h3 {
-  font-size : 25px;
+  font-size : 22px;
   letter-spacing: 1px;
 }
 
@@ -63,14 +126,14 @@ h3 {
   height: 12px;
 }
 *::-webkit-scrollbar-track {
-  background: var(--quiz-background-color);
+  background: var(--scrollbar-track-color);
   visibility:hidden;
   border-radius: 25px;
   margin-right: 10px;
 
 }
 *::-webkit-scrollbar-thumb {
-  background: var(--banner-background-color);
+  background: var(--scrollbar-thumb-color);
   visibility:hidden;
   border-radius: 25px;
 }
@@ -78,8 +141,7 @@ h3 {
   visibility:visible;
 }
 
-/* General classes */
-
+/* Button container & classes */
 .btnContainer {
   padding-top: 20px;
   margin-top: 10px;
@@ -88,55 +150,126 @@ h3 {
   padding: 20px 3% 0 3%;
   border-top: 1px solid var(--border-color);
 }
-.btnContainerDual {
-  justify-content: space-between;
-}
-.btnContainerSingle {
-  justify-content: space-evenly;
-  width: 100%;
-}
-
-.colorBtn {
-  cursor: pointer;
-  min-height: 30px;
-  min-width: 100px;
-  padding: 0px 10px;
-  color : var(--header-color-1 );
-  background-color: var(--button-color);
-  border: 1px var(--button-border-color);
+  .btnContainerDual {
+    justify-content: space-between;
+  }
+  .btnContainerSingle {
+    justify-content: space-evenly;
+    width: 100%;
+  }
+  .stackedBtnContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px 12px 12px 12px;
+  }
+button, .btn {
   border-radius: 5px;
   font-size: 21px;
-  transition: background-color .2s;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background-color .4s;
 }
-.colorBtn:hover {
-  background-color: var(--button-border-color);
-  border: 1px var(--button-color);
-}
+  .colorBtn {
+    color : var(--button-text);
+    background-color: var(--button-color);
+    border: 1px var(--button-border-color);
+  }
+    .colorBtn:hover {
+      color : var(--button-text);
+      background-color: var(--active-button-color);
+      border: 1px var(--button-border-color);
+    }
+  .cautionBtn {
+    color : var(--button-text);
+    background-color: var(--warning-btn-color);
+    border: 1px var(--warning-btn-hover-color);
+  }
+    .cautionBtn:hover {
+      background-color: var(--warning-btn-hover-color);
+      border: 1px var(--warning-btn-color);
+    }
+  .deactivatedBtn { 
+    color : var(--warning-deactive-btn-text);
+    background-color: var(--warning-deactive-btn-color);
+    border: 1px var(--warning-deactive-btn-border);
+  }
 
-.btnCaution {
-  color : var(--header-color-1);
-  background-color: var(--warning-btn-color);
-  border: 1px var(--warning-btn-border);
-  transition: background-color .2s;
-}
-.btnCaution:hover {
-  background-color: var(--warning-btn-border);
-  border: 1px var(--warning-btn-color);
-}
-
-.btnCautionDeactivated {
-  color : var(--warning-deactive-btn-text);
-  background-color: var(--warning-deactive-btn-color);
-  border: 1px var(--warning-deactive-btn-border);
-}
-
-
+/* Component specific classes */
+  /* Login page */
+  .loginBtn, .textInput  {
+    height: 30px;
+    width: 350px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .loginBtn {
+    font-weight: 600; 
+    font-size: 14px;
+  }
+  /* Quiz Config & Historical */
+  .quizConfigPrevViewBtn {
+    min-height: 30px;
+    width: 100%;
+    max-width: 300px;
+  }
+  /* Quiz Detail */
+  .quizDetailResultsBtnContainer, .quizConfig {
+    width: 80%;
+    max-width: 1000px;
+  }
+  .quizDetailResultsBtnContainer {
+    margin: 0;
+    padding: 0;
+  }
+    .quizConfigBtn {
+      min-width: 150px;
+      min-height: 30px;
+    }
+  /* Quiz */
+  .quizNavBtn {
+    width: 200px;
+    height: 40px;
+  }
+  /* Quiz Creator */
+  .creatorBtn {
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  .creatorBtnMain {
+    font-size: 22px;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+  }
+  /* UserStats */
+  .tabsetBtn {
+    padding: .5% 1%;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid var(--border-color);
+    border-bottom: 0;
+    cursor: pointer;
+    background-color: var(--user-stat-inactive-tabset-color);
+    color: var(--user-stat-inactive-tabset-text);
+  }
+  .tabsetBtn:hover, .activeTabsetBtn {
+    background-color: var(--user-stat-active-tabset-color);
+    color: var(--user-stat-active-tabset-text);
+  }
+  .activeTabsetBtn {
+    position: relative;
+    top: 1px;
+  }
+  .userStatsBtn {
+    padding: 5px;
+    min-width: 150px;
+  }
 
 /* Header bar */
 header {
-  height: 18%;
+  height: 10%;
   max-height: 120px;
-  background-color: var(--main-background-color);
+  background-color: var(--header-background-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -148,7 +281,7 @@ header {
     .logoHeaderBear {
       padding-left: 20px;
       width: auto;
-      max-height: 100px;
+      max-height: 75px;
     }
     .logoHeaderText {
       padding-left: 5%;
@@ -168,47 +301,48 @@ header {
 .navBar {
   display: flex;
   justify-content: space-around;
-  background-color: var(--main-background-color);
-  border-top: 2px solid var(--button-color); /* this should be the same color as the active tab */
-  height: 7.5%;
+  background-color: var(--navbar-background-color);
+  border-top: 5px solid var(--nav-bar-top-border-color); /* this should be the same color as the active tab */
+  height: 7%;
 }
-  .navBarBtn {
-    cursor: pointer;
+  .navBarTab {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     padding-bottom: 10px;
     width: 200px;
-    border-radius: 0px 0px 5px 5px ;
-    color : var(--header-color-2 );
-    background-color: var(--button-border-color);
-    border: 1px var(--button-color);
+    border-radius: 0 0 5px 5px ;
     margin-bottom: 10px;
+    color : var(--nav-bar-tab-inactive-text);
+    background-color: var(--nav-bar-tab-inactive-color);
+    border: var(--nav-bar-tab-inactive-inshadow);
   }
-  .navBarBtn:hover {
-    color : var(--header-color-1);
-    background-color: var(--button-color);
-    border: 1px var(--button-border-color);
+  .activeTab {
+    color : var(--nav-bar-tab-active-text);
+    background-color: var(--nav-bar-tab-active-color);
+    box-shadow: var(--nav-bar-tab-active-inshadow);
+    border: 0;
+    border-top: var(--nav-bar-tab-active-border); 
   }
-  .activeBtn {
-    color : var(--header-color-1);
-    background-color: var(--button-color);
-    border: 1px var(--button-border-color);
+  .navBarTab:hover {
+    color : var(--nav-bar-tab-hover-text);
+    background-color: var(--nav-bar-tab-active-color);
   }
-  .activeBtn > * {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 2px;
+  .activeTab:hover {
+    color : var(--nav-bar-tab-active-text);
   }
-
-
+    .activeTab > * {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+    }
 /* Login page */
 .loginMain {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: var(--gradient-background-color);
+  background-image: var(--gradient-background-color-login);
   height: 100%;
 }
 /* Bear Logo */
@@ -221,7 +355,7 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--sub-background-color);
+  background-color: var(--login-form-color);
   border-radius: 25px;
   padding: 1%;
   margin-top: 15px;
@@ -234,27 +368,10 @@ header {
     text-align: center;
     margin-bottom: 10px;
   }
-  .loginButton, .textInput, .toggleAccCreateButton  {
-    height: 30px;
-    width: 350px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
   .textInput {
     padding: 10px;
     border: var(--border-color) 1px solid;
   }
-  .buttonContainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 20px 12px 12px 12px;
-  }
-    .buttonContainer > * {
-    font-weight: 600; 
-    font-size: 14px;
-    letter-spacing: .5px;
-    }
   .loginMsgContainer {
     height: 50px;
     max-width: 350px;
@@ -263,7 +380,6 @@ header {
     font-size: 20px;
   }
     .userMessage {
-      font-style: italic;
       text-align: center;
       margin-top: 5px;
       margin-bottom: 5px;
@@ -271,11 +387,10 @@ header {
       min-height: 25px;
       color: var(--err-msg-color);
     }
-
 /*---Main Menu---*/
 main {
   height: 100%;
-  background-image: var(--gradient-background-color);
+  background-image: var(--gradient-background-color-main);
 }
 .welcomeTextContainer{
   display:  flex;
@@ -286,8 +401,8 @@ main {
   max-height: 80px;
 }
 .quizCardDisplay  {
-  background-color: var(--sub-background-color);
-  max-height: 70%;
+  background-color: var(--quiz-card-color);
+  max-height: 65%;
   min-width: 400px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -297,23 +412,21 @@ main {
   align-items: center;
   grid-template-columns: repeat(auto-fill, minmax(375px, 400px));
   margin: 10px 50px;
-  padding: 20px;
   border-radius: 10px;
 }
   /*-- Quiz Card ---*/
   .quizCard {
     cursor: pointer;
     border: solid 1px black;
-    height: auto;
     display: inline-block;
-    background-color: var(--banner-background-color);
-    margin: 0px 30px 20px 20px;
+    background-color: var(--base-color);
+    margin: 0 3px 20px 20px;
     min-width: 350px;
     max-width: 400px;
     height: 200px;
   }
   .quizCard:hover {
-    box-shadow: 5px 10px 10px rgb(194, 194, 194);
+    box-shadow: 5px 10px 10px var(--quiz-card-shadow-color);
   }
     .quizCardContent {
       display: flex;
@@ -331,7 +444,6 @@ main {
     .quizCardSubject {
       font-size: 25px;
       color: var(--header-color-1);
-      font-style: italic;
     }
     .quizCardContent > p {
       font-size: 20px;
@@ -346,7 +458,7 @@ main {
   justify-content: center;
 }
   .quizDetail {
-    background-color: var(--sub-background-color);
+    background-color: var(--quiz-detail-color);
     display:  flex;
     flex-direction: column;
     justify-content: center;
@@ -368,8 +480,6 @@ main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-  }
-  .quizDetailTitle {
     font-size: 25px;
   }
   .quizForm {
@@ -403,17 +513,7 @@ main {
           font-size: 20px;
           text-align: justify;
         }
-    .quizDetailResultsBtnContainer, .quizConfig {
-      width: 80%;
-      max-width: 1000px;
-    }
-    .quizDetailResultsBtnContainer {
-      margin: 0px;
-      padding: 0px;
-    }
-      .quizDetailResultsBtnContainer * {
-        width: 100%;
-      }
+
     .quizConfig {
       display: flex;
       flex-direction: column;
@@ -442,10 +542,6 @@ main {
         margin-left: 20px;
         color : var(--general-text-color)
       }
-      .quizNavButton {
-        width: 200px;
-        height: 40px;
-      }
     .quizFormProgressBarContainer {
       display: flex;
       justify-content: center;
@@ -459,18 +555,27 @@ main {
         flex-direction: row;
         width: 80%;
         border: 1px solid var(--border-color);
+        background-color: var(--progress-bar-background-color);
       }
         .quizFormProgressBarBlock {
           width: 100%;
-          background-color: var(--header-color-2);
         }
         .activeBlock {
-          background-color: var(--emphasis-text-color);
+          background-color: var(--progress-bar-block-color);
         }
+      .activeBlock {
+        position: relative;
+        right: 5px;
+      }
+      .activeBlock:first-child {
+        padding-right: 0px;
+        position: relative;
+        right: 0px;
+      }
 
 /*-- Quiz Creator Form ---*/
 .quizCreatorForm {
-  background-color: var(--sub-background-color);
+  background-color: var(--quiz-creator-form-color);
   display:  flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -488,17 +593,8 @@ main {
   
 }
   .creatorInput {
-    margin: 0px 10px 5px 10px;
-  }
-  .creatorBtn {
-    font-size: 18px;
-    padding: 5px;
-    border-radius: 5px;
-  }
-  .creatorBtnMain {
-    font-size: 22px;
-    padding: 10px 12px;
-    margin-bottom: 20px;
+    margin: 0 1px 5px 10px;
+    padding-left: 10px;
   }
   .creatorTitle {
     align-items: center;
@@ -525,7 +621,7 @@ main {
     border-bottom: 1px dashed var(--border-color);
   }
   .topicCreatorContainer:last-child {
-    border-bottom: 0px;
+    border-bottom: 0;
   }
     .topicNameText, .topicNameText > * {
       font-size: 23px;
@@ -550,14 +646,14 @@ main {
           margin-left: 15px;
         }
         .noBorder {
-          border: 0px;
+          border: 0;
         }
       .questionCreator {
         border-bottom: 1px dashed var(--border-color);
         margin-bottom: 15px;
       }
       .questionCreator:last-child {
-        border-bottom: 0px;
+        border-bottom: 0;
       }
       .quizCreatorFormMessage {
         font-size: 18px;
@@ -569,16 +665,7 @@ main {
         justify-content: flex-end;
         padding: 5px 3% 3% 3%;
       }
-
-
-
-
 /* QuizResults */
-  .togglePrevBtn {
-    min-height: 30px;
-    width: 100%;
-    max-width: 300px;
-  }
   .histQuizContainer {
     display: flex;
     flex-direction: column;
@@ -587,8 +674,8 @@ main {
   }
     .inactiveQuiz {
       min-width: 300px;
-      max-height: 60vh;
-      margin: 20px 0px 20px 0px;
+      max-height: 50vh;
+      margin: 20px 0 2px 0;
       overflow: auto;
       border: 1px var(--border-color) solid;
     }
@@ -596,17 +683,18 @@ main {
       .histQuizListItem {
         display: flex;
         flex-direction: column;
-        background-color: var(--quiz-background-color);
+        background-color: var(--hist-quiz-list-item);
         border-bottom: 1px var(--border-color) dashed;
         transition: background-color .5s;
         width: 100%;
         padding: 10px 5px;
       }
       .histQuizListItem:last-child {
-        border: 0px var(--border-color) solid;
+        border: 0 v(--border-color) solid;
       }
       .histQuizListItem:hover {
-        background-color: var(--sub-background-color);
+
+        background-color: var(--hist-quiz-list-item-active);
       }
           .histQuizListItem__text {
             font-size: 17px;
@@ -629,7 +717,7 @@ main {
       .inactiveQuestionTextContainer {
         display: flex;
         flex-direction: column;
-        margin: 10px 0px 25px;
+        margin: 10px 0 2px;
       }
         .inactiveQuestionText {
           display: flex;
@@ -663,7 +751,6 @@ main {
     position:absolute;
     left:-30%;
     display: grid;
-    position: relative;
   }
   .confirm-box__content > span {
     text-align: center;
@@ -676,7 +763,7 @@ main {
     height: 80%;
   }
   .userStatsContent {
-    background-color: var(--sub-background-color);
+    background-color: var(--user-stats-content);
     display:  flex;
     flex-direction: column;
     justify-content: center;
@@ -701,7 +788,7 @@ main {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      padding: 10px 0px 10px 10px;
+      padding: 10px 0 1px 10px;
     }
       .userStatsResultsCardTitle {
         font-size: 30px;
@@ -719,31 +806,13 @@ main {
           font-size: 24px;
         }
         .userStatsResultsCardSep {
-          margin: 0px 10px;
+          margin: 0 1px;
         }
         .userStatsResultsCardPct {
           font-size: 24px;
-          font-style: italic;
         }
-  /* UserStatsTabset */
+/* UserStatsTabset */
   .tabsetContainer { 
     display: flex;
     width: 90%;
-  }
-  .tabsetBtn {
-    padding: .5% 1%;
-    border-radius: 10px 10px 0px 0px;
-    border: 1px solid var(--border-color);
-    border-bottom: 0;
-    cursor: pointer;
-    background-color: var(--header-color-2);
-    color: var(--button-border-color)
-  }
-  .tabsetBtn:hover, .activeTabsetBtn {
-    background-color: var(--header-color-1);
-    color: var(--banner-background-color);
-  }
-  .activeTabsetBtn {
-    position: relative;
-    top: 1px;
   }

@@ -110,37 +110,39 @@ const Quiz = () => {
   }
 
   return(
-    <main>
+    <>
       <Header negateMetrics={true}/>
-      <div> {/*
-        Don't delete this div - 
-        it is required in order to ensure quizContainer fits screen properly 
-      */}
-        <div className="quizContainer">
-          {activeQuiz && 
-            <div className="quizDetail">
-              <QuizHeader quizName={activeQuiz.quizName} subject={activeQuiz.subject} />
-                <form className="quizForm" onSubmit={submitAnswer}>
-                  {displayQuestion(questionIndex)}
-                  <div className="quizFormProgressBarContainer">
-                    <div className="quizFormProgressBar">
-                      {activeQuiz.shuffledQuestions.map((question, index) => <div className={`quizFormProgressBarBlock ${questionIndex > index ? " activeBlock" : ""}`} key={index}></div>)}
+      <main>
+        <div> {/*
+          Don't delete this div - 
+          it is required in order to ensure quizContainer fits screen properly 
+        */}
+          <div className="quizContainer">
+            {activeQuiz && 
+              <div className="quizDetail">
+                <QuizHeader quizName={activeQuiz.quizName} subject={activeQuiz.subject} />
+                  <form className="quizForm" onSubmit={submitAnswer}>
+                    {displayQuestion(questionIndex)}
+                    <div className="quizFormProgressBarContainer">
+                      <div className="quizFormProgressBar">
+                        {activeQuiz.shuffledQuestions.map((question, index) => <div className={`quizFormProgressBarBlock ${questionIndex > index ? " activeBlock" : ""}`} key={index}></div>)}
+                      </div>
                     </div>
-                  </div>
-                  <div className="btnContainer btnContainerDual">
-                    <button className="quizNavButton colorBtn" onClick={exitHandler}>Exit Quiz</button>  
-                    <button className="quizNavButton colorBtn">
-                      {questionIndex === (activeQuiz.shuffledQuestions.length - 1) ? "Finish" : 
-                        "Next Question"}
-                    </button>
-                  </div>
-                  <p className="userMessage">{messageText}</p>
-                </form>
-            </div>
-          }
+                    <div className="btnContainer btnContainerDual">
+                      <button className="quizNavBtn cautionBtn" onClick={exitHandler}>Exit Quiz</button>  
+                      <button className="quizNavBtn colorBtn">
+                        {questionIndex === (activeQuiz.shuffledQuestions.length - 1) ? "Finish" : 
+                          "Next Question"}
+                      </button>
+                    </div>
+                    <p className="userMessage">{messageText}</p>
+                  </form>
+              </div>
+            }
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
 export default Quiz;
