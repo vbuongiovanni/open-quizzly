@@ -4,11 +4,12 @@ const TopicResultsSummary = props => {
   const rankTopics = (histPerformance) => {
     return histPerformance.sort((a, b) => a.percentCorrect < b.percentCorrect ? 1 : -1)
           .map((element, index) => {
+            const {percentCorrect} = element;
+            const roundedPct = Math.round(percentCorrect*1000)/10
             const className = index === 0 ? "best" : index === (histPerformance.length - 1) ? "worst" : ""
-            return <p className={className} key={index}>{element.topicName}: {element.percentCorrect * 100}% Correct</p>
+            return <p className={className} key={index}>{element.topicName}: {roundedPct}% Correct</p>
           })
   }
-
   return (
     <>
       {rankTopics(histPerformance)}

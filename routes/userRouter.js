@@ -115,20 +115,19 @@ const quizModel = require("../models/quiz");
     userRouter.post("/summary/:userId", (req, res, next) => {  
       const {userName, password} = req.body;
 
-      userModel.find({userName : userName}, (err, users) => {
+      userModel.findOne({userName : userName}, (err, user) => {
         if (err) {
           res.status(500);
           return next(err);
         }
 
         // If user doesn't exist, throw error:
-        if (users.length === 0) {
+        if (user.length === 0) {
           res.status(401);
           const err = new Error("User not found or credentials don't match. Please try again or create a new account.");
           return next(err);
         // otherwise, check password:
         } else {
-          const [user] = users;
           // if passwords match, then return user details
           if (user.password === password){
             // create array of results, by quiz & topic name
@@ -137,7 +136,7 @@ const quizModel = require("../models/quiz");
               topicName : result.topicName,
               isCorrect : result.userAnswer === result.correctAnswer ? 1 : 0
             }));
-            // aggregate results by quizz ID and topic name
+            // aggregate results by quiz ID and topic name
             const aggregated = dl
               .groupby("quizId", "topicName")
               .execute(quizSummary)
@@ -161,14 +160,27 @@ const quizModel = require("../models/quiz");
               }
             });
 
-            res.send({
-              results : user.results, 
-              summaryStats,
-              globalStats : {
-                globalTotal,
-                globalCorrectTotal
-              }
-            });
+            quizModel.find({}, (err, quizzes) => {
+              const {results} = user;
+              const namedResults = results.map(result => {
+                const {quizId} = result;
+                const {quizName, subject} = quizzes.find(quiz => quiz._id.toString() === quizId)
+                return {
+                  quizName,
+                  subject,
+                  ...result
+                }
+              })
+              res.send({
+                results : namedResults, 
+                summaryStats,
+                globalStats : {
+                  globalTotal,
+                  globalCorrectTotal
+                }
+              });
+            })
+            
           } else {
             // otherwise, throw error
             res.status(401);

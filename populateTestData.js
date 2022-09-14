@@ -1,29 +1,5 @@
 const axios = require("axios");
 
-// load template quiz
-const reactDesignPatternsQuiz = require("./quiz-content/Design Patterns in React.json")
-const html5Quiz = require("./quiz-content/HTML5.json")
-
-const unpackQuizData = quizData => {
-    const {quizName, quizSubject} = quizData;
-    let topics = Object.values(quizData.topics);
-    topics = topics.map(topic => ({...topic, questions : Object.values(topic.questions)}))
-    const quizDetails = {
-        quizName : quizName,
-        subject : quizSubject,
-        topics : topics
-    }
-    return (quizDetails);
-}
-
-axios.post("http://localhost:9000/quiz/add/", unpackQuizData(reactDesignPatternsQuiz))
-    .then(res => res.data)
-    .catch(err => console.log(err))
-
-axios.post("http://localhost:9000/quiz/add/", unpackQuizData(html5Quiz))
-    .then(res => res.data)
-    .catch(err => console.log(err))
-
 // define functions to load mock-data
 
 const populateUser = async (userName, password) => {
@@ -141,15 +117,16 @@ const populateQuizResult = async (userName, password) => {
 
 // populate 5 quizs:
     
-    populateQuiz("A Sample Quiz");
-    populateQuiz("Another Sample Quiz");
-    populateQuiz("Simple Math test");
-    populateQuiz("Different simple math test");
-    populateQuiz("Math Test");
-    populateQuiz("Just a math test");
-    populateQuiz("Yet, another quiz");
-    populateQuiz("Math quiz");
-    populateQuiz("test quiz");
+    populateQuiz("Just a Sample Quiz");
+    // populateQuiz("Another Sample Quiz");
+    // populateQuiz("Simple Math test");
+    // populateQuiz("Different simple math test");
+    // populateQuiz("Math Test");
+    // populateQuiz("Just a math test");
+    // populateQuiz("Yet, another quiz");
+    // populateQuiz("Math quiz");
+    // populateQuiz("test quiz");
 
 // run recursive functions to load user tables/result arrays
     loadUserCollection(0);
+

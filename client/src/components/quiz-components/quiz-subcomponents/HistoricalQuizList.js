@@ -1,6 +1,5 @@
 const HistoricalQuizList = props => {
   const {quizGrouping, handleQuizSelect, togglePrevResults} = props;
-
   return (
     <>
       <p className="spacerText">Select a historical quiz below see your feedback</p>
@@ -11,10 +10,7 @@ const HistoricalQuizList = props => {
           return (
             <div key={quiz.sessionId} id={quiz.sessionId} onClick={handleQuizSelect} className="histQuizListItem btn">
               <p className="histQuizListItem__pair histQuizListItem__text">
-                <span className="histQuizListItem__label">Quiz Name: </span>
-                <span>{quiz.quizId}</span>
-              </p>
-              <p className="histQuizListItem__pair histQuizListItem__text">
+                <span className="histQuizListItem__label">Date Taken: </span>
                 <span>{prettyDate}</span>
               </p>
               <p className="histQuizListItem__pair histQuizListItem__text">
@@ -22,7 +18,7 @@ const HistoricalQuizList = props => {
                 <span>{quiz.score}%</span>
               </p>
               <p className="emphasizedText histQuizListItem__text">
-                Answered {quiz.correctAnswers} questions correctly out of {quiz.totalQuestions} attempted
+                Answered {quiz.correctAnswers} questions correctly out of {quiz.totalQuestions} the attempted
               </p>
             </div>
           )

@@ -182,8 +182,8 @@ const QuizCreator = () => {
       <div className="quizContainer">
         <form onSubmit={submitNewQuiz} className="quizCreatorForm">
           <div className="quizDetailTitle creatorTitle">
-            <input type="text" className="creatorQuizName creatorInput" onChange={handleQuizDetailChange} placeholder="Quiz Name" maxlength="22" name="quizName" value={quizDetails.quizName} required/>
-            <input type="text" className="creatorQuizSubject creatorInput" onChange={handleQuizDetailChange} placeholder="Subject" maxlength="22" name="subject" value={quizDetails.subject} required/>
+            <input type="text" className="creatorQuizName creatorInput" onChange={handleQuizDetailChange} placeholder="Quiz Name" maxLength="22" name="quizName" value={quizDetails.quizName} required/>
+            <input type="text" className="creatorQuizSubject creatorInput" onChange={handleQuizDetailChange} placeholder="Subject" maxLength="22" name="subject" value={quizDetails.subject} required/>
           </div>
           <div className="topicCreatorContainerSpacer">
           {
