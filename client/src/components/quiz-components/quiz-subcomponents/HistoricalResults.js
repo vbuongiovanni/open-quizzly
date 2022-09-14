@@ -12,6 +12,8 @@ const HistoricalResults = props => {
 
   const [results, setResults] = useState([])
 
+  
+
   // fetch and set state of 'results' from backend.
   useEffect(() => {
     const requestBody = {
@@ -21,8 +23,8 @@ const HistoricalResults = props => {
     axios.post("/user/summary/" + userId, requestBody)
       .then(res => setResults(res.data.results))
       .catch(err => console.log(err))
-  }, [userName, userId, password])
-
+    }, [userName, userId, password])
+    
   const togglePrevResults = props.togglePrevResults;
   
   const sessionSet = new Set(results.filter(result => result.quizId === quizId).map(session => session.sessionId))
@@ -37,13 +39,17 @@ const HistoricalResults = props => {
     const correctAnswers = questions.reduce((prev, curr) => prev + (curr.userAnswer === curr.correctAnswer ? 1 : 0), 0)
     const totalQuestions = questions.length
 
+    const {quizId, quizName, subject} = results.find(result => result.sessionId === sessionId);
+
     quizGrouping.push({
       sessionId,
       correctAnswers,
       totalQuestions,
       score : Math.round((correctAnswers / totalQuestions) * 10000)/100,
       questions : questions,  
-      quizId : results.find(result => result.sessionId === sessionId).quizId,
+      quizId,
+      quizName,
+      subject,
       dateTime : new Date(year, month, day, hour, minute)
     })
   }

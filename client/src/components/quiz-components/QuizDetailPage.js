@@ -86,6 +86,7 @@ const QuizDetailPage = () => {
     toggleCheckbox,
     togglePrevResults
   }
+
   
   return(
     <main>

@@ -21,7 +21,8 @@ const Quiz = () => {
   const navigate = useNavigate();
 
   const handleAnswerSelect = e => {
-    setAnswerInput(e.target.value)
+    const {value, id} = e.target
+    setAnswerInput(value === undefined ? id : value)
     setMessageText("")
   }
 
@@ -88,10 +89,10 @@ const Quiz = () => {
         <p className="questionText">{questionText}</p>
         {answers.map((answer, index) => {
           return (
-            <div className="questionContainer" key={index}>
+            <div id={index} onClick={handleAnswerSelect} className="questionContainer" key={index}>
               <div className="questionInputContainer">
                 <input 
-                  className="radioInput"
+                  className="radioInput questionTextContainerClickable"
                   type="radio"
                   value={index}
                   checked={parseInt(answerInput) === index}
@@ -99,8 +100,8 @@ const Quiz = () => {
                   onChange={handleAnswerSelect}
                 />
               </div>
-              <div className="questionTextContainer">
-                <p className="answerText">{answer}</p>
+              <div id={index} onClick={handleAnswerSelect} className="questionTextContainer questionTextContainerClickable">
+                <p id={index} onClick={handleAnswerSelect}  className="answerText">{answer}</p>
               </div>
             </div>
           )

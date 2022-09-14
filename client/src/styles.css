@@ -516,7 +516,7 @@ main {
 
     .questionText {
       font-weight: 600;
-      font-size: 25px;
+      font-size: 23px;
       margin-bottom: 20px;
       height: 100px;
     }
@@ -538,6 +538,9 @@ main {
       .questionTextContainer {
         display: flex;
       }
+        .questionTextContainerClickable {
+          cursor: pointer;
+        }
         .answerText {
           font-size: 20px;
           text-align: justify;
@@ -591,16 +594,8 @@ main {
         }
         .activeBlock {
           background-color: var(--progress-bar-block-color);
+          border-radius: 0px;
         }
-      .activeBlock {
-        position: relative;
-        right: 5px;
-      }
-      .activeBlock:first-child {
-        padding-right: 0px;
-        position: relative;
-        right: 0px;
-      }
 
 /*-- Quiz Creator Form ---*/
 .quizCreatorForm {

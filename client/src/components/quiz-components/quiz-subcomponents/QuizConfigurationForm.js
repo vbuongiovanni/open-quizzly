@@ -21,11 +21,17 @@ const QuizConfigurationForm = props => {
       .catch(err => console.log(err))
   }, [userId, quizId])
 
+  console.log(histPerformance.length)
+
   return (
     <>
       <TopicResultsSummary histPerformance={histPerformance}/>
       <div className='quizDetailResultsBtnContainer'>
-        <button className="quizConfigPrevViewBtn colorBtn" onClick={togglePrevResults}>See historical Results</button>
+        {
+          histPerformance.length !== 0 ? 
+          <button className="quizConfigPrevViewBtn colorBtn" onClick={togglePrevResults}>See historical Results</button> : 
+          <button className="quizConfigPrevViewBtn deactivatedBtn" onClick={() => {}}>See historical Results</button>
+        }
       </div>
       <form className='quizConfig' onSubmit={startQuiz}>
         <p>Select the topics you would like to be included in the quiz:</p>
