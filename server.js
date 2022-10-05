@@ -25,7 +25,7 @@ require("dotenv").config();
 // test response - delete me after initial commit.
     app.get("/test", (req, res) => {
         res.send("Express server says... I am listening! on port 9000!");
-    })
+    });
 
 // setup error handler - relay error message to client via object
     app.use((err, req, res, next) => {
@@ -33,7 +33,7 @@ require("dotenv").config();
             res.status(err.status);
         }
         return res.send({errMsg : err.message});
-    })
+    });
 
 // start server
     app.listen(9000, () => console.log("Express server is listening on port 9000."));
