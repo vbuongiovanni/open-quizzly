@@ -24,4 +24,4 @@ const quizSchema = new Schema({
   }
 });
 
-module.exports = model("quiz", quizSchema);
+module.exports = model("Quiz", quizSchema);
