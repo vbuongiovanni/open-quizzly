@@ -1,20 +1,17 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from "axios";
+import { useParams } from 'react-router-dom';
+import {AppContext} from "./../../context/AppContext";
+import {QuizContext} from "./../../context/QuizContext";
 import Header from "../Header";
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 import QuizConfigurationForm from './quiz-subcomponents/QuizConfigurationForm';
 import HistoricalResults from './quiz-subcomponents/HistoricalResults';
 
-import {QuizContext} from "./QuizContext";
-
 const QuizDetailPage = () => {
 
   const {quizId} = useParams();
+  const {getQuizDetails, generateQuiz, navCallbacks : {navToMenu, navToActiveQuiz}} = useContext(AppContext);
   const {setActiveQuiz} = useContext(QuizContext);
-
-  // init navigate object
-  const navigate = useNavigate();
 
   // init local state of QuizDetailPage
   const [prevResultsView, setPrevResultsView] = useState(false);
@@ -24,12 +21,7 @@ const QuizDetailPage = () => {
 
   useEffect(() => {
     // get quiz details:
-    axios.get("/quiz/" + quizId)
-      .then(res => {
-        setQuizDetails(res.data)
-        setSelectedTopics(res.data.topicSelections)
-      })
-      .catch(err => console.log(err))
+    getQuizDetails(quizId, setQuizDetails, setSelectedTopics)
   }, [quizId])
 
   const togglePrevResults = () => {
@@ -66,22 +58,15 @@ const QuizDetailPage = () => {
                             return name;
                           })
       }
-      axios.post("/quiz/generate/" + quizConfiguration.selectedQuizId, quizConfiguration)
-        .then(res => {
-          setActiveQuiz(res.data)
-        })
-        .catch(err => console.log(err))
-      navigate(`/quiz/active/${quizId}`)
+      generateQuiz(quizId, setActiveQuiz, quizConfiguration);
+      navToActiveQuiz(quizId);
     } else {
       setMessageText("Please select at least one topic.")
     }
   }
 
-  const handleBack = () => {
-    navigate("/menu/")
-  }
   const quizConfigHandlers = {
-    handleBack,
+    navToMenu,
     startQuiz,
     toggleCheckbox,
     togglePrevResults

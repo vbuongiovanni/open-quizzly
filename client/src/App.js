@@ -1,5 +1,6 @@
-import React from "react";
-import {Route, Routes} from "react-router-dom";
+import {React, useContext} from "react";
+import {Route, Routes, Navigate} from "react-router-dom";
+import { UserContext } from "./context/UserContext";
 import Login from "./components/login-components/Login";
 import MainMenu from "./components/MainMenu";
 import QuizCreator from "./components/QuizCreator";
@@ -9,16 +10,14 @@ import Quiz from "./components/quiz-components/Quiz";
 import "./styles.css";
 
 const App = () => {
-
+  const {token} = useContext(UserContext).credentials;
+  
   return (
     <>
       <Routes>
+      <Route path="/" element={!token ? <Login/> : <Navigate to="/menu"/>}/>
         <Route
-            path="/"
-            element={<Login/>}
-        />
-        <Route
-            path="/menu/"
+            path="/menu"
             element={<MainMenu/>}
         />
         <Route

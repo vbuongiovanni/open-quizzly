@@ -1,24 +1,21 @@
 import {useContext, useState} from "react";
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from "axios";
+import { useParams } from 'react-router-dom';
 import {confirm} from "react-confirm-box";
-import {QuizContext} from "./QuizContext";
-import {UserContext} from "../UserContext";
+import {QuizContext} from "../../context/QuizContext";
+import {AppContext} from "../../context/AppContext";
 import Header from "../Header";
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 
 const Quiz = () => {
 
   const {activeQuiz} = useContext(QuizContext);
-  const {credentials} = useContext(UserContext);
+  const {postAnswer, navCallbacks : {navToMenu}} = useContext(AppContext);
   
   const {quizId} = useParams();
 
   const [questionIndex, setQuestionIndex] = useState(0)
   const [answerInput, setAnswerInput] = useState(null);
   const [messageText, setMessageText] = useState("");
-
-  const navigate = useNavigate();
 
   const handleAnswerSelect = e => {
     const {value, id} = e.target
@@ -42,17 +39,13 @@ const Quiz = () => {
         correctAnswer : answeredQuestion.question.correctAnswer
       }
       const requestBody = {
-        userName : credentials.userName,
-        password : credentials.password,
         newAnswer
       }
-      // find user and post answer:
-      axios.post(`/user/answer/${credentials._id}`, requestBody)
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err))
+      // post answer
+      postAnswer(requestBody);
       // if user is on final question, navigate to main, otherwise iterate index val
       if (questionIndex + 1 === activeQuiz.shuffledQuestions.length) {
-        navigate("/menu/");
+        navToMenu();
       } else {
         setQuestionIndex(prevIndex => prevIndex + 1);
         setAnswerInput(null)
@@ -70,9 +63,8 @@ const Quiz = () => {
       }
     }
     const userRes = await confirm("Are you sure you want to exit the quiz?", options);
-    console.log(userRes)
     if (userRes) {
-      navigate("/menu/")
+      navToMenu();
     }
   }
   const exitHandler = e => {
@@ -80,13 +72,14 @@ const Quiz = () => {
     confirmExit()
     return false;
   }
-
+  
   // function to return question component, given an index number
   const displayQuestion = (questionNumber) => {
     const {questionText, answers} = activeQuiz.shuffledQuestions[questionNumber].question;
+    const {topicName} = activeQuiz.shuffledQuestions[questionNumber];
     return (
       <div>
-        <p className="questionText">{questionText}</p>
+        <p className="questionText" id={topicName}>{questionText}</p>
         {answers.map((answer, index) => {
           return (
             <div id={index} onClick={handleAnswerSelect} className="questionContainer" key={index}>

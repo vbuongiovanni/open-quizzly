@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import {BrowserRouter} from "react-router-dom";
-import { AppContextProvider } from "./components/AppContext";
-import { UserContextProvider } from "./components/UserContext";
-import { QuizContextProvider } from "./components/quiz-components/QuizContext";
+import { AppContextProvider } from "./context/AppContext";
+import { UserContextProvider } from "./context/UserContext";
+import { QuizContextProvider } from "./context/QuizContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

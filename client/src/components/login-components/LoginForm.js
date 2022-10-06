@@ -1,58 +1,21 @@
-import {useState, useContext} from "react";
-import {useNavigate} from "react-router-dom";
-import { UserContext } from "../UserContext";
-import axios from "axios";
+import {useState} from "react";
 
 const LoginForm = (props) => {
-  const {toggleAccCreation} = props
-  const navigate = useNavigate();
+  const {toggleAccCreation, loginMessage, setLoginMessage, setCredentials, userAuthReq, loginFormHandler} = props;
   const [loginFormInputs, setLoginFormInputs] = useState({
-    userName : "",
+    username : "",
     password : ""
   });
-  const {setCredentials} = useContext(UserContext);
-  const [loginMessage, setLoginMessage] = useState("")
 
   // handler for form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/user", loginFormInputs)
-      .then(res => {
-        if (res.data !== undefined) {
-          setCredentials({...res.data});
-          navigate("/menu/");
-          localStorage.setItem("credentials", JSON.stringify(res.data))
-        }
-      })
-      .catch(err => setLoginMessage(err.response.data.errMsg))
+    userAuthReq("login", loginFormInputs, setCredentials, setLoginMessage);
   };
   
   // handler func for inputs
   const handleChange = (e) => {
-    const {name, value} = e.target;
-    if (name === "userName") {
-      const pattern = /\w/
-      const restrictedChars = value.split("").every(element => {
-        return pattern.test(element);
-      })
-      if (!restrictedChars) {
-        setLoginMessage("Please use only alphanumeric characters for username.")
-      } else {
-        setLoginMessage("")
-        setLoginFormInputs(prevInputs => ({...prevInputs, [name] : value}))
-      }
-    } else {
-      const pattern = /(\w|!|@|#|\?)/
-      const restrictedChars = value.split("").every(element => {
-        return pattern.test(element);
-      })
-      if (!restrictedChars) {
-        setLoginMessage("Valid characters password include only alphanumeric and _, !, @, #, $, and ?")
-      } else {
-        setLoginMessage("")
-        setLoginFormInputs(prevInputs => ({...prevInputs, [name] : value}))
-      }
-    }
+    loginFormHandler(e.target, setLoginFormInputs, setLoginMessage);
   };
   
   return(    
@@ -62,7 +25,7 @@ const LoginForm = (props) => {
         <input 
           className="textInput"
           type="text"
-          name="userName"
+          name="username"
           placeholder="Username"
           maxLength="15"
           minLength="2"

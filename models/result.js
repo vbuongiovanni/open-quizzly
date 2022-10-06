@@ -2,24 +2,53 @@ const mongoose = require("mongoose");
 const {Schema, model} = mongoose;
 
 const resultsSchema = new Schema({
-  user : {
+  userId : {
     type : Schema.Types.ObjectId,
     required : true,
     ref : "User",
   },
-  quiz : {
+  quizId : {
     type : Schema.Types.ObjectId,
     required : true,
     ref : "Quiz",
   },
-  questions : [{
-    topic : String,
-    questionText : String,
-    questionNumber : Number,
-    userAnswer : String,
-    dateAnswer : Date,
-    correctAnswer : String,
-    incorrectAnswers : []
-  }]
+  sessionId : {
+    type : String,
+    required : true
+  },
+  topicName : {
+    type : String,
+    required : true
+  },
+  questionText : {
+    type : String,
+  },
+  questionNumber : {
+    type : Number,
+  },
+  userAnswer : {
+    type : String,
+  },
+  isCorrect : {
+    type : Number
+  },
+  dateAnswer : {
+    type : Date,
+    default : Date.now,
+  },
+  correctAnswer : {
+    type : String,
+  },
+  incorrectAnswers : [
+    {
+      type : String
+    }
+  ]
 });
+resultsSchema.pre("save", function(next) {
+  const result = this;
+  result.isCorrect = result.correctAnswer === result.userAnswer ? 1 : 0;
+  next()
+})
+
 module.exports = model("Result", resultsSchema);

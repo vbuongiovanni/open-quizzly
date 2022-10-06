@@ -1,11 +1,14 @@
 import {useEffect, useState, useContext} from "react";
-import axios from "axios";
-import {UserContext} from "../../UserContext";
+import {UserContext} from "./../../../context/UserContext";
+import {AppContext} from "./../../../context/AppContext";
 import TopicResultsSummary from "./TopicResultsSummary";
 
 const QuizConfigurationForm = props => {
   const {quizId, selectedTopics, quizConfigHandlers} = props;
-  const {handleBack, startQuiz, toggleCheckbox, togglePrevResults} = quizConfigHandlers;
+  const {startQuiz, toggleCheckbox, togglePrevResults, navToMenu} = quizConfigHandlers;
+
+  const {getUserQuizPerformance} = useContext(AppContext);
+
 
   const {credentials} = useContext(UserContext);
   const {_id : userId} = credentials;
@@ -14,14 +17,8 @@ const QuizConfigurationForm = props => {
 
   useEffect(() => {
     // get historical performance of quiz:
-    axios.get(`/user/history/${userId}?quizId=${quizId}`)
-      .then(res => {
-        setHistPerformance(res.data)
-      })
-      .catch(err => console.log(err))
+    getUserQuizPerformance(quizId, setHistPerformance)
   }, [userId, quizId])
-
-  console.log(histPerformance.length)
 
   return (
     <>
@@ -53,7 +50,7 @@ const QuizConfigurationForm = props => {
           })
         }
         <div className='btnContainer btnContainerDual'>
-          <button className="colorBtn quizConfigBtn" onClick={handleBack}>Back</button>
+          <button className="colorBtn quizConfigBtn" onClick={navToMenu}>Back</button>
           <button className="colorBtn quizConfigBtn" >Start Quiz</button>
         </div>
       </form>

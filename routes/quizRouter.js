@@ -9,7 +9,23 @@ quizRoute.get("/", (req, res, next) => {
       res.status(500);
       return next(err);
     }
-      res.send(quizzes);
+      const quizCardData = quizzes.map(quiz => {
+        const {_id, quizName, subject, topics} = quiz;
+        const topicsText = topics.map(topic => {
+          const {topicName} = topic;
+          let properTopicName = "";
+          for (let c in topicName) {
+            if (c === "0" || topicName[c - 1] === " ") {
+              properTopicName = properTopicName += topicName[c].toUpperCase()
+            } else {
+              properTopicName = properTopicName += topicName[c]
+            }
+          }
+          return properTopicName;
+        }).join(", ");
+        return {_id, quizName, subject, topicsText};
+      })
+      res.send(quizCardData);
   })
 })
 
@@ -32,6 +48,8 @@ quizRoute.get("/:quizId", (req, res, next) => {
 quizRoute.post("/generate/:quizId", (req, res, next) => {   
   const quizConfiguration = req.body;
   const {quizId} = req.params;
+  console.log(quizConfiguration)
+  console.log(quizId)
   /* Randomize array in-place using Durstenfeld shuffle algorithm */
   // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
   const shuffleArray = array => {
@@ -96,7 +114,7 @@ quizRoute.post("/add", (req, res, next) => {
   // validate that quizName isn't already taken 
   quizModel.findOne({quizName : quizName}, (err, quiz) => {
     if (quiz) {
-      const errMsg = new Error(`Looks like "${quizName}" is already taken as a quiz name... try to come up with a new than that has a little more 'pizzazz'!`);
+      const errMsg = new Error(`Looks like "${quizName}" is already taken as a quiz name... try to come up with a different name that has a little more 'pizzazz'!`);
       res.status(500);
       return next(errMsg);
     } else {

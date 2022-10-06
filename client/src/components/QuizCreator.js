@@ -1,6 +1,5 @@
-import {useState} from "react";
-import { useNavigate } from "react-router-dom"
-import axios from "axios";
+import {useState, useContext} from "react";
+import {AppContext} from "./../context/AppContext";
 import Header from "./Header";
 import NavBar from './NavBar';
 import QuizTopicInput from "./quiz-creator-components/QuizTopicInput";
@@ -8,8 +7,8 @@ import {confirm} from "react-confirm-box";
 
 const QuizCreator = () => {
   
-  // initialize navigate object
-  const navigate = useNavigate();
+  // 
+  const {postQuiz} = useContext(AppContext)
   
   // initialize question and topic objects
     const initQuestion = {
@@ -149,18 +148,8 @@ const QuizCreator = () => {
     const submitNewQuiz = (e) => {
       e.preventDefault();
       const {quizName, subject} = quizDetails;
-      const requestBody = {quizName, subject, topics : topics};
-      axios.post(`/quiz/add`, requestBody)
-          .then(res => {
-            console.log(res)
-            navigate("/menu/")
-          })
-          .catch(err => {
-            setMessageText(err.response.data.errMsg)
-            setInterval(() => {
-              setMessageText("")
-            }, 10000)
-          })
+      const newQuizData = {quizName, subject, topics : topics};
+      postQuiz(newQuizData, setMessageText)
     }
 
   // 
