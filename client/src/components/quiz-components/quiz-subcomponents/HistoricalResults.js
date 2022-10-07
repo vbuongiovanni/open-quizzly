@@ -1,14 +1,12 @@
 import { useState, useContext, useEffect} from "react";
-import {UserContext} from "../../UserContext";
-import axios from "axios";
+import {AppContext} from "./../../../context/AppContext";
 import HistoricalQuizList from "./HistoricalQuizList";
 import HistoricalQuizDetail from "./HistoricalQuizDetail";
 
 const HistoricalResults = props => {
   const {quizId} = props
 
-  const {credentials} = useContext(UserContext);
-  const {userName, password, userId} = credentials;
+  const {getUserSummaryStats} = useContext(AppContext);
 
   const [results, setResults] = useState([])
 
@@ -16,14 +14,11 @@ const HistoricalResults = props => {
 
   // fetch and set state of 'results' from backend.
   useEffect(() => {
-    const requestBody = {
-      userName : userName,
-      password : password,
-    }
-    axios.post("/user/summary/" + userId, requestBody)
-      .then(res => setResults(res.data.results))
-      .catch(err => console.log(err))
-    }, [userName, userId, password])
+    // getUserSummaryStats(setResults)
+    // axios.post("/user/summary/" + userId, requestBody)
+    //   .then(res => setResults(res.data.results))
+    //   .catch(err => console.log(err))
+    }, [])
     
   const togglePrevResults = props.togglePrevResults;
   

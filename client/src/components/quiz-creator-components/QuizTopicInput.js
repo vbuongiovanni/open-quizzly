@@ -20,7 +20,7 @@ const QuizTopicInput = (props) => {
   return (
     <div className="topicCreatorContainer">
       <p className="topicNameText">
-        {`Topic ${topicNumber}`} - <input type="text" id={topicNumber} maxlength="12" className="creatorInput" placeholder="Addition" onChange={handleTopicChange} value={topicName} name="topicName" required/>
+        {`Topic ${topicNumber}`} - <input type="text" id={topicNumber} maxLength="15" className="creatorInput" placeholder="Addition" onChange={handleTopicChange} value={topicName} name="topicName" required/>
       </p>
       <div className="questionCreatorContainer">
         {questions.map((question, index) => <QuizQuestionInput key={index} numQuestions={questions.length} topicNumber={topicNumber} questionData={question} handleDeleteQuestion={handleDeleteQuestion} handleQuestionChange={handleQuestionChange}/>)}

@@ -6,12 +6,6 @@ const jwt = require("jsonwebtoken");
 // initial Signup
 authRouter.post("/signup", (req, res, next) => {
   const {username, password, confirmPassword} = req.body;
-  if (password !== confirmPassword) {
-    res.status(403);
-    const err = new Error("Passwords must match.");
-    return next(err);
-  }
-
   User.findOne({username : username}, (err, user) => {
     if (err) {
       res.status(500);
@@ -34,7 +28,7 @@ authRouter.post("/signup", (req, res, next) => {
         }
         const token = jwt.sign(savedUser.removePassword(), process.env.SECRET);
         res.status(201);
-        res.send({user : savedUser.removePassword(), token});
+        res.send({token});
     });
   });
 });
@@ -65,7 +59,7 @@ authRouter.post("/login", (req, res, next) => {
       }
       const token = jwt.sign(user.removePassword(), process.env.SECRET);
       res.status(200);
-      res.send({user : user.removePassword(), token});
+      res.send({token});
     })
   })
 });

@@ -1,7 +1,6 @@
 import {useState, useEffect, useContext} from "react";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {UserContext} from "../UserContext";
+import {AppContext} from "./../../context/AppContext";
 import Header from "../Header";
 import NavBar from '../NavBar';
 import UserStatsTabset from "./UserStatsTabset";
@@ -12,9 +11,7 @@ const UserStats = () => {
   // create nav object
   const navigate = useNavigate();
 
-  // load and deconstruct context:
-    const {credentials} = useContext(UserContext);
-    const {userName, password, _id} = credentials
+    const {getUserGlobalStats, navCallbacks : {navToMenu}} = useContext(AppContext);
 
   // create state to contain global statistics data
     const [globalStats, setGlobalStats] = useState({
@@ -28,21 +25,8 @@ const UserStats = () => {
   
   // wrap http request in useEffect - single render
     useEffect(() => {
-      const requestBody = {
-        userName : userName,
-        password : password,
-      }
-      axios.post("/user/global/" + _id, requestBody)
-        .then(res => {
-          setGlobalStats(res.data)
-        })
-        .catch(err => console.log(err))
-    }, [userName, password, _id])
-
-  // handle nav to main menu
-    const navToMain = () => {
-      navigate("/menu/");
-    }
+      getUserGlobalStats(setGlobalStats)
+    }, [])
 
   // handle change between tabset
     const changeTabset = e => {
@@ -63,7 +47,7 @@ const UserStats = () => {
               <UserStatsTabset tabsetProps={tabsetProps}/>
               <UserStatsPane globalStats={globalStats} tabSelection={tabSelection}/>
             <div className="btnContainer btnContainerSingle">
-              <button className="colorBtn userStatsBtn" onClick={navToMain}>Back</button>
+              <button className="colorBtn userStatsBtn" onClick={navToMenu}>Back</button>
             </div>
           </div>
         </div>
