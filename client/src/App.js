@@ -8,6 +8,7 @@ import UserStats from "./components/user-statistics-components/UserStats";
 import QuizDetailPage from "./components/quiz-components/QuizDetailPage";
 import Quiz from "./components/quiz-components/Quiz";
 import "./styles.css";
+import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
   const {token} = useContext(UserContext).credentials;
@@ -15,27 +16,27 @@ const App = () => {
   return (
     <>
       <Routes>
-      <Route path="/" element={!token ? <Login/> : <Navigate to="/menu"/>}/>
+        <Route path="/" element={!token ? <Login/> : <Navigate to={"/menu"}/>}/>
         <Route
             path="/menu"
-            element={<MainMenu/>}
-        />
+            element={<ProtectedRoute token={token} redirectRoute="/"><MainMenu/></ProtectedRoute>}
+            />
         <Route
             path="/quiz/creator"
-            element={<QuizCreator/>}
-        />
+            element={<ProtectedRoute token={token} redirectRoute="/"><QuizCreator/></ProtectedRoute>}
+            />
         <Route
             path="/user/stats"
-            element={<UserStats/>}
-        />
+            element={<ProtectedRoute token={token} redirectRoute="/"><UserStats/></ProtectedRoute>}
+            />
         <Route
             path="/quiz/:quizId"
-            element={<QuizDetailPage/>}
-        />
+            element={<ProtectedRoute token={token} redirectRoute="/"><QuizDetailPage/></ProtectedRoute>}
+            />
         <Route
             path="/quiz/active/:quizId"
-            element={<Quiz/>}
-        />
+            element={<ProtectedRoute token={token} redirectRoute="/"><Quiz/></ProtectedRoute>}
+            />
       </Routes>
     </>
   );

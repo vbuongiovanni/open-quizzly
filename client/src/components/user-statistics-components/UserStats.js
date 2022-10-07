@@ -1,5 +1,4 @@
 import {useState, useEffect, useContext} from "react";
-import {useNavigate} from "react-router-dom";
 import {AppContext} from "./../../context/AppContext";
 import Header from "../Header";
 import NavBar from '../NavBar';
@@ -7,9 +6,6 @@ import UserStatsTabset from "./UserStatsTabset";
 import UserStatsPane from "./UserStatsPane";
 
 const UserStats = () => {
-
-  // create nav object
-  const navigate = useNavigate();
 
     const {getUserGlobalStats, navCallbacks : {navToMenu}} = useContext(AppContext);
 
