@@ -7,8 +7,8 @@ const Header = (props) => {
       </div>
       {!props.negateMetrics && 
         <div className="headerMetrics">
-          <h3>Correct Answers: {props.globalStats.globalCorrectTotal}</h3>
-          <h3>Total Answers: {props.globalStats.globalTotal}</h3>
+          <h3>Correct Answers: {props.globalStats.totalCorrect}</h3>
+          <h3>Total Answers: {props.globalStats.totalAnswers}</h3>
         </div>
       }
     </header>

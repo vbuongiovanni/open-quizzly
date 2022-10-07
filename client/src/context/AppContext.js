@@ -110,7 +110,7 @@ export const AppContextProvider = (props) => {
         const getUserSummaryStats = (stateSetter) => {
           authAxios.get(`/api/user/summary`)
             .then(res => {
-              stateSetter(res.data.globalStats)
+              stateSetter(res.data)
             })
             .catch(err => console.log(err))
         }
@@ -119,12 +119,10 @@ export const AppContextProvider = (props) => {
         const getUserGlobalStats = (stateSetter) => {
           authAxios.get(`/api/user/global`)
             .then(res => {
-              console.log(res.data)
               stateSetter(res.data)
             })
             .catch(err => console.log(err))
         }
-
 
       // request historical performance of a specific quiz:
         const getUserQuizPerformance = (quizId, stateSetter) => {
@@ -176,16 +174,16 @@ export const AppContextProvider = (props) => {
       // post new quiz
         const postQuiz = (newQuizData, userMsgSetter) => {
           authAxios.post(`/api/quiz/add`, newQuizData)
-          .then(res => {
-            console.log(res)
-            navToMenu()
-          })
-          .catch(err => {
-            userMsgSetter(err.response.data.errMsg)
-            setInterval(() => {
-              userMsgSetter("")
-            }, 10000)
-          })
+            .then(res => {
+              console.log(res)
+              navToMenu()
+            })
+            .catch(err => {
+              userMsgSetter(err.response.data.errMsg)
+              setInterval(() => {
+                userMsgSetter("")
+              }, 10000)
+            })
         }
         
 

@@ -39,7 +39,7 @@ const resultsSchema = new Schema({
   correctAnswer : {
     type : String,
   },
-  incorrectAnswers : [
+  answers : [
     {
       type : String
     }
