@@ -3,7 +3,7 @@ const quizRoute = express.Router();
 const quizModel = require("../models/quiz");
 
 // get all quizzes
-quizRoute.get("/", (req, res, next) => {    
+quizRoute.get("/", (req, res, next) => {
   quizModel.find({}, (err, quizzes) => {
     if (err) {
       res.status(500);
@@ -48,8 +48,6 @@ quizRoute.get("/:quizId", (req, res, next) => {
 quizRoute.post("/generate/:quizId", (req, res, next) => {   
   const quizConfiguration = req.body;
   const {quizId} = req.params;
-  console.log(quizConfiguration)
-  console.log(quizId)
   /* Randomize array in-place using Durstenfeld shuffle algorithm */
   // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
   const shuffleArray = array => {
@@ -127,7 +125,6 @@ quizRoute.post("/add", (req, res, next) => {
         return {topicName, topicNumber, questions}
       })
       const quizDetails = {quizName : quizName, subject, topics : cleanedTopics}
-      console.log(quizDetails)
       const newQuiz = new quizModel(quizDetails)
       newQuiz.save((err, savedQuiz) => {
         if (err) {
@@ -178,7 +175,6 @@ quizRoute.post("/mockQuiz/:newQuizName", (req, res, next) => {
     ],
     },
     ]}
-    console.log(quizDetails)
     const newQuiz = new quizModel(quizDetails)
     newQuiz.save((err, savedQuiz) => {
       if (err) {

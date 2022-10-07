@@ -5,7 +5,7 @@ const HistoricalQuizDetail = props => {
   return (
     <>
       <div className="inactiveQuiz">
-        {renderQuestions.questions.map((question, index) => {
+        {renderQuestions.map((question, index) => {
           return <HistoricalQuizQuestion key={index} question={question} questionNumber={index+1}/>
         })}
       </div>

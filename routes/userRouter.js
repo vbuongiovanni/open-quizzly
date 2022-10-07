@@ -2,7 +2,6 @@ const express = require("express");
 const dl = require("datalib");
 const userRouter = express.Router();
 const User = require("../models/user");
-const Quiz = require("../models/quiz");
 const Result = require("../models/result");
 const jwt_decode = require("jwt-decode");
 
@@ -54,20 +53,19 @@ const jwt_decode = require("jwt-decode");
       const jwt = req.get('Authorization').toString().replace("Bearer ", "").trim();
       const {_id : userId} = jwt_decode(jwt);
 
-      User.findOne({_id : userId}, (err, user) => {
+      Result.find({userId : userId}, (err, results) => {
         if (err) {
           res.status(500);
           return next(err);
         }
-
         res.send({
-          results : [], 
-          summaryStats : 0,
-          globalStats : {
-            globalTotal : 0,
-            globalCorrectTotal : 0
-          }
+          totalAnswers : results.length,
+          totalCorrect : results.reduce( (prev, curr) => curr.isCorrect + prev, 0)
         });
+
+      })
+
+      User.findOne({_id : userId}, (err, user) => {
 
         
         // // create array of results, by quiz & topic name
@@ -130,86 +128,71 @@ const jwt_decode = require("jwt-decode");
       const jwt = req.get('Authorization').toString().replace("Bearer ", "").trim();
       const {_id : userId} = jwt_decode(jwt);
 
-      User.findOne(
-        {_id : userId},
-        (err, user) => {
-          console.log(user)
+      Result
+        .find({userId : userId})
+        .populate("quizId")
+        .then((results, err) => {
           if (err) {
             res.status(500);
-            const err = new Error("Something went wrong. please log out and log back in.");
             return next(err);
-          } else {
-
-            res.send("Send High level summary stats about each topic, quiz, and subject.")
-
-            
-            // const {results} = user;
-            // // this joins in the quizName and Subject into the result array
-            // // note that I considered using .populate() for this, but I decided against it because
-            // // the common property that could be used to ref between the two collections is deeply nested
-            // Quiz.find({}, (err, quizzes) => {
-            //   const namedResults = results.map(result => {
-            //     const {quizId, totalCorrect, totalAttempted} = result;
-            //     const {quizName, subject} = quizzes.find(quiz => quiz._id.toString() === quizId)
-            //     return {
-            //       quizId,
-            //       quizName,
-            //       subject,
-            //       topic : result.topicName,
-            //       isCorrect : result.correctAnswer === result.userAnswer,
-            //     }
-            //   })
-            //   // Aggregate results by topics:
-            //     const aggregatedTopics = dl
-            //       .groupby("subject", "topic")
-            //       .execute(namedResults)
-            //   // Aggregate results by Subject:
-            //     const aggregatedSubjects = dl
-            //       .groupby("subject")
-            //       .execute(namedResults)
-            //   // Aggregate results by Quiz:
-            //     const aggregatedQuizzes = dl
-            //       .groupby("quizName")
-            //       .execute(namedResults)
-            //   // Create summary objects
-            //     // Topics
-            //       const summarizedTopics = aggregatedTopics.map(element => {
-            //         const totalCorrect = dl.sum(element.values.map(value => value.isCorrect));
-            //         const totalAttempted = element.values.length;
-            //         return {
-            //           subject : element.subject,
-            //           topic : element.topic,
-            //           totalCorrect,
-            //           totalAttempted
-            //         }
-            //       })
-            //     // Subject
-            //       const summarizedSubjects = aggregatedSubjects.map(element => {
-            //         const totalCorrect = dl.sum(element.values.map(value => value.isCorrect));
-            //         const totalAttempted = element.values.length;
-            //         return {
-            //           subject : element.subject,
-            //           totalCorrect,
-            //           totalAttempted
-            //         }
-            //       })
-            //     // Quiz
-            //       const summarizedQuizzes = aggregatedQuizzes.map(element => {
-            //         const totalCorrect = dl.sum(element.values.map(value => value.isCorrect));
-            //         const totalAttempted = element.values.length;
-            //         return {
-            //           quizName : element.quizName,
-            //           totalCorrect,
-            //           totalAttempted
-            //         }
-            //       })
-            //   res.send({
-            //     summarizedTopics,
-            //     summarizedSubjects,
-            //     summarizedQuizzes
-            //   })
-            // })
           }
+          const summarizedResults = results
+                    .map(result => {
+                      const resultObject = result.toObject();
+                      const {quizName, subject} = resultObject.quizId;
+                      delete resultObject.quizId;
+                      return {...resultObject, quizName, subject}
+                    });
+          // Aggregate results by topics:
+            const aggregatedTopics = dl
+                .groupby("subject", "topicName")
+                .execute(summarizedResults);
+          // Aggregate results by Subject:
+            const aggregatedSubjects = dl
+              .groupby("subject")
+              .execute(summarizedResults);
+          // Aggregate results by Quiz:
+            const aggregatedQuizzes = dl
+              .groupby("quizName")
+              .execute(summarizedResults);
+          // Create summary objects
+            // Topics
+              const summarizedTopics = aggregatedTopics.map(element => {
+                const totalCorrect = dl.sum(element.values.map(value => value.isCorrect));
+                const totalAttempted = element.values.length;
+                return {
+                  subject : element.subject,
+                  topic : element.topicName,
+                  totalCorrect,
+                  totalAttempted
+                }
+              });
+            // Subject
+              const summarizedSubjects = aggregatedSubjects.map(element => {
+                const totalCorrect = dl.sum(element.values.map(value => value.isCorrect));
+                const totalAttempted = element.values.length;
+                return {
+                  subject : element.subject,
+                  totalCorrect,
+                  totalAttempted
+                }
+              });
+            // Quiz
+              const summarizedQuizzes = aggregatedQuizzes.map(element => {
+                const totalCorrect = dl.sum(element.values.map(value => value.isCorrect));
+                const totalAttempted = element.values.length;
+                return {
+                  quizName : element.quizName,
+                  totalCorrect,
+                  totalAttempted
+                }
+              });
+            // send results
+            res.send({
+              summarizedSubjects,
+              summarizedQuizzes,
+              summarizedTopics
+            })
       })
     })
 
@@ -218,42 +201,43 @@ const jwt_decode = require("jwt-decode");
       const jwt = req.get('Authorization').toString().replace("Bearer ", "").trim();
       const {_id : userId} = jwt_decode(jwt);
       const {quizId} = req.query;
-      
-      User.findOne({_id : userId}, (err, user) => {
-        if (err) {
-          res.status(500);
-          const err = new Error("Something went wrong... please try to login again.");
-          return next(err);
-        }
 
-        res.send([{topicName : "", totalAnswers : 0, correctAnswers : 0, percentCorrect : 0}])
+      Result
+        .find({quizId : quizId, userId : userId}, (err, results) => {
+          if (err) {
+            res.status(500);
+            return next(err);
+          }
+          const summarizedResults = results
+                    .map(result => {
+                      const resultObject = result.toObject();
+                      const {quizName, subject} = resultObject.quizId;
+                      delete resultObject.quizId;
+                      return {...resultObject, quizName, subject}
+                    });
+          // Aggregate results by topics:
+            const aggregatedTopics = dl
+                .groupby("topicName")
+                .execute(summarizedResults);
+          // Create summary objects
+            // Topics
+              const summarizedTopics = aggregatedTopics
+                .map(element => {
+                  const correctAnswers = dl.sum(element.values.map(value => value.isCorrect));
+                  const totalAnswers = element.values.length;
+                  const percentCorrect = Math.round((correctAnswers / totalAnswers)*1000)/10;
+                  return {
+                    topic : element.topicName,
+                    correctAnswers,
+                    totalAnswers, 
+                    percentCorrect 
+                  }
+                })
+                .sort((a, b) => a.percentCorrect < b.percentCorrect ? 1 : -1)
 
-        // // get summary of all results 
-        // const quizSummary = user.results.filter(result => result.quizId === quizId).map(result => ({
-        //   topicName : result.topicName,
-        //   sessionId : result.sessionId,
-        //   isCorrect : result.userAnswer === result.correctAnswer ? 1 : 0
-        // }));
-
-        // // aggregate results by quiz ID and topic name
-        // const aggregated = dl
-        //   .groupby("topicName")
-        //   .execute(quizSummary)
-        
-        // // create historicalStats, showing the various statics of results
-        // const historicalStats = aggregated.map(element => {
-        //   const totalCorrect = dl.sum(element.values.map(value => value.isCorrect)) + 0.00;
-        //   const totalAnswered = element.values.length + 0.00;
-        //   return {
-        //     topicName : element.topicName,
-        //     totalAnswers : totalAnswered,
-        //     correctAnswers : totalCorrect, 
-        //     percentCorrect : Math.round((totalCorrect / totalAnswered) * 10000)/10000
-        //   }
-
-        // })
-        // res.send(historicalStats);
-      })
+            // send results
+              res.send(summarizedTopics)
+        });
     })
 
   // get historical results of a specific quizId for a given user.
@@ -261,17 +245,50 @@ const jwt_decode = require("jwt-decode");
       const jwt = req.get('Authorization').toString().replace("Bearer ", "").trim();
       const {_id : userId} = jwt_decode(jwt);
       const {quizId} = req.query;
-      
-      User.findOne({_id : userId}, (err, user) => {
+
+      Result.find({quizId : quizId, userId : userId}, (err, results) => {
         if (err) {
           res.status(500);
-          const err = new Error("Something went wrong... please try to login again.");
           return next(err);
         }
+        const sessionResults = results.map(element => {
+          const {topicName : topic, quizId, questionText, sessionId, userAnswer, correctAnswer, answers} = element;
+          const [year, month, day, hour, minute] = sessionId.split("_");
+          const dateTime = new Date(year, month, day, hour, minute);
+          return {
+            sessionId, 
+            dateTime,
+            topic, 
+            questionText,
+            correctAnswer, answers,
+            userAnswer
+          }
+        })
 
-        res.send("send ALL results pertaining to the quizId, shown in the query params")
+        const aggregatedSessions = dl
+          .groupby("sessionId")
+          .execute(results);
 
-      })
+        const sessionSummaries = aggregatedSessions
+          .map(aggResult => {
+            const {sessionId} = aggResult;
+            const [year, month, day, hour, minute] = sessionId.split("_");
+            const dateTime = new Date(year, month, day, hour, minute);
+            const correctAnswers = dl.sum(aggResult.values.map(value => value.isCorrect));
+            const totalAnswers = aggResult.values.length;
+            const percentCorrect = Math.round((correctAnswers / totalAnswers)*1000)/10;
+            return {
+              sessionId,
+              dateTime,
+              correctAnswers,
+              totalAnswers, 
+              percentCorrect 
+            }
+          })
+          .sort((a, b) => a.dateTime < b.dateTime ? 1 : -1)
+
+        res.send({sessionResults, sessionSummaries})
+      });
     })
 
 module.exports = userRouter;
