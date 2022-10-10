@@ -1,11 +1,13 @@
+import ScrollableListItem from "../../common-components/ScrollableListItem";
+import ScrollableListEntry from "../../common-components/ScrollableListEntry";
 const HistoricalQuizList = props => {
-  const {sessionSummaries, handleQuizSelect, togglePrevResults} = props;
+  const {sessionSummaries, setQuizSelection, togglePrevResults} = props;
   return (
     <>
       <p className="spacerText">Select a historical quiz below see your feedback</p>
       <div className="inactiveQuiz">
         {sessionSummaries.map(quiz => {
-          const {dateTime, sessionId, correctAnswers, percentCorrect, totalQuestions} = quiz;
+          const {dateTime, sessionId, correctAnswers, totalAnswers} = quiz;
           const dateTimeFormat = new Date(dateTime)
           const months = [
             "January", "February", "March", "April", "May", "June",
@@ -13,19 +15,11 @@ const HistoricalQuizList = props => {
           ];
           const prettyDate = `${months[dateTimeFormat.getMonth()]} ${dateTimeFormat.getDate()}, ${dateTimeFormat.getFullYear()}`
           return (
-            <div key={sessionId} id={sessionId} onClick={handleQuizSelect} className="histQuizListItem btn">
-              <p className="histQuizListItem__pair histQuizListItem__text">
-                <span className="histQuizListItem__label">Date Taken: </span>
-                <span>{prettyDate}</span>
-              </p>
-              <p className="histQuizListItem__pair histQuizListItem__text">
-                <span className="histQuizListItem__label">Score: </span>
-                <span>{percentCorrect}%</span>
-              </p>
-              <p className="emphasizedText histQuizListItem__text">
-                Answered {correctAnswers} questions correctly out of {totalQuestions} the attempted
-              </p>
-            </div>
+            <ScrollableListItem key={sessionId} id={sessionId} onClick={setQuizSelection} >
+              <ScrollableListEntry label={"Date Taken: "} value={prettyDate}/>
+              <ScrollableListEntry label={"Score: "} value={prettyDate}/>
+              <ScrollableListEntry label={""} value={`Answered ${correctAnswers} questions correctly out of ${totalAnswers} the attempted`} valueClassName={"emphasizedText"}/>
+            </ScrollableListItem>
           );
         })}
       </div>

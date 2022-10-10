@@ -27,6 +27,14 @@ export const AppContextProvider = (props) => {
       navigate("/menu");
     };
 
+    const navToQuizEditorList = () => {
+      navigate("/quiz/editor");
+    };
+
+    const navToQuizEditor = (quizId) => {
+      navigate(`/quiz/editor/${quizId}`);
+    };
+
     const navToQuizCreator = () => {
       navigate("/quiz/creator");
     };
@@ -45,6 +53,7 @@ export const AppContextProvider = (props) => {
 
     const navCallbacks = {
       navToLogin, navToMenu,
+      navToQuizEditorList, navToQuizEditor,
       navToQuizCreator, navToUserStats,
       navToQuiz, navToActiveQuiz
     };
@@ -125,16 +134,26 @@ export const AppContextProvider = (props) => {
         };
 
     // /quiz requests
-      // req all available quizzes
-        const getQuizData = stateSetterFunc => {
-          authAxios.get("/api/quiz")
+      // get entire quiz (for making edits)
+        const getQuiz = (stateSetterFunc, quizId) => {
+          if (quizId) {
+            authAxios.get(`/api/quiz/${quizId}`)
+              .then(res => stateSetterFunc(res.data))
+              .catch(err => console.log(err));
+          }
+        };
+
+      // req all available quiz cards
+        const getQuizData = (stateSetterFunc, authorId = undefined) => {
+          const url = `/api/quiz/${authorId ? "?authorId=" + authorId : ""}`
+          authAxios.get(url)
             .then(res => stateSetterFunc(res.data))
             .catch(err => console.log(err));
         };
 
-      // view and select details pertaining to a specific quiz
+      // view and select quiz card pertaining to a specific quiz
         const getQuizDetails = (quizId, quizDetailSetter, topicStateSetter) => {
-          authAxios.get(`/api/quiz/${quizId}`)
+          authAxios.get(`/api/quiz/detail/${quizId}`)
             .then(res => {
               quizDetailSetter(res.data);
               topicStateSetter(res.data.topicSelections);
@@ -155,13 +174,26 @@ export const AppContextProvider = (props) => {
             .then(res => console.log("posted"))
             .catch(err => timedUserMsg(err.response.data.errMsg, userMsgSetter));
         };
+      // update Existing Quiz
+        const editQuiz = (newQuizData, quizId, userMsgSetter) => {
+          authAxios.put(`/api/quiz/edit/${quizId}`, newQuizData)
+            .then(res => console.log(res.data))
+            .catch(err => timedUserMsg(err.response.data.errMsg, userMsgSetter));
+        };
+      // delete quiz:
+        const deleteQuiz = (quizId, userMsgSetter) => {
+          authAxios.delete(`/api/quiz/${quizId}`)
+            .then(res => console.log(res.data))
+            .catch(err => timedUserMsg(err.response.data.errMsg, userMsgSetter));
+        };
+
 
   return (
     <AppContext.Provider value={{
                           navCallbacks,
                           userAuthReq, loginFormHandler, 
                           getUserSummaryStats, getUserQuizPerformance, getUserGlobalStats, postAnswer, getUserQuizResults,
-                          getQuizData, getQuizDetails, generateQuiz, postQuiz
+                          getQuiz, getQuizData, getQuizDetails, generateQuiz, postQuiz, editQuiz, deleteQuiz
                           }}>
       {props.children}
     </AppContext.Provider>

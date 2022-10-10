@@ -11,6 +11,10 @@ const quizSchema = new Schema({
     type : String,
     required : true
   },
+  authorId : {
+    type : Schema.Types.ObjectID,
+    required : true
+  },
   topics : {
     type : [
     // topicName : String

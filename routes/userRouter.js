@@ -20,29 +20,30 @@ const jwt_decode = require("jwt-decode");
           res.status(500);
           return next(err);
         }
-        User.findOne(
-          {_id : userId},
-          (err, user) => {
-            if (err) {
-              res.status(500);
-              return next(err);
-            }
-            User.findOneAndUpdate(
-              {_id : userId},
-              {
-                results : [...user.results, addedResult._id]
-              },
-              {new : true},
-              (err, updatedUser) => {
-                if (err) {
-                  res.status(500);
-                  return next(err);
-                }
-                res.send("Answer Saved")
-              }
-            );
-          }
-        );
+        res.send("Answer Saved");
+        // User.findOne(
+        //   {_id : userId},
+        //   (err, user) => {
+        //     if (err) {
+        //       res.status(500);
+        //       return next(err);
+        //     }
+        //     User.findOneAndUpdate(
+        //       {_id : userId},
+        //       {
+        //         results : [...user.results, addedResult._id]
+        //       },
+        //       {new : true},
+        //       (err, updatedUser) => {
+        //         if (err) {
+        //           res.status(500);
+        //           return next(err);
+        //         }
+        //         res.send("Answer Saved")
+        //       }
+        //     );
+        //   }
+        // );
       });
     })
 
