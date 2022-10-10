@@ -60,8 +60,8 @@ authRouter.post("/login", (req, res, next) => {
       const token = jwt.sign(user.removePassword(), process.env.SECRET);
       res.status(200);
       res.send({token});
-    })
-  })
+    });
+  });
 });
 
 module.exports = authRouter;

@@ -13,6 +13,6 @@ const HistoricalQuizDetail = props => {
         <button className="quizConfigPrevViewBtn colorBtn" onClick={handleExitQuizReview}>Exit Quiz Review</button>
       </div>
     </>
-  )
-}
+  );
+};
 export default HistoricalQuizDetail;

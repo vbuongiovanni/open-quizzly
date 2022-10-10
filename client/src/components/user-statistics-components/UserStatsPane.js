@@ -52,6 +52,6 @@ const UserStatsPane = props => {
         )
       })}
     </div>
-  )
-}
+  );
+};
 export default UserStatsPane;

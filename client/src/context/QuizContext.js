@@ -10,5 +10,5 @@ export const QuizContextProvider = (props) => {
     <QuizContext.Provider value={{setActiveQuiz, activeQuiz}}>
       {props.children}
     </QuizContext.Provider>
-  )
-}
+  );
+};

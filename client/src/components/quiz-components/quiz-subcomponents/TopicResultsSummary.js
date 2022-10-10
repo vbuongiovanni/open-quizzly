@@ -8,12 +8,12 @@ const TopicResultsSummary = props => {
         className={index === 0 ? "best" : index === (histPerformance.length - 1) ? "worst" : ""} >
           {element.topic}: {element.percentCorrect}% Correct
       </p>
-    )
-  }
+    );
+  };
   return (
     <>
       {rankTopics(histPerformance)}
     </>
-  )
-}
+  );
+};
 export default TopicResultsSummary;

@@ -4,21 +4,28 @@ import {AppContext} from "./../../../context/AppContext";
 import TopicResultsSummary from "./TopicResultsSummary";
 
 const QuizConfigurationForm = props => {
-  const {quizId, selectedTopics, quizConfigHandlers} = props;
-  const {startQuiz, toggleCheckbox, togglePrevResults, navToMenu} = quizConfigHandlers;
+  const {
+    quizId,
+    selectedTopics,
+    quizConfigHandlers : {
+      startQuiz,
+      toggleCheckbox,
+      togglePrevResults,
+      navToMenu
+    }
+  } = props;
 
   const {getUserQuizPerformance} = useContext(AppContext);
-
-
   const {credentials} = useContext(UserContext);
-  const {_id : userId} = credentials;
 
   const [histPerformance, setHistPerformance] = useState([]);
 
+  const {_id : userId} = credentials;
+
   useEffect(() => {
-    // get historical performance of quiz:
     getUserQuizPerformance(quizId, setHistPerformance)
-  }, [userId, quizId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, quizId]);
 
   return (
     <>
@@ -46,7 +53,7 @@ const QuizConfigurationForm = props => {
                       />
                       <label htmlFor={name}>{name}</label>
                     </div>
-                  )
+                  );
           })
         }
         <div className='btnContainer btnContainerDual'>
@@ -55,6 +62,6 @@ const QuizConfigurationForm = props => {
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 export default QuizConfigurationForm;

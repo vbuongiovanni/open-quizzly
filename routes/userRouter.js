@@ -12,7 +12,6 @@ const jwt_decode = require("jwt-decode");
       const {_id : userId} = jwt_decode(jwt);
 
       const {newAnswer} = req.body
-      const {quizId, sessionId} = newAnswer;
       // get user with their existing responses:
       const newResult = new Result({userId, ...newAnswer})
 
@@ -43,9 +42,8 @@ const jwt_decode = require("jwt-decode");
               }
             );
           }
-        )
-      })
-
+        );
+      });
     })
 
   // get basic stats of user
@@ -62,65 +60,7 @@ const jwt_decode = require("jwt-decode");
           totalAnswers : results.length,
           totalCorrect : results.reduce( (prev, curr) => curr.isCorrect + prev, 0)
         });
-
-      })
-
-      User.findOne({_id : userId}, (err, user) => {
-
-        
-        // // create array of results, by quiz & topic name
-        // const quizSummary = user.results.map(result => ({
-        //   quizId : result.quizId,
-        //   topicName : result.topicName,
-        //   isCorrect : result.userAnswer === result.correctAnswer ? 1 : 0
-        // }));
-        // // aggregate results by quiz ID and topic name
-        // const aggregated = dl
-        //   .groupby("quizId", "topicName")
-        //   .execute(quizSummary)
-
-        // // create counters for global metrics
-        // let globalTotal = 0;
-        // let globalCorrectTotal = 0;
-        
-        // // create summaryStats, showing the various statics of results
-        // const summaryStats = aggregated.map(element => {
-        //   const totalCorrect = dl.sum(element.values.map(value => value.isCorrect)) + 0.00;
-        //   globalCorrectTotal = globalCorrectTotal + totalCorrect;
-        //   const totalAnswered = element.values.length + 0.00;
-        //   globalTotal = globalTotal + totalAnswered;
-        //   return {
-        //     quizId : element.quizId,
-        //     topicName : element.topicName,
-        //     totalAnswers : totalAnswered,
-        //     correctAnswers : totalCorrect, 
-        //     percentCorrect : Math.round((totalCorrect / totalAnswered) * 10000)/10000
-        //   }
-        // });
-
-        // Quiz.find({}, (err, quizzes) => {
-        //   const {results} = user;
-        //   const namedResults = results.map(result => {
-        //     const {quizId} = result;
-        //     const {quizName, subject} = quizzes.find(quiz => quiz._id.toString() === quizId)
-        //     return {
-        //       quizName,
-        //       subject,
-        //       ...result
-        //     }
-        //   })
-        //   res.send({
-        //     results : namedResults, 
-        //     summaryStats,
-        //     globalStats : {
-        //       globalTotal,
-        //       globalCorrectTotal
-        //     }
-        //   });
-        // })
-
-
-      })
+      });
     })
 
   // get detailed stats of user
@@ -194,7 +134,7 @@ const jwt_decode = require("jwt-decode");
               summarizedTopics
             })
       })
-    })
+    });
 
   // get historical results of a specific quizId for a given user.
     userRouter.get("/historical/summary", (req, res, next) => {
@@ -220,20 +160,19 @@ const jwt_decode = require("jwt-decode");
                 .groupby("topicName")
                 .execute(summarizedResults);
           // Create summary objects
-            // Topics
-              const summarizedTopics = aggregatedTopics
-                .map(element => {
-                  const correctAnswers = dl.sum(element.values.map(value => value.isCorrect));
-                  const totalAnswers = element.values.length;
-                  const percentCorrect = Math.round((correctAnswers / totalAnswers)*1000)/10;
-                  return {
-                    topic : element.topicName,
-                    correctAnswers,
-                    totalAnswers, 
-                    percentCorrect 
-                  }
-                })
-                .sort((a, b) => a.percentCorrect < b.percentCorrect ? 1 : -1)
+            const summarizedTopics = aggregatedTopics
+              .map(element => {
+                const correctAnswers = dl.sum(element.values.map(value => value.isCorrect));
+                const totalAnswers = element.values.length;
+                const percentCorrect = Math.round((correctAnswers / totalAnswers)*1000)/10;
+                return {
+                  topic : element.topicName,
+                  correctAnswers,
+                  totalAnswers, 
+                  percentCorrect 
+                }
+              })
+              .sort((a, b) => a.percentCorrect < b.percentCorrect ? 1 : -1)
 
             // send results
               res.send(summarizedTopics)
@@ -289,6 +228,6 @@ const jwt_decode = require("jwt-decode");
 
         res.send({sessionResults, sessionSummaries})
       });
-    })
+    });
 
 module.exports = userRouter;

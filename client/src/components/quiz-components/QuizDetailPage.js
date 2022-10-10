@@ -5,7 +5,7 @@ import {QuizContext} from "./../../context/QuizContext";
 import Header from "../Header";
 import QuizHeader from './quiz-subcomponents/QuizHeader';
 import QuizConfigurationForm from './quiz-subcomponents/QuizConfigurationForm';
-import HistoricalResults from './quiz-subcomponents/HistoricalResults';
+import HistoricalResults from './historical-components/HistoricalResults';
 
 const QuizDetailPage = () => {
 
@@ -22,6 +22,7 @@ const QuizDetailPage = () => {
   useEffect(() => {
     // get quiz details:
     getQuizDetails(quizId, setQuizDetails, setSelectedTopics)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizId])
 
   const togglePrevResults = () => {
