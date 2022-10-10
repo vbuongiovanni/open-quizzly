@@ -26,8 +26,8 @@ quizRoute.get("/", (req, res, next) => {
         return {_id, quizName, subject, topicsText};
       })
       res.send(quizCardData);
-  })
-})
+  });
+});
 
 // get single quiz 
 quizRoute.get("/:quizId", (req, res, next) => {
@@ -44,7 +44,6 @@ quizRoute.get("/:quizId", (req, res, next) => {
 })
 
 // given a :quizId and request body, endpoint responds w/ filtered and randomized quiz
-// filters by topic
 quizRoute.post("/generate/:quizId", (req, res, next) => {   
   const quizConfiguration = req.body;
   const {quizId} = req.params;
@@ -102,8 +101,8 @@ quizRoute.post("/generate/:quizId", (req, res, next) => {
       sessionId ,
       shuffledQuestions
     });
-  })
-})
+  });
+});
 
 // endpoint to add real quiz to local MongoDB
 quizRoute.post("/add", (req, res, next) => {
@@ -134,58 +133,7 @@ quizRoute.post("/add", (req, res, next) => {
         res.send(savedQuiz)
       })
     }
-  })
-})
+  });
+});
 
-// endpoint to add mock quizzes to everyone's local MongoDB
-quizRoute.post("/mockQuiz/:newQuizName", (req, res, next) => {
-  // **mock quiz question response**
-  const createFakeQuiz = quizName => {
-    const quizDetails = {
-    quizName : quizName,
-    subject : "Math",
-    topics : [{
-      topicName : "Addition",
-      questions : [
-      {
-        questionText : "What is 2 + 2",
-        correctAnswer : "4",
-        incorrectAnswers : ["5", "8", "22"]
-      },
-      {
-        questionText : "What is 4 + 4",
-        correctAnswer : "8",
-        incorrectAnswers : ["0", "44", "4"]
-      },
-    ],
-    },
-    {
-    topicName : "multiplication",
-    questions : [
-      {
-        questionText : "What is 2 * 2",
-        correctAnswer : "4",
-        incorrectAnswers : ["0", "44", "22"]
-      },
-      {
-        questionText : "What is 0 * 4",
-        correctAnswer : "0",
-        incorrectAnswers : ["10", "44", "4"]
-      }
-    ],
-    },
-    ]}
-    const newQuiz = new quizModel(quizDetails)
-    newQuiz.save((err, savedQuiz) => {
-      if (err) {
-        res.status(500);
-        return next(err);
-      }
-        res.send(savedQuiz)
-      })
-  }
-  const {newQuizName} = req.params;
-  createFakeQuiz(newQuizName);
-})
-
-module.exports = quizRoute
+module.exports = quizRoute;

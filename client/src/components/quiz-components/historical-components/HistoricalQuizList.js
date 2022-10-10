@@ -26,13 +26,13 @@ const HistoricalQuizList = props => {
                 Answered {correctAnswers} questions correctly out of {totalQuestions} the attempted
               </p>
             </div>
-          )
+          );
         })}
       </div>
       <div className='btnContainer btnContainerSingle'>
         <button className="quizConfigPrevViewBtn colorBtn" onClick={togglePrevResults}>Back to Topic Selection</button>
       </div>
     </>
-  )
-}
+  );
+};
 export default HistoricalQuizList;

@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 const LoginForm = (props) => {
-  const {toggleAccCreation, loginMessage, setLoginMessage, setCredentials, userAuthReq, loginFormHandler} = props;
+  const {toggleAccCreation, loginMessage, setLoginMessage, setCredentials, userAuthReq, loginFormHandler, navToLogin} = props;
   const [loginFormInputs, setLoginFormInputs] = useState({
     username : "",
     password : ""
@@ -11,6 +11,7 @@ const LoginForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     userAuthReq("login", loginFormInputs, setCredentials, setLoginMessage);
+    navToLogin();
   };
   
   // handler func for inputs
@@ -33,7 +34,6 @@ const LoginForm = (props) => {
           required
           onChange={handleChange}
           />
-        {/* <label htmlFor="password">Password</label> */}
         <input 
           className="textInput"
           type="password"
@@ -54,5 +54,5 @@ const LoginForm = (props) => {
       </form>
     </>
   );
-}
+};
 export default LoginForm;

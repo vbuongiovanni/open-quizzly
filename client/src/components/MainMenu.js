@@ -1,16 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {AppContext} from "../context/AppContext";
 import {UserContext} from "../context/UserContext";
+import { parseToken } from '../modules/parseToken';
 import Header from "./Header"
-import NavBar from './NavBar';
+import NavBar from './navbar-components/NavBar';
 import QuizCard from "./quiz-components/QuizCard";
 
 const MainMenu = () => {
 
   // load and deconstruct context:
   const {credentials} = useContext(UserContext);
-  const {getQuizData, getUserSummaryStats, parseToken} = useContext(AppContext);
-  const {username, userId} = parseToken(credentials.token);
+    const {username} = parseToken(credentials.token);
+  const {getQuizData, getUserSummaryStats} = useContext(AppContext);
 
   const [globalStats, setGlobalStats] = useState({});
   const [quizLibrary, setQuizLibrary] = useState([]);
@@ -18,8 +19,9 @@ const MainMenu = () => {
   // fetch and set state of stats from backend.
   useEffect(() => {
     getQuizData(setQuizLibrary);
-    getUserSummaryStats(setGlobalStats)
-  }, [username, userId])
+    getUserSummaryStats(setGlobalStats);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   
   return(
     <>

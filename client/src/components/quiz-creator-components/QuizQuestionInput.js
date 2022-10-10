@@ -1,24 +1,24 @@
 import {useState} from "react";
+import { timedUserMsg } from "../../modules/timedUserMsg";
 const QuizQuestionInput = (props) => {
   
   const {
-    questionText, correctAnswer, 
-    incorrectAnswer1, incorrectAnswer2, incorrectAnswer3,
-    questionNumber,
-  } = props.questionData;
-
-  const {topicNumber, handleDeleteQuestion, handleQuestionChange, numQuestions} = props;
+    topicNumber,
+    handleDeleteQuestion,
+    handleQuestionChange,
+    numQuestions,
+    questionData : {
+      questionText, correctAnswer, 
+      incorrectAnswer1, incorrectAnswer2, incorrectAnswer3,
+      questionNumber,
+    }
+  } = props;
 
   const [messageText, setMessageText] = useState("");
-  // handler to post message if deactivated button is pressed
+  
   const handleUserMessage = (e) => {
-    setMessageText("Each topic must have at least 1 question.")
-    setInterval(() => {
-      setMessageText("")
-    }, 5000)
-  }
-
-  const isDeleteDeactivated = numQuestions <= 1
+    timedUserMsg("Each topic must have at least 1 question.", setMessageText);
+  };
   
   return (
     <div className="inactiveQuestionContainer questionCreator">
@@ -35,13 +35,13 @@ const QuizQuestionInput = (props) => {
         <textarea id={`${topicNumber}-${questionNumber}`} className="quizCreatorAnswerIncorr creatorInput" placeholder={"Not entirely sure..."} name="incorrectAnswer3" value={incorrectAnswer3} onChange={handleQuestionChange} required></textarea>
       </div>
       <div className="questionDeleteContainer">
-        {!isDeleteDeactivated ? 
+        {!(numQuestions <= 1) ? 
           <input type="button" className="creatorBtn btn cautionBtn colorBtn" id={`${topicNumber}-${questionNumber}`} onClick={handleDeleteQuestion} value={`Delete Question ${questionNumber}`}/> :
           <input type="button" className="creatorBtn btn deactivatedBtn" id={`${topicNumber}-${questionNumber}`} onClick={handleUserMessage} value={`Delete Question ${questionNumber}`}/>
         }
       </div>
       <p className="userMessage emphasizedText quizCreatorFormMessage">{messageText}</p>
     </div>
-  )
-}
+  );
+};
 export default QuizQuestionInput;

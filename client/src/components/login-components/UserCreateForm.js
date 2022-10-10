@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 const UserCreateForm = props => {
-  const {toggleAccCreation, loginMessage, setLoginMessage, setCredentials, userAuthReq, loginFormHandler} = props;
+  const {toggleAccCreation, loginMessage, setLoginMessage, setCredentials, userAuthReq, loginFormHandler, navToLogin} = props;
 
   const [loginFormInputs, setLoginFormInputs] = useState({
     username : "",
@@ -16,6 +16,7 @@ const UserCreateForm = props => {
       setLoginMessage("Your password and the confirmation must match.");
     } else {
       userAuthReq("signup", loginFormInputs, setCredentials, setLoginMessage);
+      navToLogin();
       toggleAccCreation();
     }
   };
@@ -70,5 +71,5 @@ const UserCreateForm = props => {
       </form>
     </>
   );
-}
+};
 export default UserCreateForm;

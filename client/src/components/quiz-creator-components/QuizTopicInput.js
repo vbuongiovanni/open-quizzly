@@ -1,4 +1,5 @@
 import {useState} from "react";
+import { timedUserMsg } from "../../modules/timedUserMsg";
 import QuizQuestionInput from "./QuizQuestionInput";
 
 const QuizTopicInput = (props) => {
@@ -7,15 +8,9 @@ const QuizTopicInput = (props) => {
 
   const [messageText, setMessageText] = useState("");
 
-  const isDeleteDeactivated = numTopics <= 1
-
-  // handler to post message if deactivated button is pressed
   const handleUserMessage = (e) => {
-    setMessageText("There must be at least 1 topic.")
-    setInterval(() => {
-      setMessageText("")
-    }, 5000)
-  }
+    timedUserMsg("There must be at least 1 topic.", setMessageText);
+  };
 
   return (
     <div className="topicCreatorContainer">
@@ -27,13 +22,13 @@ const QuizTopicInput = (props) => {
       </div>
       <div className="btnContainer btnContainerDual noBorder">
         <input type="button" id={topicNumber} className="creatorBtn btn colorBtn" onClick={handleNewQuestion} value="Add New Question"/>
-        {!isDeleteDeactivated ? 
+        {!(numTopics <= 1) ? 
           <input type="button" id={topicNumber} onClick={handleDeleteTopic} className="creatorBtn btn cautionBtn" value={`Delete Topic ${topicNumber}`}/> : 
           <input type="button" id={topicNumber} onClick={handleUserMessage} className="creatorBtn btn deactivatedBtn" value={`Delete Topic ${topicNumber}`}/>
           }  
       </div>
       <p className="userMessage emphasizedText quizCreatorFormMessage">{messageText}</p>
     </div>
-  )
-}
+  );
+};
 export default QuizTopicInput;
