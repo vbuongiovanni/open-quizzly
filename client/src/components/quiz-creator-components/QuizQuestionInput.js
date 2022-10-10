@@ -21,26 +21,26 @@ const QuizQuestionInput = (props) => {
   };
   
   return (
-    <div className="inactiveQuestionContainer questionCreator">
+    <div className="inactiveQuestionContainer questionEditor">
       <p className="inactiveQuestionText">
         {`${questionNumber}.`}
-        <textarea cols="100" rows="3" id={`${topicNumber}-${questionNumber}`} className="creatorInput" placeholder={"What is 2 + 2?"} name="questionText" value={questionText} onChange={handleQuestionChange} required></textarea>
+        <textarea cols="100" rows="3" id={`${topicNumber}-${questionNumber}`} className="editorInput" placeholder={"What is 2 + 2?"} name="questionText" value={questionText} onChange={handleQuestionChange} required></textarea>
       </p>
-      <div className="answerCreatorContainer">
-        <p className="answerCreatorGuideText">Correct Answer:</p>
-        <textarea id={`${topicNumber}-${questionNumber}`} className="quizCreatorAnswerCorr creatorInput" placeholder={"4"} name="correctAnswer" value={correctAnswer} onChange={handleQuestionChange} required></textarea>
-        <p className="answerCreatorGuideText">Incorrect Answers:</p>
-        <textarea id={`${topicNumber}-${questionNumber}`} className="quizCreatorAnswerIncorr creatorInput" placeholder={"22"} name="incorrectAnswer1" value={incorrectAnswer1} onChange={handleQuestionChange} required></textarea>
-        <textarea id={`${topicNumber}-${questionNumber}`} className="quizCreatorAnswerIncorr creatorInput" placeholder={"8"} name="incorrectAnswer2" value={incorrectAnswer2} onChange={handleQuestionChange} required></textarea>
-        <textarea id={`${topicNumber}-${questionNumber}`} className="quizCreatorAnswerIncorr creatorInput" placeholder={"Not entirely sure..."} name="incorrectAnswer3" value={incorrectAnswer3} onChange={handleQuestionChange} required></textarea>
+      <div className="answerEditorContainer">
+        <p className="answerEditorGuideText">Correct Answer:</p>
+        <textarea id={`${topicNumber}-${questionNumber}`} className="quizEditorAnswerCorr editorInput" placeholder={"4"} name="correctAnswer" value={correctAnswer} onChange={handleQuestionChange} required></textarea>
+        <p className="answerEditorGuideText">Incorrect Answers:</p>
+        <textarea id={`${topicNumber}-${questionNumber}`} className="quizEditorAnswerIncorr editorInput" placeholder={"22"} name="incorrectAnswer1" value={incorrectAnswer1} onChange={handleQuestionChange} required></textarea>
+        <textarea id={`${topicNumber}-${questionNumber}`} className="quizEditorAnswerIncorr editorInput" placeholder={"8"} name="incorrectAnswer2" value={incorrectAnswer2} onChange={handleQuestionChange} required></textarea>
+        <textarea id={`${topicNumber}-${questionNumber}`} className="quizEditorAnswerIncorr editorInput" placeholder={"Not entirely sure..."} name="incorrectAnswer3" value={incorrectAnswer3} onChange={handleQuestionChange} required></textarea>
       </div>
       <div className="questionDeleteContainer">
         {!(numQuestions <= 1) ? 
-          <input type="button" className="creatorBtn btn cautionBtn colorBtn" id={`${topicNumber}-${questionNumber}`} onClick={handleDeleteQuestion} value={`Delete Question ${questionNumber}`}/> :
-          <input type="button" className="creatorBtn btn deactivatedBtn" id={`${topicNumber}-${questionNumber}`} onClick={handleUserMessage} value={`Delete Question ${questionNumber}`}/>
+          <input type="button" className="editorBtn btn cautionBtn colorBtn" id={`${topicNumber}-${questionNumber}`} onClick={handleDeleteQuestion} value={`Delete Question ${questionNumber}`}/> :
+          <input type="button" className="editorBtn btn deactivatedBtn" id={`${topicNumber}-${questionNumber}`} onClick={handleUserMessage} value={`Delete Question ${questionNumber}`}/>
         }
       </div>
-      <p className="userMessage emphasizedText quizCreatorFormMessage">{messageText}</p>
+      <p className="userMessage emphasizedText quizEditorFormMessage">{messageText}</p>
     </div>
   );
 };

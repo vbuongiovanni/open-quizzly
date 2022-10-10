@@ -2,6 +2,7 @@ import { useState, useContext, useEffect} from "react";
 import {AppContext} from "./../../../context/AppContext";
 import HistoricalQuizList from "./HistoricalQuizList";
 import HistoricalQuizDetail from "./HistoricalQuizDetail";
+import {handleQuizSelect} from "../../../modules/handleQuizSelect";
 
 const HistoricalResults = props => {
   const {quizId} = props;
@@ -19,11 +20,10 @@ const HistoricalResults = props => {
   const togglePrevResults = props.togglePrevResults;
   const renderQuestions = results.sessionResults.filter(session => session.sessionId === selectedSessionId);
 
-  // Display detailed <HistoricalQuizDetail/> of a specific quiz
-  const handleQuizSelect = (e) => {
-    const id = `${e.target.id}${e.target.parentElement.id}${e.target.parentElement.parentElement.id}`
-    setSessionId(id);
-  };
+  // handle and set quiz Selection from scrollable list
+  const setQuizSelection = (e) => {
+    handleQuizSelect(e, setSessionId)
+  }
 
   // Exit detailed <HistoricalQuizDetail/> of a specific quiz 
   const handleExitQuizReview = () => {
@@ -33,7 +33,7 @@ const HistoricalResults = props => {
   return (
     <div className="histQuizContainer">
       {selectedSessionId === null ? 
-        <HistoricalQuizList sessionSummaries={results.sessionSummaries} selectedSessionId={selectedSessionId} handleQuizSelect={handleQuizSelect} togglePrevResults={togglePrevResults}/> :
+        <HistoricalQuizList sessionSummaries={results.sessionSummaries} selectedSessionId={selectedSessionId} setQuizSelection={setQuizSelection} togglePrevResults={togglePrevResults}/> :
         <HistoricalQuizDetail renderQuestions={renderQuestions} handleExitQuizReview={handleExitQuizReview}/>
       }
     </div>
