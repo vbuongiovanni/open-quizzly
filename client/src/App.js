@@ -4,7 +4,6 @@ import { UserContext } from "./context/UserContext";
 import Login from "./components/login-components/Login";
 import MainMenu from "./components/MainMenu";
 import QuizEditorList from "./components/quiz-creator-components/QuizEditorList";
-import QuizEditLoader from "./components/quiz-creator-components/QuizEditLoader";
 import QuizEditor from "./components/quiz-creator-components/QuizEditor";
 import UserStats from "./components/user-statistics-components/UserStats";
 import QuizDetailPage from "./components/quiz-components/QuizDetailPage";

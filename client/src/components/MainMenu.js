@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
+import { useLocation } from 'react-router-dom';
 import {AppContext} from "../context/AppContext";
 import {UserContext} from "../context/UserContext";
 import { parseToken } from '../modules/parseToken';
-import Header from "./Header"
+import Header from "./Header";
 import NavBar from './navbar-components/NavBar';
 import QuizCard from "./quiz-components/QuizCard";
+import RevealingFilter from './common-components/RevealingFilter';
 
 const MainMenu = () => {
 
@@ -15,13 +17,17 @@ const MainMenu = () => {
 
   const [globalStats, setGlobalStats] = useState({});
   const [quizLibrary, setQuizLibrary] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [subjectSelections, setSubjectSelections] = useState([]);
+  const [filterHeight, setFilterHeight] = useState(0);
 
   // fetch and set state of stats from backend.
   useEffect(() => {
-    getQuizData(setQuizLibrary);
+    getQuizData(setQuizLibrary, setSubjects, undefined);
     getUserSummaryStats(setGlobalStats);
+    setSubjectSelections(subjects)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [useLocation().pathname])
   
   return(
     <>
@@ -32,9 +38,16 @@ const MainMenu = () => {
           <h1>Welcome, {username}!</h1>
         </div>
         <div className="quizCardDisplayContainer">
-          <div className="quizCardDisplaySpacer spacerTextContainer"><span className="spacerText">Select a quiz card to begin</span></div>
+          <div className="quizCardDisplaySpacer spacerTextContainer"><span className="spacerText">Filter by one or more subjects, then select a quiz card to begin</span></div>
+          <RevealingFilter 
+            subjects={subjects}
+            filterHeight={filterHeight}
+            subjectSelections={subjectSelections}
+            setSubjectSelections={setSubjectSelections}
+            setFilterHeight={setFilterHeight}
+          />
           <div className="quizCardDisplay">
-              {quizLibrary.map(quiz => <QuizCard key={quiz._id} cardDetails={quiz}/>)}
+              {quizLibrary.filter(quiz => subjectSelections.includes(quiz.subject) || subjectSelections.length === 0).map(quiz => <QuizCard key={quiz._id} cardDetails={quiz}/>)}
           </div>
           <div className="quizCardDisplaySpacer"></div>
         </div>

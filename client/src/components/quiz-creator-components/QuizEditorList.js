@@ -20,7 +20,7 @@ const QuizEditorList = () => {
 
   // fetch and set state of stats from backend.
   useEffect(() => {
-    getQuizData(setQuizLibrary, userId);
+    getQuizData(setQuizLibrary, undefined, userId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -46,7 +46,7 @@ const QuizEditorList = () => {
                   const {_id, quizName, subject, topicsText} = quiz;
                   const isSelected = selectedQuiz === _id
                   return (
-                    <ScrollableListItem reactkey={_id} id={_id} onClick={setQuizSelection} >
+                    <ScrollableListItem reactKey={_id} id={_id} onClick={setQuizSelection} >
                       <ScrollableListEntry label={"Quiz Name: "} value={quizName}/>
                       <ScrollableListEntry label={"Subject: "} value={subject}/>
                       <ScrollableListEntry label={"Topics: "} value={topicsText}/>

@@ -144,10 +144,15 @@ export const AppContextProvider = (props) => {
         };
 
       // req all available quiz cards
-        const getQuizData = (stateSetterFunc, authorId = undefined) => {
+        const getQuizData = (stateSetterFunc, subjectsSetterFunc, authorId = undefined) => {
           const url = `/api/quiz/${authorId ? "?authorId=" + authorId : ""}`
           authAxios.get(url)
-            .then(res => stateSetterFunc(res.data))
+            .then(res => {
+              if (subjectsSetterFunc) {
+                subjectsSetterFunc(res.data.map(quiz => quiz.subject));
+              }
+              stateSetterFunc(res.data)
+            })
             .catch(err => console.log(err));
         };
 
