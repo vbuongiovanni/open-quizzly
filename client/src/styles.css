@@ -127,14 +127,14 @@ h3 {
 *::-webkit-scrollbar-track {
   background: var(--scrollbar-track-color);
   visibility:hidden;
-  border-radius: 25px;
+  border-radius: 5px;
   margin-right: 10px;
 
 }
 *::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb-color);
   visibility:hidden;
-  border-radius: 25px;
+  border-radius: 5px;
 }
 *:hover::-webkit-scrollbar-thumb, *:hover::-webkit-scrollbar-track {
   visibility:visible;
@@ -244,7 +244,7 @@ button, .btn {
   /* UserStats */
   .tabsetBtn {
     padding: .5% 1%;
-    border-radius: 10px 10px 0 0;
+    border-radius: 5px 5px 0 0;
     border: 1px solid var(--border-color);
     border-bottom: 0;
     cursor: pointer;
@@ -302,15 +302,15 @@ header {
   justify-content: space-around;
   background-color: var(--navbar-background-color);
   border-top: 5px solid var(--nav-bar-top-border-color); /* this should be the same color as the active tab */
-  height: 7%;
+  
 }
   .navBarTab {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     padding-bottom: 10px;
     width: 200px;
-    border-radius: 0 0 5px 5px ;
+    border-radius: 0 0 10px 10px ;
     margin-bottom: 10px;
     color : var(--nav-bar-tab-inactive-text);
     background-color: var(--nav-bar-tab-inactive-color);
@@ -343,10 +343,13 @@ header {
   background-image: var(--gradient-background-color-login);
   height: 100%;
 }
+.loginMain > h1 {
+  text-align: center;
+}
 /* Bear Logo */
 .bearLogoMain {
   width: auto;
-  max-height: 300px;
+  height: 35%;
 }
 .loginForm {
   display: flex;
@@ -354,7 +357,7 @@ header {
   align-items: center;
   justify-content: center;
   background-color: var(--login-form-color);
-  border-radius: 25px;
+  border-radius: 5px;
   padding: 1%;
   margin-top: 15px;
   max-width: 500px;
@@ -417,9 +420,6 @@ main {
       width: 100%;
       height: 80%;
     }
-    .selectInput-selected {
-      background-color: yellow;
-    }
   .selectedTopicContainer {
     overflow:hidden;
     width: 100%;
@@ -428,6 +428,10 @@ main {
     .selectedTopicContainerContent {
       width: 100%;
       padding: 10px;
+      height: 100%;
+    }
+    .selectedTopicContainerContent > * {
+      display: inline-block;
     }
       .selectedTopic {
         margin-left: 10px;
@@ -439,7 +443,7 @@ main {
   .filterBtnContainer {
     display: flex;
     justify-content: flex-end;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
   }
   .filterBtn {
     padding: 4px;
@@ -447,12 +451,13 @@ main {
   }
 .quizCardDisplayContainer {
   background-color: var(--quiz-card-color);
-  max-height: 65%;
+  height: 100%;
+  max-height: 70%;
   min-width: 400px;
   display: flex;
   flex-direction: column;
   margin: 10px 50px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 .quizCardDisplaySpacer {
   min-height: 10px;
@@ -470,7 +475,8 @@ main {
     font-size: 20px;
   }
 .quizCardDisplay  {
-  background-color: var(--quiz-card-color);
+  background-color: var(--base-color-light-contrast);
+  height: 80%;
   max-height: 90%;
   width: 100%;
   overflow-y: scroll;
@@ -481,7 +487,8 @@ main {
   align-items: center;
   grid-template-columns: repeat(auto-fill, minmax(375px, 400px));
   /* margin: 10px 50px; */
-  border-radius: 10px;
+  border-radius: 5px;
+  padding-top: 25px;
 }
   /*-- Quiz Card ---*/
   .quizCard {
@@ -545,7 +552,7 @@ main {
     padding: 20px;
     min-width: 350px;
     max-width: 80%;
-    border-radius: 25px;
+    border-radius: 5px;
     width: 100%;
     text-align: center;
   }
@@ -568,7 +575,6 @@ main {
     .quizSubHeader {
       font-size: 22px;
     }
-
     .questionText {
       font-weight: 600;
       font-size: 23px;
@@ -600,7 +606,6 @@ main {
           font-size: 20px;
           text-align: justify;
         }
-
     .quizConfig {
       display: flex;
       flex-direction: column;
@@ -653,6 +658,21 @@ main {
         }
 
 /*-- Quiz Editor Form ---*/
+.editListItem {
+  display: flex;
+  align-items: center;
+}
+  .editListItemContent {
+    padding-left: 10px;
+  }
+  .editListItemBtn {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+  }
+  .enterEditBtn {
+    padding: 7px;
+  }
 .quizEditorForm {
   background-color: var(--quiz-editor-form-color);
   display:  flex;
@@ -665,11 +685,10 @@ main {
   min-width: 350px;
   width: 100%;
   max-width: 80%;
-  border-radius: 25px;
+  border-radius: 5px;
   overflow: auto;
   height: fit-content;
   max-height: 700px;
-  
 }
   .editorInput {
     margin: 0 1px 5px 10px;
@@ -853,7 +872,7 @@ main {
     width: 100%;
     min-width: 350px;
     max-width: 80%;
-    border-radius: 25px;
+    border-radius: 5px;
     text-align: center;
   }
   .userStatsPane {
@@ -929,3 +948,302 @@ main {
     font-weight: 600;
     
   }
+
+/* media screen breakpoints - < 1000px */
+@media only screen and (max-width: 1000px) {
+  /* Login page */
+  .bearLogoMain {
+    height: 20%;
+  }
+  .loginMain {
+    justify-content: flex-start;
+  }
+  .navBar {
+    border-top: 3px solid var(--nav-bar-top-border-color);
+    height: 5%;
+  }
+    .navBarTab {
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+    }
+    /* Quiz Card */
+    .quizCardDisplayContainer {
+      height: 100%;
+      max-height: 70%;
+    }
+    .quizCardDisplaySpacer {
+      min-height: 10px;
+    }
+      .spacerTextContainer {
+        padding: 15px;
+      }
+      .spacerText {
+        font-weight: 600;
+        font-size: 18px;
+        text-align: center;
+      }
+    .quizCardDisplay  {
+      max-height: 90%;
+      padding: 15px 5px 15px;
+      width: 100%;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 300px));
+      align-items: start;
+    }
+    .quizCard {
+      margin: 0 3px 5px 5px;
+      min-width: 200px;
+      max-width: 300px;
+      height: 175px;
+    }
+      .quizCardContent {
+        align-items: center;
+      }
+      .quizCardContent * {
+        margin-bottom: 5px;
+      }
+      .quizCardName {
+        font-size: 22px;
+        color: var(--header-color-1);
+      }
+      .quizCardSubject {
+        font-size: 18px;
+        color: var(--header-color-1);
+      }
+      .quizCardContent > p {
+        font-size: 15px;
+        color: var(--header-color-2);
+      }
+    /* filter menu */
+      .selectContainer {
+        margin: 0 25px 15px;
+      }
+        .selectContainerContent {
+          padding-bottom: 5px;
+        }
+        .availableTopicContainer {
+          width: 35%;
+        }
+        .selectedTopicContainer {
+          width: 60%;
+        }
+        .selectedTopicContainerContent {
+          padding: 0;
+          padding-top: 10px;
+          padding-right: 2px;
+        }
+        .selectedTopic {
+          padding: 3px;
+        }
+      /* Edit form */
+      .quizEditorForm {
+        margin: 20px;
+        padding: 10px;
+        width: 100%;
+        min-width: 100%;
+        height: 100%;
+        max-height: 90%;
+      }
+        .editorInput {
+          margin: 0 1px 2px 5px;
+          padding-left: 5px;
+        }
+          .editorQuizName {
+            font-size: 27px;
+            margin-bottom: 10px;
+          }
+          .editorQuizSubject {
+            font-size: 24px;
+          }
+        .topicEditorContainer {
+          padding-left: 2%;
+          padding-bottom: 3px;
+          margin-bottom: 5px;
+        }
+        .topicEditorContainer:last-child {
+          border-bottom: 0;
+        }
+          .topicNameText, .topicNameText > * {
+            font-size: 18px;
+            display: flex;
+          }
+          .inactiveQuestionText > * {
+            font-size: 18px;
+          }
+          .questionEditorContainer {
+            padding-left: 2%;
+          }
+            .answerEditorContainer {
+              padding-left: 30px;
+            }
+              .answerEditorGuideText {
+                font-size: 16px;
+              }
+              .quizEditorAnswerCorr, .quizEditorAnswerIncorr {
+                font-size: 16px;
+                margin-left: 10px;
+              }
+            .questionEditor {
+              margin-bottom: 5px;
+            }
+            .questionEditor:last-child {
+              border-bottom: 0;
+            }
+            .quizEditorFormMessage {
+              font-size: 16px;
+            }
+            .questionDeleteContainer{
+              margin-top: 5px;
+            }
+
+  @media only screen and (min-width: 700px) and (max-width: 955px) {
+    .navBarTab > span {
+      font-size: 15px;
+    }
+    .welcomeTextContainer > h1 {
+      padding-top: 5px;
+      font-size: 30px;
+    }
+  }
+  /* additional breakpoint for phones */
+  @media only screen and (min-width: 1px) and (max-width: 699px) {
+    /* login page */
+      .loginMain > h1 {
+        font-size: 30px;
+      }
+      .loginForm {
+        margin-top: 5px;
+        max-width: 80%;
+      }
+      .loginHeader {
+        width: 100%;
+        margin-bottom: 5px;
+      }
+      .loginBtnContainer{
+        align-items: center;
+      }
+      .textInput, .loginBtn {
+        max-width: 85%;
+        padding: 5px;
+      }
+      .loginMsgContainer {
+        height: 50px;
+        max-width: 350px;
+      }
+      .loginMsgContainer > p {
+        font-size: 18px;
+      }
+        .userMessage {
+          font-size: 22px;
+          text-align: center;
+        }
+    /* header */
+      header {
+        display: none;
+      }
+    /* navbar */
+      .navBar {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .navBarTab {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .navBarTab > span {
+        font-size: 12px;
+      }
+      .welcomeTextContainer > h1 {
+        padding-top:10px;
+        font-size: 20px;
+      }
+    /* main container */
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .quizCardDisplayContainer {
+        width: 95%;
+        min-width: 80%;
+        max-height: 80%;
+        margin: 0;
+      }
+      .spacerText {
+        font-size: 15px;
+      }
+      /* filter menu */
+      .selectContainer {
+        margin: 0 10px 5px;
+      }
+        .selectContainerContent {
+          padding-bottom: 5px;
+        }
+          .selectInput {
+            max-height: 50px;
+          }
+        .availableTopicContainer {
+          width: 30%;
+        }
+        .selectedTopicContainer {
+          width: 70%;
+        }
+        .filterBtn {
+          font-size: 14px;
+        }
+      /* Quiz Editor */
+      /* Edit form */
+        .quizEditorForm {
+          padding: 10px;
+          overflow-x: hidden;
+        }
+          .quizDetailTitle {
+            padding-top: 10px;
+          }
+          .editorQuizName {
+            font-size: 25px;
+            margin-bottom: 7px;
+          }
+          .editorQuizSubject {
+            font-size: 22px;
+          }
+            .topicNameText, .topicNameText > * {
+              font-size: 16px;
+            }
+            .inactiveQuestionText > * {
+              font-size: 14px;
+            }
+              .answerEditorGuideText {
+                font-size: 14px;
+              }
+              .quizEditorAnswerCorr, .quizEditorAnswerIncorr {
+                font-size: 14px;
+              }
+              .quizEditorFormMessage {
+                font-size: 14px;
+              }
+              .btnContainerDual {
+                display: flex;
+                flex-direction: column;
+                padding-left: 30%;
+              }
+              .editorBtn {
+                font-size: 14px;
+                padding: 3px 3px;
+                margin-bottom: 0;
+              }
+              .editorBtnMain {
+                font-size: 16px;
+                padding: 5px 5px;
+                margin-bottom: 0;
+              }
+      /* UserStats */
+      .userStatsTabset {
+        font-size: 20px;
+      }
+      .tabsetBtn {
+        padding: 0 4px;
+      }
+  }
+}

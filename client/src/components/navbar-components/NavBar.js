@@ -12,7 +12,7 @@ const NavBar = () => {
     <nav className="navBar">
       <NavBarBtn btnText={"Take A Quiz"} isActiveLocation={"/menu"} onClick={navToMenu}/>
       <NavBarBtn btnText={"Quiz Editor"} isActiveLocation={"/quiz/editor"} onClick={navToQuizEditorList}/>
-      <NavBarBtn btnText={"Create New Quiz"} isActiveLocation={"/quiz/creator"} onClick={navToQuizCreator}/>
+      <NavBarBtn btnText={"Create Quiz"} isActiveLocation={"/quiz/creator"} onClick={navToQuizCreator}/>
       <NavBarBtn btnText={"My Global Stats"} isActiveLocation={"/user/stats"} onClick={navToUserStats}/>
       <NavBarBtn btnText={"Logout"} isActiveLocation={"/"} onClick={handleLogout}/>
     </nav>
