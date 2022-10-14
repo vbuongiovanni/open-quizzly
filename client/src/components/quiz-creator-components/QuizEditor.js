@@ -58,6 +58,7 @@ const QuizEditor = props => {
         setQuizDetails(initQuizDetails);
         setTopics([initTopic]);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [quizData.topics.length, pathname]) 
 
   // handle quiz detail inputs
@@ -137,8 +138,8 @@ const QuizEditor = props => {
       const handleQuizDelete = () => {
         setConfirmMsgOptions({
           text : "Are you sure you want to delete the quiz?",
-          confirmText : "Awhh yeah",
-          denyText : "Nahh",
+          confirmText : "Yes",
+          denyText : "No",
           onAcceptCallback : () => {
             deleteQuiz(quizId, setMessageText);
             navToMenu();
@@ -200,7 +201,7 @@ const QuizEditor = props => {
     <main>
       <div className="quizContainer">
         <form onSubmit={submitNewQuiz} className="quizEditorForm">
-          {quizId && <input type="button" className="editorBtn btn cautionBtn colorBtn deleteQuizBtn" onClick={handleQuizDelete} value={`<<**Delete Quiz**>>`}/>}
+          {quizId && <input type="button" className="editorBtn btn cautionBtn colorBtn deleteQuizBtn" onClick={handleQuizDelete} value={`Delete Quiz`}/>}
           <div className="quizDetailTitle editorTitle">
             <input type="text" className="editorQuizName editorInput" onChange={handleQuizDetailChange} placeholder="Quiz Name" maxLength="22" name="quizName" value={quizDetails.quizName} required/>
             <input type="text" className="editorQuizSubject editorInput" onChange={handleQuizDetailChange} placeholder="Subject" maxLength="22" name="subject" value={quizDetails.subject} required/>

@@ -1,6 +1,6 @@
 import {useContext, useState} from "react";
 import { useParams } from 'react-router-dom';
-import {confirm} from "react-confirm-box";
+import ConfirmMsg from "../common-components/ConfirmMsg";
 import {QuizContext} from "../../context/QuizContext";
 import {AppContext} from "../../context/AppContext";
 import Header from "../Header";
@@ -16,6 +16,9 @@ const Quiz = () => {
   const [questionIndex, setQuestionIndex] = useState(0)
   const [answerInput, setAnswerInput] = useState(null);
   const [messageText, setMessageText] = useState("");
+
+  const [inConfirmPopup, setInConfirmPopup] = useState(false);
+  const [confirmMsgOptions, setConfirmMsgOptions] = useState({});
 
   const handleAnswerSelect = e => {
     const {value, id} = e.target
@@ -55,23 +58,16 @@ const Quiz = () => {
   
   // functions to 1) handle the click of sub-button on form and 
   // 2) uses a confirmation box to dictate whether or not to exit
-  const confirmExit = async () => {
-    const options = {
-      labels: {
-        confirmable: "Yes, get me out of this thing",
-        cancellable: "No, I have a few more questions in me"
-      }
-    }
-    const userRes = await confirm("Are you sure you want to exit the quiz?", options);
-    if (userRes) {
-      navToMenu();
-    }
-  }
-  const exitHandler = e => {
-    e.preventDefault()
-    confirmExit()
-    return false;
-  }
+  const handleQuizExit = () => {
+    setConfirmMsgOptions({
+      text : "Are you sure you want to exit the quiz?",
+      confirmText : "Yes",
+      denyText : "No",
+      onAcceptCallback : () => navToMenu(),
+      setInConfirmPopup : setInConfirmPopup
+    });
+    setInConfirmPopup(true);
+  };
   
   // function to return question component, given an index number
   const displayQuestion = (questionNumber) => {
@@ -105,6 +101,7 @@ const Quiz = () => {
 
   return(
     <>
+      {inConfirmPopup && <ConfirmMsg options={confirmMsgOptions}/>}
       <Header negateMetrics={true}/>
       <main>
         <div> {/*
@@ -123,7 +120,7 @@ const Quiz = () => {
                       </div>
                     </div>
                     <div className="btnContainer btnContainerDual">
-                      <button className="quizNavBtn cautionBtn" onClick={exitHandler}>Exit Quiz</button>  
+                      <button className="quizNavBtn cautionBtn" onClick={handleQuizExit}>Exit Quiz</button>  
                       <button className="quizNavBtn colorBtn">
                         {questionIndex === (activeQuiz.shuffledQuestions.length - 1) ? "Finish" : 
                           "Next Question"}

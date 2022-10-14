@@ -47,10 +47,16 @@ const QuizEditorList = () => {
                   const isSelected = selectedQuiz === _id
                   return (
                     <ScrollableListItem reactKey={_id} id={_id} onClick={setQuizSelection} >
-                      <ScrollableListEntry label={"Quiz Name: "} value={quizName}/>
-                      <ScrollableListEntry label={"Subject: "} value={subject}/>
-                      <ScrollableListEntry label={"Topics: "} value={topicsText}/>
-                      <ScrollableListEntry label={""} value={isSelected ? <button onClick={e => navToQuizEditor(selectedQuiz)}>Edit</button> : ""}/>
+                      <div className="editListItem">
+                        <div className="editListItemContent">
+                          <ScrollableListEntry label={"Quiz Name: "} value={quizName}/>
+                          <ScrollableListEntry label={"Subject: "} value={subject}/>
+                          <ScrollableListEntry label={"Topics: "} value={topicsText}/>
+                        </div>
+                        <div className="editListItemBtn">
+                          <ScrollableListEntry label={""} value={isSelected ? <button className="enterEditBtn colorBtn" onClick={e => navToQuizEditor(selectedQuiz)}>Edit</button> : ""}/>
+                        </div>
+                      </div>
                     </ScrollableListItem>
                   );  
                 })}

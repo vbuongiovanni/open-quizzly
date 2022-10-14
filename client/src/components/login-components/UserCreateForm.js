@@ -61,7 +61,7 @@ const UserCreateForm = props => {
           required
           onChange={handleChange}
         />
-        <div className="stackedBtnContainer">
+        <div className="stackedBtnContainer loginBtnContainer">
           <button className="loginBtn btn colorBtn">Create New Account</button>
           <button className="loginBtn btn colorBtn" onClick={toggleAccCreation}>Cancel</button>
         </div>

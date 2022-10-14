@@ -2,7 +2,7 @@ const UserStatsPane = props => {
   const {globalStats, tabSelection} = props;
 
   const getTabsetData = () => {
-    const selectedKey = Object.keys(globalStats).filter(key => key.includes(tabSelection));
+    const selectedKey = Object.keys(globalStats).find(key => key.includes(tabSelection));
     const renderData = globalStats[selectedKey].map(result => {
       let output = "";
       switch(tabSelection) {
@@ -28,7 +28,7 @@ const UserStatsPane = props => {
           }
           break;
         default :
-          output = "";
+          output = "default-case failed";
       }
       return output;
     });
@@ -39,18 +39,18 @@ const UserStatsPane = props => {
 
   return (
     <div className="userStatsPane">
-      {renderContent.map((result, index) => {
-        return (
-          <div key={index} className="userStatsResultsCard">
-            <p className="userStatsResultsCardTitle">{result.header}</p>
-            <p className="userStatsResultsCardStats">
-              <span className="userStatsResultsCardRatio">{result.ratioCorrect}</span> 
-              <span className="userStatsResultsCardSep"> - </span> 
-              <span className="userStatsResultsCardPct emphasizedText">{`${(Math.round(result.pctCorrect*10000)/100)}%`}</span>
-            </p>
-          </div>
-        )
-      })}
+        {renderContent.map((result, index) => {
+          return (
+            <div key={index} className="userStatsResultsCard">
+              <p className="userStatsResultsCardTitle">{result.header}</p>
+              <p className="userStatsResultsCardStats">
+                <span className="userStatsResultsCardRatio">{result.ratioCorrect}</span> 
+                <span className="userStatsResultsCardSep"> - </span> 
+                <span className="userStatsResultsCardPct emphasizedText">{`${(Math.round(result.pctCorrect*10000)/100)}%`}</span>
+              </p>
+            </div>
+          )
+        })}
     </div>
   );
 };

@@ -1,6 +1,12 @@
 // helper function to pull ID from deeply nested html elements 
 const handleQuizSelect = (e, setterFunc) => {
-  const id = `${e.target.id}${e.target.parentElement.id}${e.target.parentElement.parentElement.id}`
+
+  const id = e.target.id ? e.target.id : 
+      e.target.parentElement.id ? e.target.parentElement.id : 
+      e.target.parentElement.parentElement.id ? e.target.parentElement.parentElement.id :
+      e.target.parentElement.parentElement.parentElement.id ? e.target.parentElement.parentElement.parentElement.id :
+      e.target.parentElement.parentElement.parentElement.parentElement.id ? e.target.parentElement.parentElement.parentElement.parentElement.id : "";
+  
   setterFunc(id);
 };
 
