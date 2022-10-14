@@ -8,14 +8,16 @@ export default function QuizCard(props) {
 
   const handleQuizSelection = (e) => {
     navToQuiz(e.target.id);
-  }
+  };
 
   return (
-    <div className="quizCard" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>
-      <div className="quizCardContent" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>
-        <h4 className="quizCardName" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>{quizName}</h4>
-        <h4 className="quizCardSubject emphasizedText" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>{subject}</h4>
-        <p id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>{topicsText}</p>
+    <div className="quizCardSpacer">
+      <div className="quizCard" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>
+        <div className="quizCardContent" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>
+          <h4 className="quizCardName" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>{quizName}</h4>
+          <h4 className="quizCardSubject emphasizedText" id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>{subject}</h4>
+          <p id={_id} onClick={handleQuizSelection} onDoubleClick={handleQuizSelection}>{topicsText}</p>
+        </div>
       </div>
     </div>
   )

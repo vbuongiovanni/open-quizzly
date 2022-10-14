@@ -1,9 +1,6 @@
 const UserStatsPane = props => {
   const {globalStats, tabSelection} = props;
 
-  console.log(tabSelection)
-  console.log(Object.keys(globalStats).map(keyName => keyName.replace("summarized", "")).find(keyName => keyName === tabSelection));
-
   const getTabsetData = () => {
     const selectedKey = Object.keys(globalStats).find(key => key.includes(tabSelection));
     const renderData = globalStats[selectedKey].map(result => {
@@ -54,7 +51,6 @@ const UserStatsPane = props => {
             </div>
           )
         })}
-
     </div>
   );
 };

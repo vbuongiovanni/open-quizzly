@@ -483,23 +483,30 @@ main {
   overflow-x: hidden;
   display: grid;
   justify-content: space-evenly;
-  justify-items: stretch;
-  align-items: center;
   grid-template-columns: repeat(auto-fill, minmax(375px, 400px));
-  /* margin: 10px 50px; */
+  grid-template-rows: repeat(auto, auto);
+  grid-gap: 10px;
   border-radius: 5px;
   padding-top: 25px;
+  padding-left: 15px;
 }
   /*-- Quiz Card ---*/
+  .quizCardSpacer {
+    min-height: 200px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .quizCard {
     cursor: pointer;
-    border: solid 1px black;
-    display: inline-block;
+    border-radius: 3px;
     background-color: var(--base-color);
-    margin: 0 3px 20px 20px;
+    width: 100%;
+    height: 100%;
     min-width: 350px;
-    max-width: 400px;
-    height: 200px;
+    max-width: 375px;
+    max-height: 200px;
   }
   .quizCard:hover {
     box-shadow: 5px 10px 10px var(--quiz-card-shadow-color);
@@ -540,6 +547,7 @@ main {
   height: 100%;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
   .quizDetail {
     background-color: var(--quiz-detail-color);
@@ -550,10 +558,10 @@ main {
     font-size: 30px;
     margin: 20px;
     padding: 20px;
+    width: 100%;
     min-width: 350px;
     max-width: 80%;
     border-radius: 5px;
-    width: 100%;
     text-align: center;
   }
   .quizDetailTitle {
@@ -568,6 +576,9 @@ main {
   }
   .quizForm {
     width: 100%;
+    height: 70%;
+    max-height: 70vh;
+    overflow-y: scroll;
   }
     .quizHeaderMain, .quizSubHeader {
       font-weight: 600;
@@ -604,7 +615,7 @@ main {
         }
         .answerText {
           font-size: 20px;
-          text-align: justify;
+          text-align: left;
         }
     .quizConfig {
       display: flex;
@@ -936,9 +947,10 @@ main {
   .msgBoxOptionsContainer {
     display: flex;
     justify-content: space-evenly;
+    
   }
   .msgBoxOptions {
-    padding: 0px 5px;
+    padding: 4px 0px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -946,7 +958,6 @@ main {
     min-height: 35px;
     text-align: center;
     font-weight: 600;
-    
   }
 
 /* media screen breakpoints - < 1000px */
@@ -983,14 +994,15 @@ main {
         text-align: center;
       }
     .quizCardDisplay  {
-      max-height: 90%;
-      padding: 15px 5px 15px;
-      width: 100%;
       grid-template-columns: repeat(auto-fill, minmax(200px, 300px));
-      align-items: start;
+      grid-gap: 5px;
+    }
+    .quizCardSpacer {
+      min-width: 100px;
+      max-width: 300px;
+      min-height: 200px;
     }
     .quizCard {
-      margin: 0 3px 5px 5px;
       min-width: 200px;
       max-width: 300px;
       height: 175px;
@@ -1003,15 +1015,12 @@ main {
       }
       .quizCardName {
         font-size: 22px;
-        color: var(--header-color-1);
       }
       .quizCardSubject {
         font-size: 18px;
-        color: var(--header-color-1);
       }
       .quizCardContent > p {
         font-size: 15px;
-        color: var(--header-color-2);
       }
     /* filter menu */
       .selectContainer {
@@ -1094,6 +1103,28 @@ main {
             .questionDeleteContainer{
               margin-top: 5px;
             }
+    /* Confirm Msg Box */
+      .msgBoxText {
+        font-size: 20px;
+        text-align: center;
+      }
+      .msgBoxOptionsContainer {
+        flex-direction: column;
+      }
+      .msgBoxOptions{
+        font-size: 16px;
+        margin-bottom: 5px;
+      }
+      /* UserStats */
+        .userStatsTabset {
+          font-size: 25px;
+        }
+          .userStatsResultsCardTitle {
+            font-size: 22px;
+          }
+          .userStatsResultsCardRatio, .userStatsResultsCardSep, .userStatsResultsCardPct {
+            font-size: 18px;
+          }
 
   @media only screen and (min-width: 700px) and (max-width: 955px) {
     .navBarTab > span {
@@ -1102,6 +1133,11 @@ main {
     .welcomeTextContainer > h1 {
       padding-top: 5px;
       font-size: 30px;
+    }
+  }
+  @media only screen and (min-width: 700px) and (max-width: 731px) {
+    .quizCardDisplay  {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 250px));
     }
   }
   /* additional breakpoint for phones */
@@ -1142,11 +1178,14 @@ main {
       }
     /* navbar */
       .navBar {
+        box-sizing: border-box;
+        height: auto;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
       }
       .navBarTab {
         width: 100%;
+        margin-bottom: 0;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1154,8 +1193,11 @@ main {
       .navBarTab > span {
         font-size: 12px;
       }
+      .welcomeTextContainer {
+        height: auto;
+      }
       .welcomeTextContainer > h1 {
-        padding-top:10px;
+        padding:10px;
         font-size: 20px;
       }
     /* main container */
@@ -1170,6 +1212,28 @@ main {
         max-height: 80%;
         margin: 0;
       }
+        .quizCardDisplay  {
+          grid-template-columns: repeat(2, minmax(150px, 250px));
+          grid-gap: 5px;
+          padding: 0 3px 0px;
+        }
+        .quizCard {
+          min-width: 130px;
+          max-width: 240px;
+          height: 175px;
+          max-height: 100%;
+        }
+          @media only screen and (min-width: 1px) and (max-width: 550px) {
+            .quizCardName {
+              font-size: 18px;
+            }
+            .quizCardSubject {
+              font-size: 15px;
+            }
+            .quizCardContent > p {
+              font-size: 12px;
+            }
+          }
       .spacerText {
         font-size: 15px;
       }
@@ -1200,6 +1264,9 @@ main {
         }
           .quizDetailTitle {
             padding-top: 10px;
+          }
+          .quizDetail > p {
+            font-size: 18px;
           }
           .editorQuizName {
             font-size: 25px;
@@ -1238,10 +1305,86 @@ main {
                 padding: 5px 5px;
                 margin-bottom: 0;
               }
+      /* Quiz Header */
+        .quizHeaderMain {
+          font-size: 22px;
+        }
+        .quizSubHeader {
+          font-size: 18px;
+        }
+        .quizDetailResultsBtnContainer {
+          width: 80%;
+        }
+        .quizDetailResultsBtnContainer > *, .quizConfigBtn, .quizNavBtn {
+          font-size: 16px;
+        }
+          .btnContainerDual {
+            padding-left: 0;
+            align-items: center;
+          }
+            .quizConfigBtn, .quizNavBtn {
+              margin-bottom: 5px;
+            }
+            .quizNavBtn {
+              width: 150px;
+            }
+        .questionText {
+          font-weight: 600;
+          font-size: 18px;
+          margin-bottom: 20px;
+          height: auto;
+          text-align: left;
+        }
+          .radioInput{
+            width: 25px;
+            height: 25px;
+          }
+          .answerText {
+            font-size: 14px;
+          }
+          .userMessage {
+            font-size: 18px;
+          }
+        /* Quiz Config */
+        .quizConfig > p {
+          font-size: 16px;
+        }
+          .quizConfigCheckBoxRow {
+            margin-bottom: 10px;
+          }
+          .quizConfigCheckBoxRow > input { 
+            width: 20px;
+            height: 20px;
+          }
+          .quizConfigCheckBoxRow > label { 
+            font-size: 16px;
+          }
+      /* Confirm Msg Box */
+      .msgBoxContainer {
+        height: 40%;
+      }
+      .msgBoxText {
+        font-size: 16px;
+        text-align: center;
+      }
+      .msgBoxOptionsContainer {
+        flex-direction: column;
+      }
+      .msgBoxOptions{
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
       /* UserStats */
       .userStatsTabset {
         font-size: 20px;
       }
+        .userStatsResultsCardTitle {
+          font-size: 18px;
+        }
+        .userStatsResultsCardRatio, .userStatsResultsCardSep, .userStatsResultsCardPct {
+          font-size: 15px;
+        }
       .tabsetBtn {
         padding: 0 4px;
       }
