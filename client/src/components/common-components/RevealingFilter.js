@@ -7,6 +7,8 @@ const RevealingFilter = props => {
     setFilterHeight
   } = props;
 
+  const revealTime = 1;
+
   const hideSubjectFilter = () => {
     let height = filterHeight;
     let intervalTimer = setInterval(() => {
@@ -15,7 +17,7 @@ const RevealingFilter = props => {
       if (height === 0) {
         clearInterval(intervalTimer)
       }
-    }, 1);
+    }, revealTime);
   };
 
   const revealSubjectFilter = () => {
@@ -26,7 +28,7 @@ const RevealingFilter = props => {
       if (height === 125) {
         clearInterval(intervalTimer);
       }
-    }, 1);
+    }, revealTime);
   };
 
   const toggleSubjectFilter = () => {
@@ -57,7 +59,7 @@ const RevealingFilter = props => {
             name={"selectedTopics"}
             onChange={onSelectChange}
             value={subjectSelections}>
-              {subjects.map((selection, index) => <option className={"clickable"} key={index} value={selection}>{selection}</option>)}
+              {subjects.sort((a, b) => a < b ? -1 : 1).map((selection, index) => <option className={"clickable"} key={index} value={selection}>{selection}</option>)}
           </select>
         </div>
         <div className="selectedTopicContainer">

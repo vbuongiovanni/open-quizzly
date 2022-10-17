@@ -1,6 +1,6 @@
 import {React, useContext} from "react";
-import {Route, Routes, Navigate} from "react-router-dom";
-import { UserContext } from "./context/UserContext";
+import {Route, Routes, Navigate, useLocation} from "react-router-dom";
+import { UserContext} from "./context/UserContext";
 import Login from "./components/login-components/Login";
 import MainMenu from "./components/MainMenu";
 import QuizEditorList from "./components/quiz-creator-components/QuizEditorList";
@@ -13,7 +13,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
   const {token} = useContext(UserContext).credentials;
-  
+
   return (
     <>
       <Routes>

@@ -12,13 +12,7 @@ const userSchema = new Schema({
     password : {
     type : String,
     required : true
-  },
-  results : [
-    {
-      type : Schema.Types.ObjectId,
-      ref : "Result"
-    }
-  ]
+  }
 });
 
 // presave hook to encrypt passwords on signup

@@ -89,12 +89,15 @@ export const AppContextProvider = (props) => {
   // request callbacks
     // /auth request - new and existing user signup/login
       const userAuthReq = (type, loginFormInputs, userStateSetter, userMsgSetter) => {
+        let isSuccess = false;
         axios.post(`/auth/${type}`, loginFormInputs)
           .then(res => {
             userStateSetter({...res.data});
             localStorage.setItem("token", res.data.token);
+            isSuccess = true;
           })
           .catch(err => userMsgSetter(err.response.data.errMsg));
+        return isSuccess;
       };
 
     // /user requests
@@ -175,14 +178,18 @@ export const AppContextProvider = (props) => {
 
       // post new quiz
         const postQuiz = (newQuizData, userMsgSetter) => {
-          authAxios.post(`/api/quiz/add`, newQuizData)
-            .then(res => console.log("posted"))
+          return authAxios.post(`/api/quiz/add`, newQuizData)
+            .then(res => {
+              return true;
+            })
             .catch(err => timedUserMsg(err.response.data.errMsg, userMsgSetter));
         };
       // update Existing Quiz
         const editQuiz = (newQuizData, quizId, userMsgSetter) => {
-          authAxios.put(`/api/quiz/edit/${quizId}`, newQuizData)
-            .then(res => console.log(res.data))
+          return authAxios.put(`/api/quiz/edit/${quizId}`, newQuizData)
+            .then(res => {
+              return true;
+            })
             .catch(err => timedUserMsg(err.response.data.errMsg, userMsgSetter));
         };
       // delete quiz:

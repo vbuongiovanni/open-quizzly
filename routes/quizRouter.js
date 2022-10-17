@@ -185,34 +185,46 @@ const jwt_decode = require("jwt-decode");
     const jwt = req.get('Authorization').toString().replace("Bearer ", "").trim();
     const {_id : userId} = jwt_decode(jwt);
     const cleanedTopics = topics.map(topic => {
-      const {topicName, topicNumber} = topic
+      const {topicName, topicNumber} = topic;
       const questions = topic.questions.map(question => {
         const {questionText, correctAnswer, incorrectAnswer1, incorrectAnswer2, incorrectAnswer3, questionNumber} = question;
-        return {questionText, correctAnswer, questionNumber, incorrectAnswers : [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3]}
+        return {questionText, correctAnswer, questionNumber, incorrectAnswers : [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3]};
       });
-      return {topicName, topicNumber, questions}
+      return {topicName, topicNumber, questions};
     })
-    const quizDetails = {quizName : quizName, subject, authorId : userId, topics : cleanedTopics}
 
-    // search for quizId and ensure token matches db:
-    Quiz.findOne({_id : quizId}, (err, existingQuiz) => {
+    Quiz.find({_id : {$ne : quizId}}, (err, quizzes) => {
+      const unavailableNames = quizzes.map(quiz => quiz.quizName);
       if (err) {
         res.status(500);
         return next(err);
       }
-      Quiz.findOneAndUpdate(
-        {_id : quizId, authorId : userId},
-        {...quizDetails, __v : existingQuiz.__v + 1},
-        {runValidators : true, returnOriginal : false},
-        (err, updatedQuiz) => {
-          if (err) {
-            res.status(500);
-            return next(err);
+      if (unavailableNames.includes(quizName)) {
+        const errMsg = new Error(`Looks like "${quizName}" is already taken as a quiz name... try to come up with a different name that has a little more 'pizzazz'!`);
+        res.status(500);
+        return next(errMsg);
+      }
+      const quizDetails = {quizName : quizName, subject, authorId : userId, topics : cleanedTopics};
+  
+      // search for quizId and ensure token matches db:
+      Quiz.findOne({_id : quizId}, (err, existingQuiz) => {
+        if (err) {
+          res.status(500);
+          return next(err);
+        };
+        Quiz.findOneAndUpdate(
+          {_id : quizId, authorId : userId},
+          {...quizDetails, __v : existingQuiz.__v + 1},
+          {runValidators : true, returnOriginal : false},
+          (err, updatedQuiz) => {
+            if (err) {
+              res.status(500);
+              return next(err);
             }
-            res.send(updatedQuiz)
+            res.send(updatedQuiz);
         });
-    })
-
+      });
+    });
   });
 
 // endpoint to delete quiz

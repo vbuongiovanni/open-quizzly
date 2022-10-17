@@ -176,17 +176,31 @@ const QuizEditor = props => {
       });
     };
 
+  // notify user quiz updated successfully - this is, more than anything else, to buy time for db to update:
+  const notifySuccessfulPost = e => {
+    setConfirmMsgOptions({
+      text : `Congrats - Your quiz has been ${quizId ? "updated in" : "added to"} the public repository!`,
+      confirmText : "Righteous!",
+      denyText : "",
+      onAcceptCallback : navToMenu,
+      setInConfirmPopup : setInConfirmPopup
+    });
+    setInConfirmPopup(true);
+  }
+
   // handle submission of new quiz
     const submitNewQuiz = (e) => {
       e.preventDefault();
       const {quizName, subject} = quizDetails;
       const newQuizData = {quizName, subject, topics : topics};
+      let isSuccessful;
       if (!quizId) {
-        postQuiz(newQuizData, setMessageText);
+        isSuccessful = postQuiz(newQuizData, setMessageText);
       } else {
-        editQuiz(newQuizData, quizId, setMessageText);
-      }
-      navToMenu();
+        isSuccessful = editQuiz(newQuizData, quizId, setMessageText);
+      };
+      Promise.resolve(isSuccessful)
+        .then(isSuccessful => isSuccessful && notifySuccessfulPost())
     };
 
     const handleUserMessage = (e) => {
@@ -214,7 +228,7 @@ const QuizEditor = props => {
               <input type="button" className="editorBtnMain btn colorBtn" onClick={createNewTopic} value="Add New topic"/> :
               <input type="button" className="editorBtnMain btn deactivatedBtn" onClick={handleUserMessage} value="Add New topic"/>
             }
-            <button className="editorBtnMain btn colorBtn">Create Quiz</button>
+            <button className="editorBtnMain btn colorBtn">{`${quizId ? "Update" : "Create"}`} Quiz</button>
           </div>
           <p className="userMessage emphasizedText quizEditorFormMessage">{messageText}</p>
         </form>

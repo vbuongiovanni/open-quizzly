@@ -17,11 +17,11 @@ const quizSchema = new Schema({
   },
   topics : {
     type : [
-    // topicName : String
+    // topicName : String,
     // questions : [{
     //  questionText : String,
     //  correctAnswer : String,
-    //  incorrectAnswers : [String, ...]
+    //  incorrectAnswers : [String]
     // }]
     ],
     required : true

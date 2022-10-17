@@ -11,7 +11,6 @@ const LoginForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     userAuthReq("login", loginFormInputs, setCredentials, setLoginMessage);
-    navToLogin();
   };
   
   // handler func for inputs
