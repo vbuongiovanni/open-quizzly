@@ -25,10 +25,10 @@ const MainMenu = () => {
   useEffect(() => {
     getQuizData(setQuizLibrary, setSubjects, undefined);
     getUserSummaryStats(setGlobalStats);
-    setSubjectSelections(subjects)
+    setSubjectSelections(subjects);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [useLocation().pathname])
-  
+  }, [useLocation().key])
+
   return(
     <>
       <Header globalStats={globalStats} negateMetrics={false}/>
@@ -40,7 +40,7 @@ const MainMenu = () => {
         <div className="quizCardDisplayContainer">
           <div className="quizCardDisplaySpacer spacerTextContainer"><span className="spacerText">Filter by one or more subjects, then select a quiz card to begin</span></div>
           <RevealingFilter 
-            subjects={subjects}
+            subjects={[... new Set(subjects)]}
             filterHeight={filterHeight}
             subjectSelections={subjectSelections}
             setSubjectSelections={setSubjectSelections}

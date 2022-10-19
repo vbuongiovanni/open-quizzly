@@ -28,7 +28,7 @@ const ConfirmMsg = (props) => {
         <h3 className="msgBoxText">{text}</h3>
         <div className="msgBoxOptionsContainer">
           <div className="colorBtn btn msgBoxOptions cautionBtn" onClick={handleAccept}>{confirmText}</div>
-          <div className="colorBtn btn msgBoxOptions msgBoxDeny" onClick={handleDeny}>{denyText}</div>
+          {denyText && <div className="colorBtn btn msgBoxOptions msgBoxDeny" onClick={handleDeny}>{denyText}</div>}
         </div>
       </div>
     </div>

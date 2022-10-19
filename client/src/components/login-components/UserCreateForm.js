@@ -15,9 +15,9 @@ const UserCreateForm = props => {
     if (loginFormInputs.password !== loginFormInputs.confirmPassword) {
       setLoginMessage("Your password and the confirmation must match.");
     } else {
-      userAuthReq("signup", loginFormInputs, setCredentials, setLoginMessage);
-      navToLogin();
-      toggleAccCreation();
+      if (userAuthReq("signup", loginFormInputs, setCredentials, setLoginMessage)) {
+        toggleAccCreation();
+      }      
     }
   };
   
