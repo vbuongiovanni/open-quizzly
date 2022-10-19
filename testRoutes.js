@@ -2,8 +2,8 @@ const axios = require("axios");
 const jwt_decode = require("jwt-decode");
 
 // load template quiz
-  const reactDesignPatternsQuiz = require("./quiz-content/Design Patterns in React.json")
-  const html5Quiz = require("./quiz-content/HTML5.json")
+  const reactDesignPatternsQuiz = require("./quiz-content/quizzly-templates/Design Patterns in React.json")
+  const html5Quiz = require("./quiz-content/quizzly-templates/HTML5.json")
 
   const unpackQuizData = quizData => {
       const {quizName, quizSubject} = quizData;

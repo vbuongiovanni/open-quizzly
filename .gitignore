@@ -1,3 +1,6 @@
 node_modules/
-quiz-content/
+quiz-content/originals/
+quiz-content/quiz-template.xlsx
+quiz-content/originals-to-quiz-template.R
+quiz-content/quiz-template-to-json.R
 .env
